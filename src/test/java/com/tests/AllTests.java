@@ -29,6 +29,7 @@ public class AllTests extends BaseTestClass {
     CommonVerifications commonVerifications = getCommonVerifications();
     OnlineAppointmentsPage onlineAppointments = OnlineAppointmentsPage.getOnlineAppointmentsPage();
 
+    //todo separate tests
 
     @Test @Order(1)
     void HomePageloaded() {
