@@ -39,10 +39,6 @@ public class ServicesPage {
         WebElement treatmentDescription = treatmentDescriptionWrapper.getFirst();
         explicitWait();
         return treatmentDescription.getText();
-
-        //WebElement treatmentDescriptionWrapper = driver.findElement(By.cssSelector(("div[class='sppb-tab-pane sppb-fade active in']")));
-        //return treatmentDescriptionWrapper.getText();
-
     }
 
     public List<String> getAllTreatmentDescriptions() {
@@ -71,5 +67,4 @@ public class ServicesPage {
                 "TRATAMENT PENTRU OCHI",
                 "TRATAMENTUL CU PULBERE DE DIAMANTE"));
     }
-
 }

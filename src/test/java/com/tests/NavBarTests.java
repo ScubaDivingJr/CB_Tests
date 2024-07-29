@@ -29,7 +29,6 @@ public class NavBarTests extends BaseTestClass {
         header.clickHome();
         commonVerifications.verifyUrl("https://cosmeticabrasov.ro/");
     }
-
     @Test
     void despreNoiTest() {
         header.clickNavBarItem(Menus.DESPRE_NOI);

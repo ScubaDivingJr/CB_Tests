@@ -25,11 +25,8 @@ public class AllTests extends BaseTestClass {
     Homepage home = new Homepage();
     ServicesPage serv = new ServicesPage();
     Footer footer = Footer.getFooter();
-
     CommonVerifications commonVerifications = getCommonVerifications();
     OnlineAppointmentsPage onlineAppointments = OnlineAppointmentsPage.getOnlineAppointmentsPage();
-
-    //todo separate tests
 
     @Test @Order(1)
     void HomePageloaded() {
@@ -40,19 +37,14 @@ public class AllTests extends BaseTestClass {
         commonVerifications.verifyTextOnPage("Consultanta cosmetica personalizata");
     }
 
-
-
     @Test @Order(2)
     public void DespreNoi(){
-
         header.clickNavBarItem(Menus.DESPRE_NOI);
         commonVerifications.verifyTextOnPage("COSMETICIANA TA");
-
     }
 
     @Test @Order(2)
     void ServiciiTratamenteDermato() {
-
         header.clickNavBarItem(Menus.SERVICII);
         assertEquals(serv.getAllTreatmentDescriptions(), serv.getExpectedTreatmentDescriptions());
     }
@@ -66,7 +58,6 @@ public class AllTests extends BaseTestClass {
 
     @Test @Tag("TreatmentDescriptionTests") @Order (3)
     void checkPeelingEnzimaticDescription() {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC);
 
@@ -74,13 +65,11 @@ public class AllTests extends BaseTestClass {
         String expectedTreatmentDescription = "Contine extracte de fructe exotice ananas si papaia";
 
         assertTrue(actualTreatmentDescription.contains(expectedTreatmentDescription), "Description not found.");
-
     }
 
     @Test @Tag("TreatmentDescriptionTests") @Order(4)
 
     void checkTratamentCuPhytopeelingDescription()  {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENTUL_CU_PHYTOPEELING);
 
@@ -92,7 +81,6 @@ public class AllTests extends BaseTestClass {
 
     @Test @Tag("TreatmentDescriptionTests") @Order(5)
     void checkTratamentulAcneeiDescription() {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENTUL_ACNEEI);
 
@@ -104,7 +92,6 @@ public class AllTests extends BaseTestClass {
 
     @Test @Tag("TreatmentDescriptionTests") @Order(5)
     void checkTerapieDnaRepairDescription() throws InterruptedException {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TERAPIE_DNA_REPAIR);
 
@@ -127,7 +114,6 @@ public class AllTests extends BaseTestClass {
 
     @Test @Tag("TreatmentDescriptionTests") @Order(6)
     void checkTerapieCuCaviarDescription() {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TERAPIE_CU_CAVIAR);
 
@@ -139,7 +125,6 @@ public class AllTests extends BaseTestClass {
 
     @Test @Tag("TreatmentDescriptionTests") @Order(7)
     void checkTratamentCuHidratareDescription() {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENT_CU_HIDRATARE);
 
@@ -147,12 +132,10 @@ public class AllTests extends BaseTestClass {
         String expectedTreatmentDescription = "Destinat tenurilor deshidratate, ingredientul principal este acidul hialuronic";
 
         assertTrue(actualTreatmentDescription.contains(expectedTreatmentDescription));
-
     }
 
     @Test @Tag("TreatmentDescriptionTests") @Order(8)
     void checkTratamentDeLiftingDescription() {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENT_DE_LIFTING_CU_PROTEINE);
 
@@ -165,7 +148,6 @@ public class AllTests extends BaseTestClass {
     @Test @Tag("TreatmentDescriptionTests") @Order(9)
 
     void checkTratamentPentruOchiDescription() {
-
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENT_PENTRU_OCHI);
 
@@ -209,7 +191,6 @@ public class AllTests extends BaseTestClass {
 
     @Test @Order(14)
     void createOnlineAppointment() {
-
         header.clickNavBarItem(Menus.PROGRAMARI_ONLINE);
         onlineAppointments.enterName("Andrei Marcu")
                 .enterPhoneNumber("0726897976")

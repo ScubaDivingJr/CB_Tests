@@ -49,5 +49,4 @@ public class Footer {
         scrollToFooter();
         driver.findElement(By.cssSelector("li[class='item-942']")).click();
     }
-
 }

@@ -16,7 +16,6 @@ import static org.framework.DriverFactory.getChromeDriver;
 public class Screenshotter implements AfterTestExecutionCallback {
 
     static WebDriver driver = getChromeDriver();
-
     @Override
     public void afterTestExecution(ExtensionContext context) throws Exception {
         if (context.getExecutionException().isPresent()) { // if the test execution has failed

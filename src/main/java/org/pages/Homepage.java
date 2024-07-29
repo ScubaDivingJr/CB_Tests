@@ -54,9 +54,7 @@ public class Homepage {
     public static By Logo() {
         return By.id("sp-logo");
     }
-
     public static By HomeButtonAndActive() {
         return By.cssSelector("li[class='sp-menu-item current-item active']");
     }
-
 }

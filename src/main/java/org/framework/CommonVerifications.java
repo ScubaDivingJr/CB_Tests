@@ -15,22 +15,18 @@ public class CommonVerifications {
     protected WebDriver driver = getChromeDriver();
 
     public static CommonVerifications getCommonVerifications() { return new CommonVerifications();}
-
     public CommonVerifications verifyIsDisplayed(By element){
         assertTrue(driver.findElement(element).isDisplayed());
         return this;
     }
-
     public CommonVerifications verifyIsNotDisplayed(By element) {
         assertFalse(driver.findElement(element).isDisplayed());
         return this;
     }
-
     public CommonVerifications verifyTextOnPage(String text) {
         assertTrue(driver.getPageSource().contains(text));
         return this;
     }
-
     public CommonVerifications verifyUrl(String expectedUrl) {
         assertEquals(driver.getCurrentUrl(), expectedUrl);
         return this;

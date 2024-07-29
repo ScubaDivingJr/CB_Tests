@@ -24,26 +24,20 @@ import static org.framework.DriverFactory.getGetDriverWait;
 
 @ExtendWith(Screenshotter.class)
 public class BaseTestClass {
-
     static WebDriver driver;
     static WebDriverWait wait;
     public static final String BASE_URL = "https://cosmeticabrasov.ro";
-
-
-
     @BeforeSuite
     public void startBrowser() {
         driver = getChromeDriver();
         wait = getGetDriverWait();
         driver.get(BASE_URL);
     }
-
     @BeforeAll
     public static void goToHome() {
         driver = getChromeDriver();
         driver.get(BASE_URL);
     }
-
     @AfterSuite
     public static void cleanUp(){
      driver.quit();

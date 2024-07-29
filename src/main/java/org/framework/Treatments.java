@@ -1,7 +1,6 @@
 package org.framework;
 
 public enum Treatments {
-
     TRATAMENTUL_CU_PEELING_ENZIMATIC(0),
     TRATAMENTUL_CU_PHYTOPEELING(1),
     TRATAMENTUL_ACNEEI(2),
@@ -13,6 +12,5 @@ public enum Treatments {
     TRATAMENT_PENTRU_OCHI(8),
     TRATAMENT_PULBERE_DIAMANTE(9);
     private int value;
-
     Treatments(int value) {this.value = value;}
 }
