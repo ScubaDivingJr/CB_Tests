@@ -3,9 +3,6 @@ package org.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 
@@ -16,18 +13,6 @@ import static org.framework.TestUtils.explicitWait;
 public class Homepage {
     private final WebDriver driver = getChromeDriver();
     private final WebDriverWait wait = getGetDriverWait();
-
-    public void clickProgramariOnline() {
-        driver.findElement(By.cssSelector("a[href='http://cosmeticabrasov.ro/programari-online.html']")).click();
-    }
-
-    public void clickMaiMulteDetalii() {
-        driver.findElement(By.id("btn-1513331494768")).click();
-    }
-
-    public void clickProgrameazate() {
-        driver.findElement(By.id("btn-1515652264954")).click();
-    }
 
     public void clickSlideshowDetails(int slide) {
 
