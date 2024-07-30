@@ -22,6 +22,7 @@ public class Screenshotter implements AfterTestExecutionCallback {
             String baseFileName = context.getRequiredTestClass().getSimpleName() + "-"
                     + context.getRequiredTestMethod().getName()
                     + LocalDateTime.now().format(DateTimeFormatter.ofPattern("-yyMMdd-HHmmss"));
+
             File targetFile = new File("C:\\TestScreenshots\\" + baseFileName + ".png");
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             Files.copy(scrFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
