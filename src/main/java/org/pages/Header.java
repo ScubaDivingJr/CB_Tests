@@ -148,6 +148,15 @@ public class Header {
                 expandFacialTreatmentsHamburgerMenu();
                 getFacialTreatmentsChildren().get(3).click();
                 break;
+            case Menus.PROGRAMARI_ONLINE:
+                getHamburgerMenuTopLevelChildren().get(12).click();
+                break;
+            case Menus.BLOG:
+                getHamburgerMenuTopLevelChildren().get(13).click();
+                break;
+            case Menus.CONTACT:
+                getHamburgerMenuTopLevelChildren().get(14).click();
+                break;
         }
     }
     private void expandServicesInHamburgerMenu() {
@@ -186,7 +195,7 @@ public class Header {
         expandServicesInHamburgerMenu();
         //wait until the last services menu child is clickable
         wait.until(ExpectedConditions.elementToBeClickable(getHamMenuServicesChildren().getLast()));
-
+        //get first child item from services menu (facial treaments), then click expand button
         WebElement servicesFirstChild = getHamMenuServicesChildren().getFirst();
         servicesFirstChild.findElement(By.tagName("span")).click();
         //wait until last child in facial treatments menu is clickable
