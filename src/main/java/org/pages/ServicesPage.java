@@ -5,6 +5,8 @@ import org.framework.Treatments;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -32,11 +34,12 @@ public class ServicesPage {
         WebElement treatment = list1.get(value.ordinal());
         treatment.click();
 
-        testUtils.explicitWait();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='sppb-tab-pane sppb-fade active in']")));
 
         List<WebElement> treatmentDescriptionWrapper = driver.findElements(By.cssSelector("div[class='sppb-tab-pane sppb-fade active in']"));
         WebElement treatmentDescription = treatmentDescriptionWrapper.getFirst();
-        testUtils.explicitWait();
+
+        wait.until(ExpectedConditions.visibilityOf(treatmentDescriptionWrapper.getFirst()));
         return treatmentDescription.getText();
     }
 
