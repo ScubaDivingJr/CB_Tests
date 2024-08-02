@@ -1,7 +1,11 @@
 package com.tests;
 
 import org.framework.CommonVerifications;
+import org.framework.Menus;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.*;
 
 public class MiscellaneousTests extends BaseTestClass {
@@ -15,5 +19,4 @@ public class MiscellaneousTests extends BaseTestClass {
         home.clickSlideshowDetails(2);
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }
-
 }

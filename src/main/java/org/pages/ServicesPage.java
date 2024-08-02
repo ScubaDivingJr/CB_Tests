@@ -1,5 +1,6 @@
 package org.pages;
 
+import org.framework.TestUtils;
 import org.framework.Treatments;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,11 +13,12 @@ import java.util.List;
 
 import static org.framework.DriverFactory.getChromeDriver;
 import static org.framework.DriverFactory.getGetDriverWait;
-import static org.framework.TestUtils.explicitWait;
 
 public class ServicesPage {
     private final WebDriver driver = getChromeDriver();
     private final WebDriverWait wait = getGetDriverWait();
+
+    TestUtils testUtils = new TestUtils();
 
     public void clickTreatment(Treatments value) {
         WebElement ul = driver.findElement(By.cssSelector("ul[class='sppb-nav sppb-nav-tabs']"));
@@ -30,11 +32,11 @@ public class ServicesPage {
         WebElement treatment = list1.get(value.ordinal());
         treatment.click();
 
-        explicitWait();
+        testUtils.explicitWait();
 
         List<WebElement> treatmentDescriptionWrapper = driver.findElements(By.cssSelector("div[class='sppb-tab-pane sppb-fade active in']"));
         WebElement treatmentDescription = treatmentDescriptionWrapper.getFirst();
-        explicitWait();
+        testUtils.explicitWait();
         return treatmentDescription.getText();
     }
 

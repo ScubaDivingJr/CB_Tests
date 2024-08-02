@@ -3,7 +3,7 @@ import java.io.*;
 
 public class TestUtils {
 
-    public static void explicitWait() {
+    public void explicitWait() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

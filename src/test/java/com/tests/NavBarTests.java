@@ -10,6 +10,7 @@ public class NavBarTests extends BaseTestClass {
 
     Header header = new Header();
     CommonVerifications commonVerifications = new CommonVerifications();
+    TestUtils testUtils = new TestUtils();
 
     @Test
     void homeButtonTest() {
@@ -36,7 +37,7 @@ public class NavBarTests extends BaseTestClass {
     void serviciiTratementeFaciale() {
         header.clickHome();
         header.clickNavBarItem(Menus.TRATAMENTE_FACIALE);
-        TestUtils.explicitWait();
+        testUtils.explicitWait();
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale.html")
                 .verifyTextOnPage("Tratamente Faciale");

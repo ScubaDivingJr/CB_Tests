@@ -20,6 +20,7 @@ public class DriverFactory {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("start-maximized");
             options.addArguments("--remote-allow-origins=*");
+            options.addArguments("--disable-search-engine-choice-screen");
             driver = new ChromeDriver(options);
         }
         return driver;
