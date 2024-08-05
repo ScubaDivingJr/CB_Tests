@@ -2,8 +2,8 @@ package com.tests;
 import org.framework.CommonVerifications;
 import org.framework.Menus;
 import org.framework.TestUtils;
-import org.junit.jupiter.api.*;
 import org.pages.Header;
+import org.testng.annotations.Test;
 
 
 public class NavBarTests extends BaseTestClass {

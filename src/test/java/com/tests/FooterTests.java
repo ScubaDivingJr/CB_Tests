@@ -2,12 +2,9 @@ package com.tests;
 
 import org.framework.CommonVerifications;
 import org.framework.TestUtils;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 import org.pages.Footer;
-
+import org.testng.annotations.Test;
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class FooterTests extends BaseTestClass {
 

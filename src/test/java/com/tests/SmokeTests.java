@@ -2,29 +2,30 @@ package com.tests;
 
 import org.framework.CommonVerifications;
 import org.framework.Menus;
-import org.junit.jupiter.api.*;
+import org.openqa.selenium.WebDriver;
+import org.pages.*;
+import org.testng.annotations.Test;
 
 import static org.framework.CommonVerifications.getCommonVerifications;
+import static org.framework.DriverFactory.getChromeDriver;
 
-import org.pages.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class SmokeTests extends BaseTestClass {
 
     Header header = new Header();
     Homepage home = new Homepage();
-    Footer footer = Footer.getFooter();
     CommonVerifications commonVerifications = getCommonVerifications();
     OnlineAppointmentsPage onlineAppointments = OnlineAppointmentsPage.getOnlineAppointmentsPage();
+    WebDriver driver = getChromeDriver();
 
-    @Test @Order(1)
+    @Test
     void HomePageloaded() {
-        driver.get(BASE_URL);
-        commonVerifications.verifyIsDisplayed(Homepage.HomeButtonAndActive());
-        commonVerifications.verifyIsDisplayed(Homepage.Logo());
-        commonVerifications.verifyIsDisplayed(Homepage.Slide());
-        commonVerifications.verifyTextOnPage("Consultanta cosmetica personalizata");
+        commonVerifications
+                .verifyIsDisplayed(Homepage.HomeButtonAndActive())
+                .verifyIsDisplayed(Homepage.Logo())
+                .verifyIsDisplayed(Homepage.Slide())
+                .verifyTextOnPage("Consultanta cosmetica personalizata");
     }
 
     @Test
@@ -34,7 +35,7 @@ public class SmokeTests extends BaseTestClass {
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }
 
-    @Test @Order(14)
+    @Test
     void createOnlineAppointment() {
         header.clickNavBarItem(Menus.PROGRAMARI_ONLINE);
         onlineAppointments.enterName("Andrei Marcu")

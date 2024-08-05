@@ -3,23 +3,22 @@ package com.tests;
 import org.framework.CommonVerifications;
 import org.framework.Menus;
 import org.framework.Treatments;
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.testng.annotations.Test;
 import org.pages.*;
+import org.testng.Assert;
 
 public class ServicesContentTests extends BaseTestClass {
 
      Header header = new Header();
      ServicesPage serv = new ServicesPage();
      CommonVerifications commonVerifications = new CommonVerifications();
-    @Test @Order(2)
+    @Test
     void ServiciiTratamenteDermato() {
         header.clickNavBarItem(Menus.SERVICII);
-        assertEquals(serv.getAllTreatmentDescriptions(), serv.getExpectedTreatmentDescriptions());
+        Assert.assertEquals(serv.getAllTreatmentDescriptions(), serv.getExpectedTreatmentDescriptions());
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
     void checkPeelingEnzimaticDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC);
@@ -27,7 +26,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC,"Contine extracte de fructe exotice ananas si papaia");
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
 
     void checkTratamentCuPhytopeelingDescription()  {
         header.clickNavBarItem(Menus.SERVICII);
@@ -36,7 +35,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENTUL_CU_PHYTOPEELING, "Reprezinta un peeling chimic mediu si in acelasi timp");
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
     void checkTratamentulAcneeiDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENTUL_ACNEEI);
@@ -44,7 +43,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENTUL_ACNEEI, "Acneea reprezinta o afectiune dermatologica la nivelul glandelor sebacee");
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
     void checkTerapieDnaRepairDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TERAPIE_DNA_REPAIR);
@@ -52,7 +51,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TERAPIE_DNA_REPAIR, "Terapie destinata tuturor tipurilor de ten");
     }
 
-    @Test @Tag("treatmentDescriptionTest")
+    @Test
     void checkTerapiaCuVitaminaCDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TERAPIE_CU_VITAMINA_C);
@@ -60,7 +59,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TERAPIE_CU_VITAMINA_C, "Terapie destinata tenurilor deshidratate");
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
     void checkTerapieCuCaviarDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TERAPIE_CU_CAVIAR);
@@ -68,7 +67,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TERAPIE_CU_CAVIAR, "Destinata tenurilor cu riduri vizibile");
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
     void checkTratamentCuHidratareDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENT_CU_HIDRATARE);
@@ -76,7 +75,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENT_CU_HIDRATARE, "Destinat tenurilor deshidratate, ingredientul principal este acidul hialuronic");
     }
 
-    @Test @Tag("TreatmentDescriptionTests")
+    @Test
     void checkTratamentDeLiftingDescription() {
         header.clickNavBarItem(Menus.SERVICII);
         serv.clickTreatment(Treatments.TRATAMENT_DE_LIFTING_CU_PROTEINE);
@@ -84,7 +83,7 @@ public class ServicesContentTests extends BaseTestClass {
         commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENT_DE_LIFTING_CU_PROTEINE, "Combinatie a doua proteine superioare: proteina din zer");
     }
 
-    @Test @Tag("TreatmentDescriptionTests") @Order(9)
+    @Test
 
     void checkTratamentPentruOchiDescription() {
         header.clickNavBarItem(Menus.SERVICII);
@@ -94,7 +93,7 @@ public class ServicesContentTests extends BaseTestClass {
 
     }
 
-    @Test @Tag("TreatmentDescriptionTests") @Order(10)
+    @Test
 
     void checkTratamentulCuPulbereDeDiamanteDescription() {
         header.clickNavBarItem(Menus.SERVICII);

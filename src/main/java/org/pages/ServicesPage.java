@@ -20,8 +20,6 @@ public class ServicesPage {
     private final WebDriver driver = getChromeDriver();
     private final WebDriverWait wait = getGetDriverWait();
 
-    TestUtils testUtils = new TestUtils();
-
     public void clickTreatment(Treatments value) {
         WebElement ul = driver.findElement(By.cssSelector("ul[class='sppb-nav sppb-nav-tabs']"));
         List<WebElement> list1 = ul.findElements(By.tagName("li"));

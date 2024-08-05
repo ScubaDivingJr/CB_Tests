@@ -2,8 +2,9 @@ package com.tests;
 
 import org.framework.CommonVerifications;
 import org.framework.Menus;
-import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
 import org.pages.Header;
+import org.testng.annotations.Test;
 
 public class HamburgerMenuTests extends BaseTestClass{
     CommonVerifications commonVerifications = new CommonVerifications();

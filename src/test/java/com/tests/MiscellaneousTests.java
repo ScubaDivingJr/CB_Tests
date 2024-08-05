@@ -2,11 +2,11 @@ package com.tests;
 
 import org.framework.CommonVerifications;
 import org.framework.Menus;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.*;
+import org.testng.annotations.Test;
 
 public class MiscellaneousTests extends BaseTestClass {
 
