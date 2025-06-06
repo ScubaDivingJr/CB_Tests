@@ -5,10 +5,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.sql.Driver;
-import java.time.Duration;
 
 public class DriverFactory {
 
@@ -46,11 +42,21 @@ public class DriverFactory {
                break;
            case "firefox":
                tlDriver.set(new FirefoxDriver());
+               break;
            case "edge":
                tlDriver.set(new EdgeDriver());
+               break;
            default:
                throw new IllegalArgumentException("Browser " + browser + "not supported.");
        }
+    }
+
+    public void quitBrowser() {
+        WebDriver driver = tlDriver.get();
+        if (driver != null) {
+            driver.quit();
+            tlDriver.remove();
+        }
     }
 
     public WebDriver getDriver() {

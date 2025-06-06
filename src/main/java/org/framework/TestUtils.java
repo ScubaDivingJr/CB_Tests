@@ -3,14 +3,6 @@ import java.io.*;
 
 public class TestUtils {
 
-    public void explicitWait() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
      public enum Credentials {
         USERNAME(0),
         PASSWORD(1);

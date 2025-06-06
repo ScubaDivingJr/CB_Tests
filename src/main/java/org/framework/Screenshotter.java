@@ -12,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.pages.BasePage;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.framework.*;
 
 public class Screenshotter extends BasePage implements ITestListener {
 

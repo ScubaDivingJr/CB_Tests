@@ -1,9 +1,7 @@
 package com.tests;
 import org.Data.TreatmentsDataProvider;
-import org.framework.CommonVerifications;
 import org.enums.Menus;
 import org.enums.Treatments;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.pages.*;
 import org.testng.Assert;

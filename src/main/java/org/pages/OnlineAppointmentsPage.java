@@ -1,9 +1,10 @@
 package org.pages;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.enums.OnlineAppointmentScheduleOptions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,15 +14,17 @@ import java.time.format.DateTimeFormatter;
 
 public class OnlineAppointmentsPage extends BasePage {
 
-    private By nameLocator = By.id ("nume");
-    private By phoneNumberLocator = By.id("telefon");
-    private By emailLocator = By.id("email");
-    private By dateLocator = By.id("data_preferata");
-    private By scheduleLocator = By.id("interval_orar");
-    private By servicesAndDetailsLocator = By.id("serviciu_dorit_si_detalii_suplimentare");
-    private By submitBtnLocator = By.id("button8");
-    private By failMessageContainerLocator = By.id("system-message");
-    private By successMessageContainerLocator = By.cssSelector(".ui message success");
+    private static final Logger log = LogManager.getLogger(OnlineAppointmentsPage.class);
+
+    private final By nameLocator = By.id ("nume");
+    private final By phoneNumberLocator = By.id("telefon");
+    private final By emailLocator = By.id("email");
+    private final By dateLocator = By.id("data_preferata");
+    private final By scheduleLocator = By.id("interval_orar");
+    private final By servicesAndDetailsLocator = By.id("serviciu_dorit_si_detalii_suplimentare");
+    private final By submitBtnLocator = By.id("button8");
+    private final By failMessageContainerLocator = By.id("system-message");
+    private final By successMessageContainerLocator = By.cssSelector(".ui message success");
 
     public OnlineAppointmentsPage enterName(String name) {
         driver.findElement(nameLocator).sendKeys(name);
@@ -54,7 +57,7 @@ public class OnlineAppointmentsPage extends BasePage {
 
     public OnlineAppointmentsPage enterSchedule(OnlineAppointmentScheduleOptions scheduleOptions) {
 
-        WebElement scheduleDropDown = driver.findElement(By.id("interval_orar"));
+        WebElement scheduleDropDown = driver.findElement(scheduleLocator);
         Select select = new Select(scheduleDropDown);
 
         switch (scheduleOptions) {

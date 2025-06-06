@@ -17,7 +17,7 @@ public class BasePage {
     private final int globalWaitDuration = 5;
     protected final WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(globalWaitDuration));
 
-    protected static Logger log = LogManager.getLogger(BasePage.class);
+    private static final Logger log = LogManager.getLogger(BasePage.class);
 
     public void goToHomepage() {
         driver.get(baseUrl);
@@ -67,7 +67,7 @@ public class BasePage {
             try {
                 webDriverWait.until(ExpectedConditions.elementToBeClickable(element)).click();
             } catch (Exception e) {
-                log.error("Unable to click element " + element.toString() + " after waiting " + globalWaitDuration + "seconds.");
+                log.error("Unable to click element {} after waiting " + globalWaitDuration + "seconds.", element.toString());
                 throw e;
             }
         }
@@ -76,7 +76,7 @@ public class BasePage {
             try {
                 element.click();
             } catch (Exception e) {
-                log.error("Unable to click element " + element.toString() + " without waiting.");
+                log.error("Unable to click element {} without waiting.", element.toString());
                 throw e;
             }
         }

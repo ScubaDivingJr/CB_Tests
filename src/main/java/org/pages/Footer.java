@@ -1,4 +1,6 @@
 package org.pages;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.framework.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -6,11 +8,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.JavascriptExecutor;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Set;
 import org.enums.FooterMenuItems;
 
 public class Footer extends BasePage {
+
+    private static Logger log = LogManager.getLogger(Footer.class);
+
     private String originalWindowHandle;
     @FindBy(css = "li[class='item-939']")
     private WebElement despreNoi;

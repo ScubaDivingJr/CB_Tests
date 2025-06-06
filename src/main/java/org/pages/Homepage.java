@@ -1,7 +1,7 @@
 package org.pages;
 
-import com.google.common.util.concurrent.UncheckedTimeoutException;
-import org.framework.TestUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 public class Homepage extends BasePage {
+
+    private static final Logger log = LogManager.getLogger(Homepage.class);
 
     private final By nextSlideArrowLocator = By.cssSelector("a[class='sppbSlideNext']");
     private final By prevSlideArrowLocator = By.cssSelector("a[class='sppbSlidePrev']");
