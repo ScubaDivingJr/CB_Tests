@@ -13,14 +13,52 @@ public class Homepage extends BasePage {
 
     private final By nextSlideArrowLocator = By.cssSelector("a[class='sppbSlideNext']");
     private final By prevSlideArrowLocator = By.cssSelector("a[class='sppbSlidePrev']");
-    private final By activeSlideLocator = By.cssSelector("[class='owl-item active']");
-    private final By detailsInSlideBtnLocator = By.cssSelector("a[href='http://cosmeticabrasov.ro/servicii/tratamente-faciale.html']");
-    private final By activeSlideBtnLocator = By.cssSelector(".owl-item.active a[href='http://cosmeticabrasov.ro/servicii/tratamente-faciale.html']");
+    private final By activeSlideBtnLocator = By.cssSelector("a[href='http://cosmeticabrasov.ro/servicii/tratamente-faciale.html']");
+    private final By animationInLocator = By.cssSelector("[class='owl-item animated owl-animated-in fadeIn active']");
+    private final By animationOutLocator = By.cssSelector("[class='owl-item animated owl-animated-out fadeout']");
+    private final By normalActiveSlideLocator = By.cssSelector("[class='owl-item active']");
+    private final By clonedActiveSlideLocator = By.cssSelector("[class='owl-item cloned active']"); //yes, we need this.
 
-    public void clickCurrentSlideDetailsBtnTest() {
-        // Wait until the active slide's details button is clickable, then click it
-        WebElement detailsBtn = webDriverWait.until(ExpectedConditions.elementToBeClickable(activeSlideBtnLocator));
-        click(detailsBtn, false);
+    public void clickCurrentSlideDetailsBtn() {
+        //hours spent here: 5
+
+        //we have to wait for the animations to finish.
+        webDriverWait.until(driver -> (
+                driver.findElements(animationInLocator).isEmpty() &&
+                driver.findElements(animationOutLocator).isEmpty()
+                        ));
+
+        //when the animation finishes, we need to wait for one of two slides to be active: the "cloned" on or the "normal" one.
+        WebElement activeSlide = webDriverWait.until(driver -> {
+            List<WebElement> normalSlide = driver.findElements(normalActiveSlideLocator);
+            if (!normalSlide.isEmpty()) {
+                return normalSlide.getFirst();
+            }
+
+            List<WebElement> clonedSlide = driver.findElements(clonedActiveSlideLocator);
+            if (!clonedSlide.isEmpty()) {
+                return clonedSlide.getFirst();
+            } else {
+                return null;
+            }
+        });
+
+        //if we got a slide, click the button inside it.
+        if (activeSlide != null) {
+            try {
+                WebElement activeSlideBtn = webDriverWait.until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
+                activeSlideBtn.click();
+
+                //I've spent enough time here. It seems that this falls back to the javascript method about half the time. I'll come back to it later. Maybe.
+            } catch (org.openqa.selenium.ElementNotInteractableException e) {
+                WebElement activeSlideBtn = webDriverWait.until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
+                log.warn("Could not interact with slide button. Trying Javascript click fallback.");
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activeSlideBtn);
+            }
+
+        } else {
+            log.error("activeSlide was null");
+        }
     }
 
     public int getCurrentSlideIndex() {
@@ -64,9 +102,5 @@ public class Homepage extends BasePage {
         for (int i = 0; i < slideChangeSteps; i++) {
             click(navigationBtn, true);
         }
-    }
-
-    public void clickNextSlideButtonTest() {
-        click(nextSlideArrowLocator, true);
     }
 }

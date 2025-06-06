@@ -1,10 +1,13 @@
 package com.tests;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.framework.DriverFactory;
 import org.framework.Screenshotter;
 import org.framework.TestUtils;
 import org.openqa.selenium.WebDriver;
+import org.pages.BasePage;
 import org.pages.Header;
 import org.pages.ServicesPage;
 import org.testng.annotations.*;
@@ -15,14 +18,18 @@ import java.lang.reflect.Method;
 @Listeners({Screenshotter.class})
 
 public class BaseTestClass {
+    protected static Logger log = LogManager.getLogger(BaseTestClass.class);
+
     WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
     protected TestUtils testUtils;
+
 
     public static final String BASE_URL = "https://cosmeticabrasov.ro";
     @BeforeClass
     public void startBrowser() {
        driver.get(BASE_URL);
     }
+
 
     private static boolean treatmentTestsFirstRun = true;
     @BeforeMethod

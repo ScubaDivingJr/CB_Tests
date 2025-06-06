@@ -15,16 +15,17 @@ public class SmokeTests extends BaseTestClass {
     CommonVerifications commonVerifications = getCommonVerifications();
     OnlineAppointmentsPage onlineAppointments = new OnlineAppointmentsPage();
 
-    @Test (groups = "SmokeTests")
+    @Test
     void HomePageloaded() {
         commonVerifications
                 .verifyTextOnPage("Consultanta cosmetica personalizata");
     }
 
-    @Test (groups = "SmokeTests")
+    @Test
     void sliderButtons() {
-        header.clickHamburgerMenuItem(Menus.ACASA);
-        home.clickCurrentSlideDetailsBtnTest();
+        header.clickNavBarMenuItem(Menus.ACASA);
+        //home.switchToSlide(0);
+        home.clickCurrentSlideDetailsBtn();
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }
 

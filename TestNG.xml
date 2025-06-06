@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Testing CosmeticaBrasov.ro">
-    <test name="Regression">
-        <classes>
-            <class name="com.tests.SmokeTests"/>
-            <!--<class name="com.tests.ServicesContentTests"/>-->
-        </classes>
+    <test name="AllTests">
+        <packages>
+            <package name="com.tests"/>
+        </packages>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
