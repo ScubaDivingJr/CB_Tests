@@ -42,6 +42,8 @@ public class Footer extends BasePage {
 
         scrollToFooter();
 
+        log.info("Cliking Footer element {}...", footerItem);
+
         switch (footerItem) {
             case DESPRE_NOI-> click(despreNoi, false);
             case SERVICII -> click(servicii, false);
@@ -99,6 +101,7 @@ public class Footer extends BasePage {
 
     public void closeFacebookWindowsAndSwitchToOriginal() {
 
+        log.info("Closing Facebook window and switching to original window...");
         Set<String> allWindowHandles = driver.getWindowHandles();
 
         for (String handle : allWindowHandles) {

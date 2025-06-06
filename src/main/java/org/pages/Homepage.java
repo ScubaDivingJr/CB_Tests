@@ -3,10 +3,14 @@ package org.pages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class Homepage extends BasePage {
@@ -22,7 +26,7 @@ public class Homepage extends BasePage {
     private final By clonedActiveSlideLocator = By.cssSelector("[class='owl-item cloned active']"); //yes, we need this.
 
     public void clickCurrentSlideDetailsBtn() {
-        //hours spent here: 5
+        //hours spent here: 6
 
         //we have to wait for the animations to finish.
         webDriverWait.until(driver -> (
@@ -48,14 +52,23 @@ public class Homepage extends BasePage {
         //if we got a slide, click the button inside it.
         if (activeSlide != null) {
             try {
-                WebElement activeSlideBtn = webDriverWait.until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
+                log.info("Trying to clicking 'Details' button in active slider...");
+
+                //we need custom wait because slide changes if we fail to find it quick
+                WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(1));
+                WebElement activeSlideBtn = customWait.until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
                 activeSlideBtn.click();
 
                 //I've spent enough time here. It seems that this falls back to the javascript method about half the time. I'll come back to it later. Maybe.
-            } catch (org.openqa.selenium.ElementNotInteractableException e) {
-                WebElement activeSlideBtn = webDriverWait.until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
+            } catch (org.openqa.selenium.ElementNotInteractableException | TimeoutException e) {
+                WebElement activeSlideBtn = activeSlide.findElement(activeSlideBtnLocator);
                 log.warn("Could not interact with slide button. Trying Javascript click fallback.");
-                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activeSlideBtn);
+
+                try {
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activeSlideBtn);
+                } catch (Exception exception) {
+                    log.error("Javascript click failed too. RIP.");
+                }
             }
 
         } else {
@@ -82,7 +95,12 @@ public class Homepage extends BasePage {
 
         int currentSlideIndex = getCurrentSlideIndex();
 
+        //we need to hover over the slider to make prev/next buttons appear.
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(By.id("slide-fullwidth"))).perform();
+
         if (currentSlideIndex == -1) {
+            log.error("Unable to determine slide index.");
             throw new IllegalStateException("Unable to determine current slide index.");
         }
 
@@ -102,6 +120,7 @@ public class Homepage extends BasePage {
         }
 
         for (int i = 0; i < slideChangeSteps; i++) {
+            log.info("We're on slide {}. Clicking {} button {} times to switch to slide {}...", currentSlideIndex, navigationBtn, slideChangeSteps, slideIndex);
             click(navigationBtn, true);
         }
     }

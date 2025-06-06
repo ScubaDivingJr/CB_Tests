@@ -24,7 +24,7 @@ public class SmokeTests extends BaseTestClass {
     @Test
     void sliderButtons() {
         header.clickNavBarMenuItem(Menus.ACASA);
-        //home.switchToSlide(0);
+        home.switchToSlide(1);
         home.clickCurrentSlideDetailsBtn();
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }

@@ -15,19 +15,19 @@ import java.lang.reflect.Method;
 public class BaseTestClass {
 
     private static final String browser = "chrome";
-    public static final String BASE_URL = "https://cosmeticabrasov.ro";
+    public static final String base_url = "https://cosmeticabrasov.ro";
 
     WebDriver driver = DriverFactory.getInstance(browser).getDriver();
     protected TestUtils testUtils;
 
     @BeforeClass
     public void startBrowser() {
-       driver.get(BASE_URL);
+        testUtils = new TestUtils();
     }
 
     @BeforeMethod
     public void setUp(Method method) {
-        testUtils = new TestUtils();
+        driver.get(base_url);
     }
 
     @AfterSuite

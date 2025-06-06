@@ -66,8 +66,11 @@ public class Header extends BasePage {
     public void clickHamburgerMenuItem(Menus itemToClick) {
 
         if (!driver.findElement(By.className("offcanvas-menu")).isDisplayed()) {
+            log.info("Hamburger menu not expanded. Expanding...");
             click(By.cssSelector("i[class='fa fa-bars']"), true);
         }
+
+        log.info("Clicking hamburger menu item '{}'...",itemToClick);
 
         if (firstLevelMenuChildItems.contains(itemToClick)) {
             expandServicesInHamburgerMenu();
@@ -84,32 +87,39 @@ public class Header extends BasePage {
     }
 
     public void clickNavBarMenuItem(Menus itemToClick) {
+
         if (firstLevelMenuChildItems.contains(itemToClick)) {
             selectServicesExpandable();
+            log.info("Clicking navBar menu item {}...", itemToClick);
             click(navBarLocators.get(itemToClick), true);
         }
         else if (secondLevelMenuChildren.contains(itemToClick)) {
             selectServicesExpandable();
             selectTreatmentsExpandable();
+            log.info("Clicking navBar menu item {}...", itemToClick);
             click(navBarLocators.get(itemToClick), true);
         }
         else {
+            log.info("Clicking navBar menu item {}...", itemToClick);
             click(navBarLocators.get(itemToClick), true);
         }
     }
 
     private void selectServicesExpandable() {
         Actions action = new Actions(driver);
+        log.info("Moving to element '{}'...", Menus.SERVICII);
         action.moveToElement(driver.findElement(navBarLocators.get(Menus.SERVICII))).perform();
     }
 
     private void selectTreatmentsExpandable() {
         selectServicesExpandable();
-        Actions act = new Actions(driver);
-        act.moveToElement(driver.findElement(navBarLocators.get(Menus.TRATAMENTE_FACIALE))).perform();
+        Actions actions = new Actions(driver);
+        log.info("Moving to element '{}'...", Menus.TRATAMENTE_FACIALE);
+        actions.moveToElement(driver.findElement(navBarLocators.get(Menus.TRATAMENTE_FACIALE))).perform();
     }
 
     private void expandServicesInHamburgerMenu() {
+        log.info("Expanding Services in HamburgerMenu.");
         click(By.cssSelector("span[class='offcanvas-menu-toggler collapsed']"), true);
     }
 
