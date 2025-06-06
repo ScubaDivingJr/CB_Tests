@@ -116,9 +116,4 @@ public class HamburgerMenuTests extends BaseTestClass{
                 .verifyUrl("https://cosmeticabrasov.ro/contact.html")
                 .verifyTextOnPage("Formular de contact");
     }
-
-    @Test
-    void hellothisistest() {
-        header.clickHamburgerMenuItem(Menus.TERAPIE_CU_OXIGEN);
-    }
 }
