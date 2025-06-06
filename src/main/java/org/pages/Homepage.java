@@ -1,47 +1,72 @@
 package org.pages;
 
+import com.google.common.util.concurrent.UncheckedTimeoutException;
 import org.framework.TestUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static org.framework.DriverFactory.getChromeDriver;
-import static org.framework.DriverFactory.getGetDriverWait;
+import java.util.List;
 
-public class Homepage {
-    private final WebDriver driver = getChromeDriver();
-    private final WebDriverWait wait = getGetDriverWait();
+public class Homepage extends BasePage {
 
-    TestUtils testUtils = new TestUtils();
+    private final By nextSlideArrowLocator = By.cssSelector("a[class='sppbSlideNext']");
+    private final By prevSlideArrowLocator = By.cssSelector("a[class='sppbSlidePrev']");
+    private final By activeSlideLocator = By.cssSelector("[class='owl-item active']");
+    private final By detailsInSlideBtnLocator = By.cssSelector("a[href='http://cosmeticabrasov.ro/servicii/tratamente-faciale.html']");
+    private final By activeSlideBtnLocator = By.cssSelector(".owl-item.active a[href='http://cosmeticabrasov.ro/servicii/tratamente-faciale.html']");
 
-    public void clickSlideshowDetails(int slide) {
+    public void clickCurrentSlideDetailsBtnTest() {
+        // Wait until the active slide's details button is clickable, then click it
+        WebElement detailsBtn = webDriverWait.until(ExpectedConditions.elementToBeClickable(activeSlideBtnLocator));
+        click(detailsBtn, false);
+    }
 
-        if (slide == 1) {
-                testUtils.explicitWait();
-                WebElement s = driver.findElement(By.xpath("//*[@id=\"slide-fullwidth\"]/div[1]/div/div[5]/div/div/div/div/div/a"));
-                JavascriptExecutor js = (JavascriptExecutor) driver;
-                js.executeScript("arguments[0].click();", s);
+    public int getCurrentSlideIndex() {
+
+        //first, let's get div that contains the dots at the bottom of the slide
+        WebElement dotContainer = driver.findElement(By.className("owl-dots"));
+        //then, inside it, let's get the all the owl dots classnames in order
+        List<WebElement> owlDots = dotContainer.findElements(By.tagName("div"));
+
+        for (WebElement ele : owlDots) {
+            if (!owlDots.isEmpty() && ele.getAttribute("class").equals("owl-dot active")) {
+                return owlDots.indexOf(ele);
+            }
+        }
+        return -1;
+    }
+
+    public void switchToSlide(int slideIndex) {
+
+        int currentSlideIndex = getCurrentSlideIndex();
+
+        if (currentSlideIndex == -1) {
+            throw new IllegalStateException("Unable to determine current slide index.");
         }
 
-        if (slide == 2) {
+        if(currentSlideIndex == slideIndex) {
+            return;
+        }
 
-            testUtils.explicitWait();
-            driver.findElement(By.cssSelector(".sppbSlideNext")).click();
-            WebElement s2 = driver.findElement(By.xpath("//*[@id=\"slide-fullwidth\"]/div[1]/div/div[5]/div/div/div/div/div/a"));
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].click();", s2);
+        int slideChangeSteps = Math.abs(slideIndex - currentSlideIndex);
+
+        By navigationBtn;
+
+        if (slideIndex > currentSlideIndex) {
+            navigationBtn = nextSlideArrowLocator;
+        }
+        else {
+            navigationBtn = prevSlideArrowLocator;
+        }
+
+        for (int i = 0; i < slideChangeSteps; i++) {
+            click(navigationBtn, true);
         }
     }
 
-    public static By Slide(){
-        return By.id("slide-fullwidth");
-    }
-    public static By Logo() {
-        return By.id("sp-logo");
-    }
-    public static By HomeButtonAndActive() {
-        return By.cssSelector("li[class='sp-menu-item current-item active']");
+    public void clickNextSlideButtonTest() {
+        click(nextSlideArrowLocator, true);
     }
 }

@@ -1,22 +1,20 @@
 package com.tests;
 
+import org.enums.Menus;
 import org.framework.CommonVerifications;
-import org.framework.Menus;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.pages.*;
 import org.testng.annotations.Test;
 
+import javax.sound.midi.ShortMessage;
+
 public class MiscellaneousTests extends BaseTestClass {
 
-    Header header = new Header();
-    Homepage home = new Homepage();
+    Homepage homepage = new Homepage();
     CommonVerifications commonVerifications = new CommonVerifications();
     @Test
     void sliderButtons() {
-        header.clickHome();
-        home.clickSlideshowDetails(2);
+        homepage.switchToSlide(1);
+        homepage.clickCurrentSlideDetailsBtnTest();
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }
 }

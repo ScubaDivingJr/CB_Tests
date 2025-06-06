@@ -1,14 +1,15 @@
 package org.framework;
+import org.enums.Treatments;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import static org.framework.DriverFactory.getChromeDriver;
+import org.pages.BasePage;
 import org.pages.ServicesPage;
 import org.testng.Assert;
 
-public class CommonVerifications {
+public class CommonVerifications extends BasePage {
 
     ServicesPage serv = new ServicesPage();
-    protected WebDriver driver = getChromeDriver();
+    WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
 
     public static CommonVerifications getCommonVerifications() { return new CommonVerifications();}
     public CommonVerifications verifyIsDisplayed(By element){

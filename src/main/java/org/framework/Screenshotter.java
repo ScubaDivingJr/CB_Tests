@@ -9,14 +9,14 @@ import java.time.format.DateTimeFormatter;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.pages.BasePage;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.framework.*;
 
-import static org.framework.DriverFactory.getChromeDriver;
+public class Screenshotter extends BasePage implements ITestListener {
 
-public class Screenshotter implements ITestListener {
-
-    static WebDriver driver = getChromeDriver();
+    WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
     @Override
     public void onTestFailure(ITestResult result) {
         if (result.getStatus() == 2) { // if the test execution has failed
@@ -25,6 +25,7 @@ public class Screenshotter implements ITestListener {
                     + LocalDateTime.now().format(DateTimeFormatter.ofPattern("-yyMMdd-HHmmss"));
 
             File targetFile = new File("C:\\TestScreenshots\\" + baseFileName + ".png");
+
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
                 Files.copy(scrFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

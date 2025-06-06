@@ -1,224 +1,118 @@
 package org.pages;
-import net.bytebuddy.dynamic.scaffold.TypeWriter;
-import org.framework.Menus;
-import org.framework.TestUtils;
+import org.enums.Menus;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.List;
+public class Header extends BasePage {
 
-import static org.framework.DriverFactory.getChromeDriver;
-import static org.framework.DriverFactory.getGetDriverWait;
+    private final Map<Menus, By> navBarLocators = Map.ofEntries(
+            Map.entry(Menus.ACASA, By.cssSelector(".logo")),
+            Map.entry(Menus.DESPRE_NOI, By.cssSelector("a[href='/despre-noi.html']")),
+            Map.entry(Menus.SERVICII, By.cssSelector("a[href='/servicii.html']")),
+            Map.entry(Menus.TRATAMENTE_FACIALE, By.xpath("//li[@class='sp-menu-item sp-has-child']/a[contains(text(), 'Tratamente faciale')]")),
+            Map.entry(Menus.MEZOTERAPIE_VIRTUALA, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Mezoterapie virtuala')]")),
+            Map.entry(Menus.TERAPIE_CU_OXIGEN, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Terapie cu oxigen')]")),
+            Map.entry(Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Microneedling')]")),
+            Map.entry(Menus.MAKE_UP, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Make-up')]")),
+            Map.entry(Menus.STILIZARE_SPRANCENE, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Stilizare sprancene')]")),
+            Map.entry(Menus.MICROBLADING, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Microblading')]")),
+            Map.entry(Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA, By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Epilare cu ceara')]")),
+            Map.entry(Menus.PROGRAMARI_ONLINE, By.cssSelector("a[href='http://cosmeticabrasov.ro/programari-online.html']")),
+            Map.entry(Menus.BLOG, By.cssSelector("a[href='/blog.html']")),
+            Map.entry(Menus.CONTACT, By.cssSelector("a[href='/contact.html']"))
+    );
 
-public class Header {
+    private final Map<Menus, By> hamburgerMenuLocators = Map.ofEntries(
+            Map.entry(Menus.ACASA, By.cssSelector("[class^='item-437']")),
+            Map.entry(Menus.DESPRE_NOI, By.cssSelector("[class^='item-544']")),
+            Map.entry(Menus.SERVICII, By.cssSelector("[class^='item-279']")),
+            Map.entry(Menus.TRATAMENTE_FACIALE, By.cssSelector("[class^='item-985']")),
+            Map.entry(Menus.MAKE_UP, By.cssSelector("[class^='item-986']")),
+            Map.entry(Menus.STILIZARE_SPRANCENE, By.cssSelector("[class^='item-987']")),
+            Map.entry(Menus.MICROBLADING, By.cssSelector("[class^='item-1010']")),
+            Map.entry(Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA, By.cssSelector("[class^='item-988']")),
+            Map.entry(Menus.MEZOTERAPIE_VIRTUALA, By.cssSelector("[class^='item-990']")),
+            Map.entry(Menus.TERAPIE_CU_OXIGEN, By.cssSelector("[class^='item-989']")),
+            Map.entry(Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE, By.cssSelector("[class^='item-991']")),
+            Map.entry(Menus.TRATAMENTE_DERMATO_COSMETICE, By.cssSelector("[class^='item-992']")),
+            Map.entry(Menus.PROGRAMARI_ONLINE,By.cssSelector("[class^='item-1009']")),
+            Map.entry(Menus.BLOG, By.cssSelector("[class^='item-1004']")),
+            Map.entry(Menus.CONTACT, By.cssSelector("[class^='item-545']"))
+    );
 
-     WebDriver driver = getChromeDriver();
-     WebDriverWait wait = getGetDriverWait();
+    private final Set<Menus> firstLevelMenuChildItems = Set.of(
+            Menus.TRATAMENTE_FACIALE,
+            Menus.MAKE_UP,
+            Menus.STILIZARE_SPRANCENE,
+            Menus.MICROBLADING,
+            Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA
+    );
 
-     TestUtils testUtils = new TestUtils();
+    private final Set<Menus> secondLevelMenuChildren = Set.of(
+            Menus.MEZOTERAPIE_VIRTUALA,
+            Menus.TERAPIE_CU_OXIGEN,
+            Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE,
+            Menus.TRATAMENTE_DERMATO_COSMETICE
+    );
 
-    public void clickHome() {
-        driver.findElement(By.cssSelector(".logo")).click();
+    public void clickHamburgerMenuItem(Menus itemToClick) {
+
+        if (!driver.findElement(By.className("offcanvas-menu")).isDisplayed()) {
+            click(By.cssSelector("i[class='fa fa-bars']"), true);
+        }
+
+        if (firstLevelMenuChildItems.contains(itemToClick)) {
+            expandServicesInHamburgerMenu();
+            click(hamburgerMenuLocators.get(itemToClick), true);
+        }
+        else if (secondLevelMenuChildren.contains(itemToClick)) {
+            expandServicesInHamburgerMenu();
+            expandFacialTreatmentsHamburgerMenu();
+            click(hamburgerMenuLocators.get(itemToClick), true);
+        }
+        else {
+            click(hamburgerMenuLocators.get(itemToClick), true);
+        }
+    }
+
+    public void clickNavBarMenuItem(Menus itemToClick) {
+        if (firstLevelMenuChildItems.contains(itemToClick)) {
+            selectServicesExpandable();
+            click(navBarLocators.get(itemToClick), true);
+        }
+        else if (secondLevelMenuChildren.contains(itemToClick)) {
+            selectServicesExpandable();
+            selectTreatmentsExpandable();
+            click(navBarLocators.get(itemToClick), true);
+        }
+        else {
+            click(navBarLocators.get(itemToClick), true);
+        }
     }
 
     private void selectServicesExpandable() {
-        WebElement serviciiDropDown = driver.findElement(By.xpath("//li[@class='sp-menu-item sp-has-child']/a[contains(text(), 'Servicii')]"));
         Actions action = new Actions(driver);
-        action.moveToElement(serviciiDropDown).perform();
+        action.moveToElement(driver.findElement(navBarLocators.get(Menus.SERVICII))).perform();
     }
 
     private void selectTreatmentsExpandable() {
         selectServicesExpandable();
-        WebElement trat = driver.findElement(By.xpath("//li[@class='sp-menu-item sp-has-child']/a[contains(text(), 'Tratamente faciale')]"));
         Actions act = new Actions(driver);
-        act.moveToElement(trat).perform();
+        act.moveToElement(driver.findElement(navBarLocators.get(Menus.TRATAMENTE_FACIALE))).perform();
     }
 
-    public void clickNavBarItem(Menus value) {
-        switch(value) {
-            case Menus.ACASA:
-                clickHome();
-                break;
-            case Menus.DESPRE_NOI:
-                driver.findElement(By.cssSelector("a[href='/despre-noi.html']")).click();
-                break;
-            case Menus.SERVICII:
-                driver.findElement(By.cssSelector("a[href='/servicii.html']")).click();
-                break;
-            case Menus.TRATAMENTE_FACIALE:
-                selectServicesExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item sp-has-child']/a[contains(text(), 'Tratamente faciale')]")).click();
-                break;
-            case Menus.MEZOTERAPIE_VIRTUALA:
-                selectServicesExpandable();
-                selectTreatmentsExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Mezoterapie virtuala')]")).click();
-                break;
-            case Menus.TERAPIE_CU_OXIGEN:
-                selectServicesExpandable();
-                selectTreatmentsExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Terapie cu oxigen')]")).click();
-                break;
-            case Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE:
-                selectServicesExpandable();
-                selectTreatmentsExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Microneedling')]")).click();
-                break;
-            case Menus.MAKE_UP:
-                selectServicesExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Make-up')]")).click();
-                break;
-            case Menus.STILIZARE_SPRANCENE:
-                selectServicesExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Stilizare sprancene')]")).click();
-                break;
-            case Menus.MICROBLADING:
-                selectServicesExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Microblading')]")).click();
-                break;
-            case Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA:
-                selectServicesExpandable();
-                driver.findElement(By.xpath("//li[@class='sp-menu-item']/a[contains(text(), 'Epilare cu ceara')]")).click();
-                break;
-            case Menus.PROGRAMARI_ONLINE:
-                driver.findElement(By.cssSelector("a[href='http://cosmeticabrasov.ro/programari-online.html']")).click();
-                break;
-            case Menus.BLOG:
-                driver.findElement(By.cssSelector("a[href='/blog.html'")).click();
-                break;
-            case Menus.CONTACT:
-                driver.findElement(By.cssSelector("a[href='/contact.html'")).click();
-                break;
-        }
-    }
-
-    public void clickHamburgerMenuItem (Menus value) {
-
-        switch(value) {
-            case Menus.ACASA:
-                getHamburgerMenuTopLevelChildren().getFirst().click();
-                break;
-            case Menus.DESPRE_NOI:
-                getHamburgerMenuTopLevelChildren().get(1).click();
-                break;
-            case Menus.SERVICII:
-                getHamburgerMenuTopLevelChildren().get(2).click();
-                break;
-            case Menus.TRATAMENTE_FACIALE:
-                expandServicesInHamburgerMenu();
-                getHamMenuServicesChildren().getFirst().click();
-                break;
-            case Menus.MAKE_UP:
-                expandServicesInHamburgerMenu();
-                getHamMenuServicesChildren().get(5).click();
-                break;
-            case Menus.STILIZARE_SPRANCENE:
-                expandServicesInHamburgerMenu();
-                getHamMenuServicesChildren().get(6).click();
-                break;
-            case Menus.MICROBLADING:
-                expandServicesInHamburgerMenu();
-                getHamMenuServicesChildren().get(7).click();
-                break;
-            case Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA:
-                expandServicesInHamburgerMenu();
-                getHamMenuServicesChildren().get(8).click();
-                break;
-            case Menus.MEZOTERAPIE_VIRTUALA:
-                expandServicesInHamburgerMenu();
-                expandFacialTreatmentsHamburgerMenu();
-                getFacialTreatmentsChildren().getFirst().click();
-                break;
-            case Menus.TERAPIE_CU_OXIGEN:
-                expandServicesInHamburgerMenu();
-                expandFacialTreatmentsHamburgerMenu();
-                getFacialTreatmentsChildren().get(1).click();
-                break;
-            case Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE:
-                expandServicesInHamburgerMenu();
-                expandFacialTreatmentsHamburgerMenu();
-                getFacialTreatmentsChildren().get(2).click();
-                break;
-            case Menus.TRATAMENTE_DERMATO_COSMETICE:
-                expandServicesInHamburgerMenu();
-                expandFacialTreatmentsHamburgerMenu();
-                getFacialTreatmentsChildren().get(3).click();
-                break;
-            case Menus.PROGRAMARI_ONLINE:
-                getHamburgerMenuTopLevelChildren().get(12).click();
-                break;
-            case Menus.BLOG:
-                getHamburgerMenuTopLevelChildren().get(13).click();
-                break;
-            case Menus.CONTACT:
-                getHamburgerMenuTopLevelChildren().get(14).click();
-                break;
-        }
-    }
     private void expandServicesInHamburgerMenu() {
-        getHamburgerMenuTopLevelChildren().get(2).findElement(By.cssSelector("span[class='offcanvas-menu-toggler collapsed'")).click();
-        wait.until(ExpectedConditions.elementToBeClickable(getHamMenuServicesChildren().getFirst()));
+        click(By.cssSelector("span[class='offcanvas-menu-toggler collapsed']"), true);
     }
-
-    private List<WebElement> getHamMenuServicesChildren() {
-        //get Hamburger menu top level children
-        WebElement s = getHamburgerMenuTopLevelChildren().get(2);
-        //find the 'services' expandable menu within them
-        WebElement s2 = s.findElement(By.id("collapse-menu-279"));
-        //get its children
-        List<WebElement> servChildren = s2.findElements(By.tagName("li"));
-        //wait until last child in list is clickable
-        wait.until(ExpectedConditions.elementToBeClickable(servChildren.getLast()));
-
-        return servChildren;
-    }
-
-    private List<WebElement> getFacialTreatmentsChildren(){
-        //get first hamburger menu child (facial treatments)
-        WebElement s1 = getHamMenuServicesChildren().getFirst();
-        //get child unordered list with id
-        WebElement f1 = s1.findElement(By.id("collapse-menu-985"));
-        //return child list
-        List<WebElement> facialTreatmetsChildren = f1.findElements(By.tagName("li"));
-        //wait until last child is clickable
-        wait.until(ExpectedConditions.elementToBeClickable(facialTreatmetsChildren.getLast()));
-
-        return facialTreatmetsChildren;
-    }
-
 
     private void expandFacialTreatmentsHamburgerMenu() {
         expandServicesInHamburgerMenu();
-        //wait until the last services menu child is clickable
-        wait.until(ExpectedConditions.elementToBeClickable(getHamMenuServicesChildren().getLast()));
-        //get first child item from services menu (facial treaments), then click expand button
-        WebElement servicesFirstChild = getHamMenuServicesChildren().getFirst();
-        servicesFirstChild.findElement(By.tagName("span")).click();
-        //wait until last child in facial treatments menu is clickable
-        wait.until(ExpectedConditions.elementToBeClickable(getFacialTreatmentsChildren().getLast()));
-    }
 
-
-    private List<WebElement> getHamburgerMenuTopLevelChildren() {
-        if (!driver.findElement(By.cssSelector(".offcanvas-menu")).isDisplayed()) {
-            driver.findElement(By.id("offcanvas-toggler")).click();
-            //wait for hamburger menu to appear
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='offcanvas-menu']")));
-        }
-
-        //specifically locate hamburger element because footer contains another 'nav-menu'.
-        WebElement hamMenu = driver.findElement(By.cssSelector("div[class='offcanvas-menu']"));
-
-        //get all elements present in nav-menu list
-        WebElement ham = hamMenu.findElement(By.cssSelector("ul[class='nav menu']"));
-        List <WebElement> hamList = ham.findElements(By.tagName("li"));
-
-        //wait until the first list element is clickable (should mean all others are clickable).
-        wait.until(ExpectedConditions.elementToBeClickable(hamList.getFirst()));
-        return hamList;
+        WebElement facialTreatmentsBtn = driver.findElement(By.cssSelector("li[class^='item-985']"));
+        WebElement facialTreatmentsExpander = facialTreatmentsBtn.findElement(By.cssSelector("[class='offcanvas-menu-toggler']"));
+        click(facialTreatmentsExpander, true);
     }
 }

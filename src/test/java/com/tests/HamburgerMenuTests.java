@@ -1,8 +1,7 @@
 package com.tests;
 
 import org.framework.CommonVerifications;
-import org.framework.Menus;
-import org.openqa.selenium.WebDriver;
+import org.enums.Menus;
 import org.pages.Header;
 import org.testng.annotations.Test;
 
@@ -76,7 +75,7 @@ public class HamburgerMenuTests extends BaseTestClass{
                 .verifyTextOnPage("Make-up");
     }
     @Test
-    void hambugerEyebrodStylingTest() {
+    void hambugerEyebrowStylingTest() {
         header.clickHamburgerMenuItem(Menus.STILIZARE_SPRANCENE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/stilizare-sprancene.html")
@@ -116,5 +115,10 @@ public class HamburgerMenuTests extends BaseTestClass{
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/contact.html")
                 .verifyTextOnPage("Formular de contact");
+    }
+
+    @Test
+    void hellothisistest() {
+        header.clickHamburgerMenuItem(Menus.TERAPIE_CU_OXIGEN);
     }
 }

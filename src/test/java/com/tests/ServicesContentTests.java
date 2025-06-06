@@ -1,104 +1,58 @@
 package com.tests;
-
+import org.Data.TreatmentsDataProvider;
 import org.framework.CommonVerifications;
-import org.framework.Menus;
-import org.framework.Treatments;
+import org.enums.Menus;
+import org.enums.Treatments;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.pages.*;
 import org.testng.Assert;
 
+import java.util.List;
+
 public class ServicesContentTests extends BaseTestClass {
 
-     Header header = new Header();
-     ServicesPage serv = new ServicesPage();
-     CommonVerifications commonVerifications = new CommonVerifications();
+    ServicesPage servicesPage = new ServicesPage();
+    Header header = new Header();
+
     @Test
-    void ServiciiTratamenteDermato() {
-        header.clickNavBarItem(Menus.SERVICII);
-        Assert.assertEquals(serv.getAllTreatmentDescriptions(), serv.getExpectedTreatmentDescriptions());
+    void verifyTreatmentTitles() {
+        //checking that all treatments titles are there against a list that we have.
+        header.clickNavBarMenuItem(Menus.SERVICII);
+        List<String> actualTreatmentTitles = servicesPage.getActualTreatmentTitles();
+        List<String> expectedTreatmentTitles = TreatmentsDataProvider.getExpectedTreatmentTitles();
+
+        Assert.assertEquals(actualTreatmentTitles.size(), expectedTreatmentTitles.size());
+
+        for (int i = 0; i < expectedTreatmentTitles.size(); i++) {
+            Assert.assertEquals(actualTreatmentTitles.get(i), expectedTreatmentTitles.get(i));
+        }
     }
 
     @Test
-    void checkPeelingEnzimaticDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC);
+    void verifyTreatmentDescriptions() {
+        header.clickHamburgerMenuItem(Menus.SERVICII);
+        List<String> actualTreatmentDescriptions = servicesPage.getActualTreatmentDescriptions();
+        List<String> expectedTreatmentDescriptions = TreatmentsDataProvider.expectedTreatmentDescriptionExcerpts().values().stream().toList();
 
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC,"Contine extracte de fructe exotice ananas si papaia");
+
+        Assert.assertEquals(actualTreatmentDescriptions.size(), expectedTreatmentDescriptions.size());
+
+        for (int i = 0; i < expectedTreatmentDescriptions.size(); i++) {
+            Assert.assertTrue(actualTreatmentDescriptions.get(i).contains(expectedTreatmentDescriptions.get(i)),
+                    "Expected description:\n" + expectedTreatmentDescriptions.get(i) + "\ndid not contain:\n" + actualTreatmentDescriptions.get(i));
+        }
     }
 
     @Test
-
-    void checkTratamentCuPhytopeelingDescription()  {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENTUL_CU_PHYTOPEELING);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENTUL_CU_PHYTOPEELING, "Reprezinta un peeling chimic mediu si in acelasi timp");
+    void verifyTreatmentDescriptionImages() {
+        header.clickNavBarMenuItem(Menus.SERVICII);
+        Assert.assertTrue(servicesPage.checkTreatmentImage(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC), "Something went wrong chekcing the image.");
     }
 
     @Test
-    void checkTratamentulAcneeiDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENTUL_ACNEEI);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENTUL_ACNEEI, "Acneea reprezinta o afectiune dermatologica la nivelul glandelor sebacee");
-    }
-
-    @Test
-    void checkTerapieDnaRepairDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TERAPIE_DNA_REPAIR);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TERAPIE_DNA_REPAIR, "Terapie destinata tuturor tipurilor de ten");
-    }
-
-    @Test
-    void checkTerapiaCuVitaminaCDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TERAPIE_CU_VITAMINA_C);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TERAPIE_CU_VITAMINA_C, "Terapie destinata tenurilor deshidratate");
-    }
-
-    @Test
-    void checkTerapieCuCaviarDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TERAPIE_CU_CAVIAR);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TERAPIE_CU_CAVIAR, "Destinata tenurilor cu riduri vizibile");
-    }
-
-    @Test
-    void checkTratamentCuHidratareDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENT_CU_HIDRATARE);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENT_CU_HIDRATARE, "Destinat tenurilor deshidratate, ingredientul principal este acidul hialuronic");
-    }
-
-    @Test
-    void checkTratamentDeLiftingDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENT_DE_LIFTING_CU_PROTEINE);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENT_DE_LIFTING_CU_PROTEINE, "Combinatie a doua proteine superioare: proteina din zer");
-    }
-
-    @Test
-
-    void checkTratamentPentruOchiDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENT_PENTRU_OCHI);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENT_PENTRU_OCHI, "Terapie completa si complexa care impiedica formarea ridurilor");
-
-    }
-
-    @Test
-
-    void checkTratamentulCuPulbereDeDiamanteDescription() {
-        header.clickNavBarItem(Menus.SERVICII);
-        serv.clickTreatment(Treatments.TRATAMENT_PULBERE_DIAMANTE);
-
-        commonVerifications.verifyTreatmentDescription(Treatments.TRATAMENT_PULBERE_DIAMANTE, "Tratamentul cu pulbere de diamante");
+    void verifyAllTreatmentDescriptionImages() {
+        header.clickNavBarMenuItem(Menus.SERVICII);
+        servicesPage.checkTreatmentImages();
     }
 }

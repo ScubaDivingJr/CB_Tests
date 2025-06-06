@@ -1,5 +1,6 @@
 package com.tests;
 
+import org.enums.FooterMenuItems;
 import org.framework.CommonVerifications;
 import org.framework.TestUtils;
 import org.pages.Footer;
@@ -14,26 +15,26 @@ public class FooterTests extends BaseTestClass {
 
     @Test
     void footerDespreNoi() {
-        footer.clickDespreNoi();
+        footer.clickFooterItem(FooterMenuItems.DESPRE_NOI);
         commonVerifications.verifyTextOnPage("Pielea noastra este o MINUNE");
     }
 
     @Test
     void footerServicii() {
-        footer.clickServicii();
+        footer.clickFooterItem(FooterMenuItems.SERVICII);
         commonVerifications.verifyTextOnPage("Tratamente Faciale");
     }
 
     @Test
     void footerBlog() {
-        footer.clickBlog();
+        footer.clickFooterItem(FooterMenuItems.BLOG);
         commonVerifications.verifyTextOnPage("BLOG - NOUTATI -INFO");
     }
 
     @Test
     void footerFacebook() throws IOException {
-
-        footer.clickFacebook();
-        footer.verifyFacebookPageAndClose();
+        footer.clickFooterItem(FooterMenuItems.FACEBOOK_BTN);
+        footer.loginToFacebook();
+        footer.closeFacebookWindowsAndSwitchToOriginal();
     }
 }
