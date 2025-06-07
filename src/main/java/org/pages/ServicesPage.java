@@ -45,7 +45,7 @@ public class ServicesPage extends BasePage {
                 click(treatmentTitlesClickable.get(i), true);
 
                 //each description lives 3 divs under descriptions List. We have to wait for them to load when we click each one. We care about the first paragraph only.
-                WebElement shortDescription = webDriverWait.until(ExpectedConditions.visibilityOf(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]"))));
+                WebElement shortDescription = webDriverWait(2).until(ExpectedConditions.visibilityOf(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]"))));
 
                 //add it to the list of actual descriptions.
                 actualTreatmentDescriptions.add(shortDescription.getText());
@@ -59,9 +59,9 @@ public class ServicesPage extends BasePage {
         List<WebElement> list1 = ul.findElements(By.tagName("li"));
         click(list1.get(treatments.getValue()), true);
 
-        List<WebElement> treatmentDescriptionWrapper = webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(activeTreatmentDescriptionWrapperLocator));
+        List<WebElement> treatmentDescriptionWrapper = webDriverWait(2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(activeTreatmentDescriptionWrapperLocator));
 
-        WebElement treatmentDescription = webDriverWait.until(ExpectedConditions.visibilityOf(treatmentDescriptionWrapper.getFirst()));
+        WebElement treatmentDescription = webDriverWait(2).until(ExpectedConditions.visibilityOf(treatmentDescriptionWrapper.getFirst()));
         return treatmentDescription.getText();
     }
 
@@ -84,9 +84,9 @@ public class ServicesPage extends BasePage {
         List<WebElement> list1 = ul.findElements(By.tagName("li"));
         click(list1.get(treatment.getValue()), true);
 
-        List<WebElement> treatmentDescriptionWrapper = webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(activeTreatmentDescriptionWrapperLocator));
+        List<WebElement> treatmentDescriptionWrapper = webDriverWait(2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(activeTreatmentDescriptionWrapperLocator));
 
-        WebElement treatmentDescription = webDriverWait.until(ExpectedConditions.visibilityOf(treatmentDescriptionWrapper.getFirst()));
+        WebElement treatmentDescription = webDriverWait(2).until(ExpectedConditions.visibilityOf(treatmentDescriptionWrapper.getFirst()));
 
         String imageSrc =  treatmentDescription.findElement(By.tagName("img")).getAttribute("src");
 

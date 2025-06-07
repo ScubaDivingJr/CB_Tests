@@ -11,16 +11,17 @@ import java.time.Duration;
 
 public class BasePage {
 
-    WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
-
     public final String baseUrl = "https://cosmeticabrasov.ro";
-    private final int globalWaitDuration = 5;
-    protected final WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(globalWaitDuration));
-
     private static final Logger log = LogManager.getLogger(BasePage.class);
+
+    WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
 
     public void goToHomepage() {
         driver.get(baseUrl);
+    }
+
+    protected WebDriverWait webDriverWait(int duration) {
+        return new WebDriverWait(driver, Duration.ofSeconds(duration));
     }
 
     /**
@@ -34,26 +35,25 @@ public class BasePage {
     protected void click(By elementLocator, boolean wait) {
 
         if (wait) {
-            webDriverWait.until(ExpectedConditions.elementToBeClickable(elementLocator)).click();
+            try {
+                log.info("Trying to click element with locator: '{}' with wait.", elementLocator);
+                webDriverWait(5).until(ExpectedConditions.elementToBeClickable(elementLocator)).click();
+            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
+                log.error("Unable to click element with locator '{}' after waiting for 5 seconds.", elementLocator);
+                log.error(e.getMessage());
+            }
         }
         else {
-            driver.findElement(elementLocator).click();
+            try {
+                log.info("Cliking element with locator: '{}' without wait.", elementLocator);
+                driver.findElement(elementLocator).click();
+            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
+                log.error("Unable to click element with locator: '{}' without waiting.", elementLocator);
+                log.error(e.getMessage());
+            }
         }
     }
 
-    /**
-     * Waits for the specified element then returns it.
-     * @param elementLocator locator of element
-     * @return element after waiting if not null
-     */
-    protected WebElement waitForElement(By elementLocator) {
-
-        try {
-            return webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(elementLocator));
-        } catch (TimeoutException e) {
-            throw  new TimeoutException("Element not found by " + elementLocator + " after waiting " + globalWaitDuration + "seconds");
-        }
-    }
     /**
      * Clicks on a web element with optional explicit wait.
      *
@@ -61,26 +61,26 @@ public class BasePage {
      * @param wait If true, waits 5 seconds for the element to be clickable before clicking.
      *             If false, attempts to click immediately without waiting.
      */
+
     protected void click(WebElement element, boolean wait) {
 
         if (wait) {
             try {
-                webDriverWait.until(ExpectedConditions.elementToBeClickable(element)).click();
-            } catch (Exception e) {
-                log.error("Unable to click element {} after waiting " + globalWaitDuration + "seconds.", element.toString());
-                throw e;
+                log.info("Clicking element '{}' with wait", element);
+                webDriverWait(5).until(ExpectedConditions.elementToBeClickable(element)).click();
+            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
+                log.error("Unable to click element {} after waiting " + 5 + "seconds.", element.toString());
+                log.error(e.getMessage());
             }
         }
-
         else {
             try {
+                log.info("Trying to click element {} without waiting.", element);
                 element.click();
-            } catch (Exception e) {
+            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
                 log.error("Unable to click element {} without waiting.", element.toString());
                 throw e;
             }
         }
     }
-
-
 }

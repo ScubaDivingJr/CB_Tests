@@ -8,9 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.List;
 
 public class Homepage extends BasePage {
@@ -29,13 +26,13 @@ public class Homepage extends BasePage {
         //hours spent here: 6
 
         //we have to wait for the animations to finish.
-        webDriverWait.until(driver -> (
+        webDriverWait(2).until(driver -> (
                 driver.findElements(animationInLocator).isEmpty() &&
                 driver.findElements(animationOutLocator).isEmpty()
                         ));
 
         //when the animation finishes, we need to wait for one of two slides to be active: the "cloned" on or the "normal" one.
-        WebElement activeSlide = webDriverWait.until(driver -> {
+        WebElement activeSlide = webDriverWait(2).until(driver -> {
             List<WebElement> normalSlide = driver.findElements(normalActiveSlideLocator);
             if (!normalSlide.isEmpty()) {
                 return normalSlide.getFirst();
@@ -52,27 +49,22 @@ public class Homepage extends BasePage {
         //if we got a slide, click the button inside it.
         if (activeSlide != null) {
             try {
-                log.info("Trying to clicking 'Details' button in active slider...");
-
-                //we need custom wait because slide changes if we fail to find it quick
-                WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(1));
-                WebElement activeSlideBtn = customWait.until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
+                //avoid long waits. slide changes fast (~2 seconds).
+                WebElement activeSlideBtn = webDriverWait(1).until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
                 activeSlideBtn.click();
 
                 //I've spent enough time here. It seems that this falls back to the javascript method about half the time. I'll come back to it later. Maybe.
             } catch (org.openqa.selenium.ElementNotInteractableException | TimeoutException e) {
                 WebElement activeSlideBtn = activeSlide.findElement(activeSlideBtnLocator);
-                log.warn("Could not interact with slide button. Trying Javascript click fallback.");
-
                 try {
+                    log.warn("Could not interact with slide button. Trying Javascript click fallback.");
                     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activeSlideBtn);
                 } catch (Exception exception) {
                     log.error("Javascript click failed too. RIP.");
                 }
             }
-
         } else {
-            log.error("activeSlide was null");
+            log.error("activeSlide was null.");
         }
     }
 

@@ -10,6 +10,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import java.io.IOException;
 import java.util.Set;
 import org.enums.FooterMenuItems;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class Footer extends BasePage {
 
@@ -57,11 +58,10 @@ public class Footer extends BasePage {
                 this.originalWindowHandle = driver.getWindowHandle();
 
                 log.info("Waiting for Facebook Widget...");
-                WebElement fbIframe = waitForElement(By.cssSelector("iframe[data-testid='fb:like_box Facebook Social Plugin']"));
+                WebElement fbIframe = webDriverWait(3).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("iframe[data-testid='fb:like_box Facebook Social Plugin']")));
 
                 log.info("Switching to its iframe...");
                 driver.switchTo().frame(fbIframe);
-                log.info("Clicking Facebook widget. This should open a new browser window...");
                 click(By.className("_1drq"), true);
 
                 log.info("Getting window information and switching to Facebook window...");
@@ -72,7 +72,6 @@ public class Footer extends BasePage {
                 driver.manage().window().maximize();
                 log.info("Continue interacting with Facebook Window by calling loginToFacebook() or close the window by calling closeFacebookWindowsAndSwitchToOriginal() (mandatory to continue tests).");
             }
-
         }
     }
 

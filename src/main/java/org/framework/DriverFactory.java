@@ -8,14 +8,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
 
+    private static DriverFactory instance;
+    private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+
     private DriverFactory() {
         //
     }
 
-    private static DriverFactory instance;
-    private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
-
     public static DriverFactory getInstance(String browser) {
+
         if (instance == null) {
             synchronized (WebDriver.class) {
                 if (instance == null) {

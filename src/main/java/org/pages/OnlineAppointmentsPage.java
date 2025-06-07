@@ -3,11 +3,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.OnlineAppointmentScheduleOptions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -65,12 +63,10 @@ public class OnlineAppointmentsPage extends BasePage {
             case LA_PRANZ -> select.selectByVisibleText(OnlineAppointmentScheduleOptions.LA_PRANZ.getValue());
             case SEARA -> select.selectByVisibleText(OnlineAppointmentScheduleOptions.SEARA.getValue());
         }
-
         return this;
     }
 
     public OnlineAppointmentsPage enterAdditionalDetails(String details) {
-
         //any string works here
         driver.findElement(servicesAndDetailsLocator).sendKeys(details);
         return this;
@@ -81,12 +77,12 @@ public class OnlineAppointmentsPage extends BasePage {
     }
 
     public boolean verifyMessageAfterSubmit() {
-        WebDriverWait customWait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         try {
-            customWait.until((WebDriver webdriver) ->
-                    !webdriver.findElements(failMessageContainerLocator).isEmpty() ||
-                    !webdriver.findElements(successMessageContainerLocator).isEmpty()
+            //failing an appointment takes a long time
+            webDriverWait(10).until(driver ->
+                    !driver.findElements(failMessageContainerLocator).isEmpty() ||
+                    !driver.findElements(successMessageContainerLocator).isEmpty()
             );
         } catch (Exception e) {
             log.error("Cannot find any message after waiting for 10 seconds.");
@@ -99,8 +95,6 @@ public class OnlineAppointmentsPage extends BasePage {
             log.error("Could not send appoinment. Fail message displayed or success message not displayed.");
         }
         return successDisplayed && !failDisplayed;
-
-
     }
 
     public void sendCompleteOnlineAppointmentWithDummyData() {
