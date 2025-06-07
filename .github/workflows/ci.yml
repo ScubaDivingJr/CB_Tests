@@ -35,3 +35,40 @@ jobs:
           subject: mvn test report
           message: Report attached.
           attachments: target/surefire-reports/emailable-report.html
+      - name: Send Mailjet email with attachment via curl
+        env:
+          MJ_APIKEY_PUBLIC: ${{ secrets.MAILJET_PUBLIC_API_KEY }}
+          MJ_APIKEY_PRIVATE: ${{ secrets.MAILJET_SECRET_API_KEY }}
+        run: |
+          BASE64_CONTENT=$(base64 -w 0 target/surefire-reports/emailable-report.html)
+          curl -s \
+            -X POST \
+            --user "$MAILJET_PUBLIC_API_KEY :$MAILJET_SECRET_API_KEY" \
+            https://api.mailjet.com/v3.1/send \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "Messages":[
+                {
+                  "From": {
+                    "Email": "andrei.marcu1337@gmail.com@gmail.com",
+                    "Name": "Andrei Marcu"
+                  },
+                  "To": [
+                    {
+                      "Email": "andrei.marcu1337@gmail.com",
+                      "Name": "Andrei Marcu"
+                    }
+                  ],
+                  "Subject": "Maven Test Report",
+                  "TextPart": "Hello, report is attached.",
+                  "HTMLPart": "<h3>god bless</h3><br />May the delivery force be with you!",
+                  "Attachments": [
+                    {
+                      "ContentType": "text/html",
+                      "Filename": "emailable-report.html",
+                      "Base64Content": "'"$BASE64_CONTENT"'"
+                    }
+                  ]
+                }
+              ]
+            }'     
