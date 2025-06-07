@@ -34,4 +34,4 @@ jobs:
           to_email: andrei.marcu1337@gmail.com
           subject: mvn test report
           message: Report attached.
-          attachments: surefire-report/emailable-report.html
+          attachments: target/surefire-report/emailable-report.html
