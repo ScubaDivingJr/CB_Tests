@@ -2,7 +2,7 @@ name: Daily Maven Tests
 
 on:
   schedule:
-    - cron: '0 4 * * *' # Runs every day at 6:00 a.m. UTC
+    - cron: '0 4 * * *' # Runs every day at 4:00 a.m. UTC
   workflow_dispatch: # Allows manual trigger
 
 jobs:
@@ -25,18 +25,13 @@ jobs:
         with:
           name: surefire-report
           path: target/surefire-reports/emailable-report.html
-
-      - name: Send Surefire Report via Email
-        uses: dawidd6/action-send-mail@v3
+      - name: Send Mail using Mailjet
+        uses: coumarane/send-mail-action@v1.1.2
         with:
-          server_address: https://api.mailjet.com/v3.1/send
-          server_port: 2525
-          username: ${{ secrets.SENDGRID_API_KEY_PUBLIC }}
-          password: ${{ secrets.SENDGRID_APIKEY_SECRET }}
-          subject: CosmeticaBrasov.ro UI Test Results
-          to: andrei.marcu1337@gmail.com
-          from: GitHub Actions <noreply@github.com>
-          content_type: text/html
-          body: |
-            <p>Find the Maven Surefire Report attached.</p>
-          attachments: target/surefire-reports/emailable-report.html
+          api_key: ${{ secrets.SENDGRID_API_KEY_PUBLIC }}
+          api_secret: ${{ secrets.SENDGRID_APIKEY_SECRET }}
+          from_email: GitHub Actions <noreply@github.com>
+          to_email: andrei.marcu1337@gmail.com
+          subject: mvn test report
+          message: Report attached.
+          attachments: surefire-report/emailable-report.html
