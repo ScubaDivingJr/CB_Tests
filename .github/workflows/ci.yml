@@ -32,7 +32,7 @@ jobs:
           server_address: https://api.mailjet.com/v3.1/send
           server_port: 2525
           username: ${{ secrets.SENDGRID_API_KEY_PUBLIC }}
-          password: ${{ SENDGRID_APIKEY_SECRET }}
+          password: ${{ secrets.SENDGRID_APIKEY_SECRET }}
           subject: CosmeticaBrasov.ro UI Test Results
           to: andrei.marcu1337@gmail.com
           from: GitHub Actions <noreply@github.com>
