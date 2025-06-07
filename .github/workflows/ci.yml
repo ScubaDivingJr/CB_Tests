@@ -30,7 +30,7 @@ jobs:
         with:
           api_key: ${{ secrets.SENDGRID_API_KEY_PUBLIC }}
           api_secret: ${{ secrets.SENDGRID_APIKEY_SECRET }}
-          from_email: GitHub Actions <noreply@github.com>
+          from_email: Andrei Marcu <andrei.marcu1337@gmail.com>
           to_email: andrei.marcu1337@gmail.com
           subject: mvn test report
           message: Report attached.
