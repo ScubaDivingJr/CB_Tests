@@ -28,8 +28,8 @@ jobs:
       - name: Send Mail using Mailjet
         uses: coumarane/send-mail-action@v1.1.2
         with:
-          api_key: ${{ secrets.SENDGRID_API_KEY_PUBLIC }}
-          api_secret: ${{ secrets.SENDGRID_APIKEY_SECRET }}
+          api_key: ${{ secrets.MAILJET_PUBLIC_API_KEY  }}
+          api_secret: ${{ secrets.MAILJET_SECRET_API_KEY }}
           from_email: Andrei Marcu <andrei.marcu1337@gmail.com>
           to_email: andrei.marcu1337@gmail.com
           subject: mvn test report
