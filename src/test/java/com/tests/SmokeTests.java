@@ -23,7 +23,7 @@ public class SmokeTests extends BaseTestClass {
 
     @Test
     void sliderButtons() {
-        header.clickNavBarMenuItem(Menus.ACASA);
+        header.clickHamburgerMenuItem(Menus.ACASA);
         home.switchToSlide(1);
         home.switchToSlide(0);
         home.clickCurrentSlideDetailsBtn();
@@ -32,7 +32,7 @@ public class SmokeTests extends BaseTestClass {
 
     @Test
     void createOnlineAppointment() {
-        header.clickNavBarMenuItem(Menus.PROGRAMARI_ONLINE);
+        header.clickHamburgerMenuItem(Menus.PROGRAMARI_ONLINE);
         onlineAppointments.sendCompleteOnlineAppointmentWithDummyData();
         Assert.assertTrue(onlineAppointments.verifyMessageAfterSubmit());
     }

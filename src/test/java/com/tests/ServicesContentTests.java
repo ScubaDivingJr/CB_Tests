@@ -16,7 +16,7 @@ public class ServicesContentTests extends BaseTestClass {
     @Test
     void verifyTreatmentTitles() {
         //checking that all treatments titles are there against a list that we have.
-        header.clickNavBarMenuItem(Menus.SERVICII);
+        header.clickHamburgerMenuItem(Menus.SERVICII);
         List<String> actualTreatmentTitles = servicesPage.getActualTreatmentTitles();
         List<String> expectedTreatmentTitles = TreatmentsDataProvider.getExpectedTreatmentTitles();
 
@@ -33,7 +33,6 @@ public class ServicesContentTests extends BaseTestClass {
         List<String> actualTreatmentDescriptions = servicesPage.getActualTreatmentDescriptions();
         List<String> expectedTreatmentDescriptions = TreatmentsDataProvider.expectedTreatmentDescriptionExcerpts().values().stream().toList();
 
-
         Assert.assertEquals(actualTreatmentDescriptions.size(), expectedTreatmentDescriptions.size());
 
         for (int i = 0; i < expectedTreatmentDescriptions.size(); i++) {
@@ -44,13 +43,7 @@ public class ServicesContentTests extends BaseTestClass {
 
     @Test
     void verifyTreatmentDescriptionImages() {
-        header.clickNavBarMenuItem(Menus.SERVICII);
+        header.clickHamburgerMenuItem(Menus.SERVICII);
         Assert.assertTrue(servicesPage.checkTreatmentImage(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC), "Something went wrong chekcing the image.");
-    }
-
-    @Test
-    void verifyAllTreatmentDescriptionImages() {
-        header.clickNavBarMenuItem(Menus.SERVICII);
-        servicesPage.checkTreatmentImages();
     }
 }

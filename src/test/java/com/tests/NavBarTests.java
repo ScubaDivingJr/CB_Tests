@@ -1,11 +1,21 @@
 package com.tests;
 import org.framework.CommonVerifications;
 import org.enums.Menus;
+import org.framework.DriverFactory;
 import org.pages.Header;
+import org.testng.SkipException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
 public class NavBarTests extends BaseTestClass {
+
+    @BeforeClass
+    public void skipIfHeadless() {
+        if (DriverFactory.headless) {
+            throw new SkipException("The navbar turns into a hamburger menu in Headless. No point in testing navbar items. We have separate hamburger menu tests");
+        }
+    }
 
     Header header = new Header();
     CommonVerifications commonVerifications = new CommonVerifications();

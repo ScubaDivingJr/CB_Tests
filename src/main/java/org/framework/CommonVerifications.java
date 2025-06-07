@@ -1,5 +1,4 @@
 package org.framework;
-import org.enums.Treatments;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.pages.BasePage;
@@ -26,14 +25,6 @@ public class CommonVerifications extends BasePage {
     }
     public CommonVerifications verifyUrl(String expectedUrl) {
         Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
-        return this;
-    }
-
-    public CommonVerifications verifyTreatmentDescription(Treatments treatment, String expectedTreatmentDescription){
-
-        String actualTreatmentDescription = serv.getActualTreatmentDescription(treatment);
-        Assert.assertTrue(actualTreatmentDescription.contains(expectedTreatmentDescription), "Description not found");
-
         return this;
     }
 }
