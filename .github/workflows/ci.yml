@@ -63,3 +63,11 @@ jobs:
                     }
                   ]
                 }' > payload.json
+      - name: Show payload preview
+        run: head -n 30 payload.json
+      - name: Send Email via Mailjet
+        run: |
+          curl -s -X POST https://api.mailjet.com/v3.1/send \
+            -u "${{ secrets.MAILJET_PUBLIC_API_KEY }}:${{ secrets.MAILJET_SECRET_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d @payload.json
