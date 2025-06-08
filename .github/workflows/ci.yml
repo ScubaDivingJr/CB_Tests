@@ -35,3 +35,43 @@ jobs:
         with:
           name: surefire-report
           path: target/surefire-reports/emailable-report.html
+
+      - name: Create Mailjet Payload
+        run: |
+          REPORT_PATH="target/surefire-reports/emailable-report.html"
+          TO_EMAIL="andrei.marcu1337@gmail.com"
+          FROM_EMAIL="andrei.marcu1337@gmail.com"
+          FROM_NAME="Andrei Marcu"
+          SUBJECT="Automated Test Report"
+
+          # Escape newlines and double quotes for JSON
+          HTML_CONTENT=$(sed ':a;N;$!ba;s/\n/\\n/g' "$REPORT_PATH" | sed 's/"/\\"/g')
+
+          cat <<EOF > payload.json
+          {
+            "Messages":[
+              {
+                "From": {
+                  "Email": "$FROM_EMAIL",
+                  "Name": "$FROM_NAME"
+                },
+                "To": [
+                  {
+                    "Email": "$TO_EMAIL",
+                    "Name": "$FROM_NAME"
+                  }
+                ],
+                "Subject": "$SUBJECT",
+                "TextPart": "See attached HTML report.",
+                "HTMLPart": "$HTML_CONTENT"
+              }
+            ]
+          }
+          EOF
+
+      - name: Send Email via Mailjet
+        run: |
+          curl -s -X POST https://api.mailjet.com/v3.1/send \
+            -u "${{ secrets.MAILJET_PUBLIC_API_KEY }}:${{ secrets.MAILJET_SECRET_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d @payload.json    

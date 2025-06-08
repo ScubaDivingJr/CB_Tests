@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+//use this locally
 public class EmailSender {
 
     private static final Logger log = LogManager.getLogger(EmailSender.class);

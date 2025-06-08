@@ -37,14 +37,14 @@ public class BaseTestClass {
 
     @AfterSuite
     public void cleanUp() {
-        try {
+/*        try {
             EmailSender emailSender = new EmailSender();
             emailSender.sendEmail();
         } catch (Exception e) {
             log.error("Unable to send report email.");
             System.err.println("Failed to send report Email " + e.getMessage());
-        } finally {
-            DriverFactory.getInstance(browser).quitBrowser();
-        }
+        } finally {*/
+        DriverFactory.getInstance(browser).quitBrowser();
+    //}
     }
 }
