@@ -39,39 +39,27 @@ jobs:
       - name: Create Mailjet Payload
         run: |
           REPORT_PATH="target/surefire-reports/emailable-report.html"
-          TO_EMAIL="andrei.marcu1337@gmail.com"
+          TO_EMAIL="${{ secrets.MAILJET_RECIPIENT || 'andrei.marcu1337@gmail.com' }}"
           FROM_EMAIL="andrei.marcu1337@gmail.com"
           FROM_NAME="Andrei Marcu"
           SUBJECT="Automated Test Report"
 
-          # Escape newlines and double quotes for JSON
-          HTML_CONTENT=$(sed ':a;N;$!ba;s/\n/\\n/g' "$REPORT_PATH" | sed 's/"/\\"/g')
+          HTML_CONTENT=$(cat "$REPORT_PATH")
 
-          cat <<EOF > payload.json
-          {
-            "Messages":[
-              {
-                "From": {
-                  "Email": "$FROM_EMAIL",
-                  "Name": "$FROM_NAME"
-                },
-                "To": [
-                  {
-                    "Email": "$TO_EMAIL",
-                    "Name": "$FROM_NAME"
-                  }
-                ],
-                "Subject": "$SUBJECT",
-                "TextPart": "See attached HTML report.",
-                "HTMLPart": "$HTML_CONTENT"
-              }
-            ]
-          }
-          EOF
-
-      - name: Send Email via Mailjet
-        run: |
-          curl -s -X POST https://api.mailjet.com/v3.1/send \
-            -u "${{ secrets.MAILJET_PUBLIC_API_KEY }}:${{ secrets.MAILJET_SECRET_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            -d @payload.json    
+          jq -n --arg from_email "$FROM_EMAIL" \
+                --arg from_name "$FROM_NAME" \
+                --arg to_email "$TO_EMAIL" \
+                --arg to_name "$FROM_NAME" \
+                --arg subject "$SUBJECT" \
+                --arg html "$HTML_CONTENT" \
+                '{
+                  "Messages": [
+                    {
+                      "From": { "Email": $from_email, "Name": $from_name },
+                      "To": [ { "Email": $to_email, "Name": $to_name } ],
+                      "Subject": $subject,
+                      "TextPart": "See attached HTML report.",
+                      "HTMLPart": $html
+                    }
+                  ]
+                }' > payload.json
