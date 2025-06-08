@@ -4,7 +4,10 @@ import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Email;
 import com.mailjet.client.resource.Emailv31;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -12,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class EmailSender {
+
+    private static final Logger log = LogManager.getLogger(EmailSender.class);
 
     private final String MJ_APIKEY_PUBLIC = System.getenv("MJ_APIKEY_PUBLIC");
     private final String MJ_APIKEY_PRIVATE = System.getenv("MJ_APIKEY_PRIVATE");
@@ -48,7 +53,7 @@ public class EmailSender {
 ));
         MailjetResponse response = client.post(request);
 
-        System.out.println(response.getStatus());
-        System.out.println(response.getData());
+        log.info("SendEmail() response status is: {}", response.getStatus());
+        log.info("SendEmail request data is: '{}'", response.getData());
     }
 }

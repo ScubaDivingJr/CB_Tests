@@ -35,14 +35,12 @@ public class BaseTestClass {
 
     @AfterSuite
     public void cleanUp() {
-
-        DriverFactory.getInstance(browser).quitBrowser();
-
         try {
             EmailSender emailSender = new EmailSender();
             emailSender.sendEmail();
         } catch (Exception e) {
             System.err.println("Failed to send report Email " + e.getMessage());
         }
+        DriverFactory.getInstance(browser).quitBrowser();
     }
 }
