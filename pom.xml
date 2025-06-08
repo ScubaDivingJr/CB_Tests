@@ -59,11 +59,11 @@
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.beust/jcommander -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
             <version>1.82</version>
-        </dependency>
+        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -99,6 +99,12 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>6.1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.mailjet/mailjet-client -->
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>5.2.6</version>
         </dependency>
     </dependencies>
     <properties>

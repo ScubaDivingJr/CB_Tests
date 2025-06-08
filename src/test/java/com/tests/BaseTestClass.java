@@ -1,13 +1,16 @@
 package com.tests;
 
 
+import com.mailjet.client.errors.MailjetException;
 import org.framework.DriverFactory;
+import org.framework.EmailSender;
 import org.framework.Screenshotter;
 import org.framework.TestUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 @Listeners({Screenshotter.class})
@@ -32,6 +35,14 @@ public class BaseTestClass {
 
     @AfterSuite
     public void cleanUp() {
+
         DriverFactory.getInstance(browser).quitBrowser();
+
+        try {
+            EmailSender emailSender = new EmailSender();
+            emailSender.sendEmail();
+        } catch (Exception e) {
+            System.err.println("Failed to send report Email " + e.getMessage());
+        }
     }
 }
