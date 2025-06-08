@@ -13,13 +13,23 @@ jobs:
       MJ_APIKEY_PRIVATE: ${{ secrets.MAILJET_SECRET_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Debug MailJet environment variables
+        run: |
+          echo "MJ_APIKEY_PUBLIC=${MJ_APIKEY_PUBLIC:0:4}****"
+          echo "MJ_APIKEY_PRIVATE=${MJ_APIKEY_PRIVATE:0:4}****"
+          echo "::add-mask::$MJ_APIKEY_PUBLIC"
+          echo "::add-mask::$MJ_APIKEY_PRIVATE"
+
       - name: Build and test
         run: mvn clean test
+
       - name: Upload Surefire Report
         uses: actions/upload-artifact@v4
         with:
