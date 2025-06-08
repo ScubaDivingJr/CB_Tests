@@ -1,0 +1,27 @@
+name: Daily Maven Tests
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Runs every day at 4:00 a.m. UTC
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      MJ_APIKEY_PUBLIC: ${{ secrets.MAILJET_PUBLIC_API_KEY }}
+      MJ_APIKEY_PRIVATE: ${{ secrets.MAILJET_SECRET_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Build and test
+        run: mvn clean test
+      - name: Upload Surefire Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-report
+          path: target/surefire-reports/emailable-report.html
