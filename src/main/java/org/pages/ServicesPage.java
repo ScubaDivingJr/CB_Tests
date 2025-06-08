@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ServicesPage extends BasePage {
 
@@ -117,6 +119,27 @@ public class ServicesPage extends BasePage {
             return true;
         }
         return false;
+    }
+
+    public boolean checkFacialTreatmentImages() {
+
+        ImageChecker imageChecker = new ImageChecker();
+        List<String> webElementIds = List.of("section-id-1517131626142", "section-id-1517131626144", "section-id-1517131626156");
+
+        for (String webElementId : webElementIds) {
+
+            WebElement section = driver.findElement(By.id(webElementIds.get(webElementIds.indexOf(webElementId))));
+            WebElement imageHolderElement = section.findElement(By.cssSelector(".sppb-image-holder"));
+            String imageSrc = imageHolderElement.getAttribute("style");
+
+            Pattern pattern = Pattern.compile("url\\(['\"]?([^'\")]+)['\"]?\\)");
+            Matcher matcher = pattern.matcher(imageSrc);
+
+            if (matcher.find() && !imageChecker.isImageLoaded(baseUrl + matcher.group(1))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private List<WebElement> getTreatmentDescriptionsContainer() {

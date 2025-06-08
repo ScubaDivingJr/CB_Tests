@@ -44,6 +44,12 @@ public class ServicesContentTests extends BaseTestClass {
     @Test
     void verifyTreatmentDescriptionImages() {
         header.clickHamburgerMenuItem(Menus.SERVICII);
-        Assert.assertTrue(servicesPage.checkTreatmentImage(Treatments.TRATAMENTUL_CU_PEELING_ENZIMATIC), "Something went wrong chekcing the image.");
+        Assert.assertTrue(servicesPage.checkTreatmentImages(), "Something went wrong checking the images.");
+    }
+
+    @Test
+    void verifyFacialTreatmentsImages() {
+        header.clickHamburgerMenuItem(Menus.SERVICII);
+        Assert.assertTrue(servicesPage.checkFacialTreatmentImages(), "Something went wrong checking the images.");
     }
 }

@@ -11,7 +11,7 @@ import java.time.Duration;
 
 public class BasePage {
 
-    public final String baseUrl = "https://cosmeticabrasov.ro";
+    public static final String baseUrl = "https://cosmeticabrasov.ro";
     private static final Logger log = LogManager.getLogger(BasePage.class);
 
     WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
@@ -35,19 +35,30 @@ public class BasePage {
     protected void click(By elementLocator, boolean wait) {
 
         if (wait) {
+
+            log.info("Trying to click element with locator '{}'...", elementLocator);
             try {
-                log.info("Trying to click element with locator: '{}' with wait.", elementLocator);
-                webDriverWait(5).until(ExpectedConditions.elementToBeClickable(elementLocator)).click();
-            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
+                WebElement element = webDriverWait(5).until(ExpectedConditions.elementToBeClickable(elementLocator));
+                String elementText = element.getText();
+                element.click();
+                if (elementText.isBlank()) {
+                    log.info("Successfully clicked element with locator '{}' (with wait - element has no visible text).", elementLocator);
+                } else {
+                    log.info("Successfully clicked '{}' (with wait).", elementText);
+                }
+            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException | StaleElementReferenceException  e) {
                 log.error("Unable to click element with locator '{}' after waiting for 5 seconds.", elementLocator);
                 log.error(e.getMessage());
             }
         }
         else {
+            log.info("Trying to click element with locator '{}' without waiting.", elementLocator);
             try {
-                log.info("Cliking element with locator: '{}' without wait.", elementLocator);
-                driver.findElement(elementLocator).click();
-            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
+                WebElement element = driver.findElement(elementLocator);
+                String elementText = element.getText();
+                element.click();
+                log.info("Successfully clicked '{}' (without wait).", elementText);
+            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException | StaleElementReferenceException  e) {
                 log.error("Unable to click element with locator: '{}' without waiting.", elementLocator);
                 log.error(e.getMessage());
             }
@@ -65,21 +76,26 @@ public class BasePage {
     protected void click(WebElement element, boolean wait) {
 
         if (wait) {
+            log.info("Trying to click element '{}' (with wait)...", element);
             try {
-                log.info("Clicking element '{}' with wait", element);
-                webDriverWait(5).until(ExpectedConditions.elementToBeClickable(element)).click();
-            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
-                log.error("Unable to click element {} after waiting " + 5 + "seconds.", element.toString());
+                webDriverWait(5).until(ExpectedConditions.elementToBeClickable(element));
+                String elementText = element.getText();
+                element.click();
+                log.info("Successfully clicked '{}' (with wait).", elementText);
+            } catch (TimeoutException | ElementClickInterceptedException | StaleElementReferenceException  e) {
+                log.error("Unable to click element '{}' after waiting {} seconds.", element, 5);
                 log.error(e.getMessage());
             }
         }
         else {
+            log.info("Trying to click element '{}' (without wait)...", element);
             try {
-                log.info("Trying to click element {} without waiting.", element);
+                String elementText = element.getText();
                 element.click();
-            } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException e) {
-                log.error("Unable to click element {} without waiting.", element.toString());
-                throw e;
+                log.info("Successfully clicked '{}'.", elementText);
+            } catch (TimeoutException | ElementClickInterceptedException | StaleElementReferenceException  e) {
+                log.error("Unable to click element {} without waiting.", element);
+                log.error(e.getMessage());
             }
         }
     }

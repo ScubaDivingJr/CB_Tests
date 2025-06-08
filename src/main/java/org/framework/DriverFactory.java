@@ -11,7 +11,7 @@ public class DriverFactory {
     private static DriverFactory instance;
     private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 
-    public static boolean headless = true;
+    public static boolean headless = false;
 
     private DriverFactory() {
         //

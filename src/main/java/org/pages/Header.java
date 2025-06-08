@@ -66,12 +66,8 @@ public class Header extends BasePage {
     public void clickHamburgerMenuItem(Menus itemToClick) {
 
         if (!driver.findElement(By.className("offcanvas-menu")).isDisplayed()) {
-            log.info("Hamburger menu not expanded. Expanding...");
             click(By.cssSelector("i[class='fa fa-bars']"), true);
         }
-
-        log.info("Clicking hamburger menu item '{}'...",itemToClick);
-
         if (firstLevelMenuChildItems.contains(itemToClick)) {
             expandServicesInHamburgerMenu();
             click(hamburgerMenuLocators.get(itemToClick), true);
