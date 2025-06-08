@@ -27,8 +27,13 @@ public class EmailSender {
     private final String toName = "Andrei Marcu";
     private final String subject = "Maven Test Results";
 
-    private String getHTmlContent() throws IOException {
-        return Files.readString(Paths.get("target/surefire-reports/emailable-report.html"));
+    private String getHTmlContent() {
+        try {
+            return Files.readString(Paths.get("target/surefire-reports/emailable-report.html"));
+        } catch (IOException e) {
+            log.error("Could not get HTML content for report.");
+            throw new RuntimeException(e);
+        }
     }
 
     //from Mailjet docs (mostly)

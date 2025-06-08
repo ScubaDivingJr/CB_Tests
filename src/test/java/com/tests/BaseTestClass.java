@@ -2,6 +2,8 @@ package com.tests;
 
 
 import com.mailjet.client.errors.MailjetException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.framework.DriverFactory;
 import org.framework.EmailSender;
 import org.framework.Screenshotter;
@@ -16,7 +18,7 @@ import java.lang.reflect.Method;
 @Listeners({Screenshotter.class})
 
 public class BaseTestClass {
-
+    private static final Logger log = LogManager.getLogger(BaseTestClass.class);
     private static final String browser = "chrome";
     public static final String base_url = "https://cosmeticabrasov.ro";
 
@@ -39,8 +41,10 @@ public class BaseTestClass {
             EmailSender emailSender = new EmailSender();
             emailSender.sendEmail();
         } catch (Exception e) {
+            log.error("Unable to send report email.");
             System.err.println("Failed to send report Email " + e.getMessage());
+        } finally {
+            DriverFactory.getInstance(browser).quitBrowser();
         }
-        DriverFactory.getInstance(browser).quitBrowser();
     }
 }
