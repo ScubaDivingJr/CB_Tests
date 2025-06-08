@@ -1,7 +1,6 @@
 package org.pages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.framework.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -81,8 +80,6 @@ public class Footer extends BasePage {
      */
     public void loginToFacebook() throws IOException {
 
-        TestUtils testUtils = new TestUtils();
-
         //Login if we're not logged in
         if (driver.getPageSource().contains("You must log in to continue.")) {
 
@@ -90,8 +87,8 @@ public class Footer extends BasePage {
             click(By.xpath("//*[@id=\"facebook\"]/body/div[3]/div[2]/div/div/div/div/div[3]/div[2]/div/div[1]/div[2]/div/div[1]/div/span/span"), true);
 
             //enter username and password
-            email.sendKeys(testUtils.getCredentials(TestUtils.Credentials.USERNAME));
-            password.sendKeys(testUtils.getCredentials(TestUtils.Credentials.PASSWORD));
+            email.sendKeys("test");
+            password.sendKeys("test");
             //pending facebook account zzz
             //driver.findElement(By.id("loginbutton")).click();
         }

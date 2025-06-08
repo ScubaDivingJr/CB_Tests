@@ -2,7 +2,6 @@ package com.tests;
 
 import org.enums.FooterMenuItems;
 import org.framework.CommonVerifications;
-import org.framework.TestUtils;
 import org.pages.Footer;
 import org.testng.annotations.Test;
 import java.io.IOException;
@@ -11,7 +10,7 @@ public class FooterTests extends BaseTestClass {
 
     Footer footer = new Footer();
     CommonVerifications commonVerifications = new CommonVerifications();
-    TestUtils credentials = new TestUtils();
+    //TestUtils credentials = new TestUtils();
 
     @Test
     void footerDespreNoi() {

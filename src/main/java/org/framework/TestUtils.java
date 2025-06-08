@@ -10,7 +10,7 @@ public class TestUtils {
          Credentials(int value) {this.value = value;}
     }
 
-    //quick and dirty read credentials from file
+    //quick and dirty read credentials from file (this isn't in git, just for local testing)
     public String getCredentials(Credentials credentials) throws IOException {
 
             BufferedReader bufferedReader = new BufferedReader(new FileReader("D:\\cosmeticaBrasovGit\\Creds.txt"));
