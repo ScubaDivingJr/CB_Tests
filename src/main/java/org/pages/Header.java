@@ -86,36 +86,30 @@ public class Header extends BasePage {
 
         if (firstLevelMenuChildItems.contains(itemToClick)) {
             selectServicesExpandable();
-            log.info("Clicking navBar menu item {}...", itemToClick);
             click(navBarLocators.get(itemToClick), true);
         }
         else if (secondLevelMenuChildren.contains(itemToClick)) {
             selectServicesExpandable();
             selectTreatmentsExpandable();
-            log.info("Clicking navBar menu item {}...", itemToClick);
             click(navBarLocators.get(itemToClick), true);
         }
         else {
-            log.info("Clicking navBar menu item {}...", itemToClick);
             click(navBarLocators.get(itemToClick), true);
         }
     }
 
     private void selectServicesExpandable() {
         Actions action = new Actions(driver);
-        log.info("Moving to element '{}'...", Menus.SERVICII);
         action.moveToElement(driver.findElement(navBarLocators.get(Menus.SERVICII))).perform();
     }
 
     private void selectTreatmentsExpandable() {
         selectServicesExpandable();
         Actions actions = new Actions(driver);
-        log.info("Moving to element '{}'...", Menus.TRATAMENTE_FACIALE);
         actions.moveToElement(driver.findElement(navBarLocators.get(Menus.TRATAMENTE_FACIALE))).perform();
     }
 
     private void expandServicesInHamburgerMenu() {
-        log.info("Expanding Services in HamburgerMenu.");
         click(By.cssSelector("span[class='offcanvas-menu-toggler collapsed']"), true);
     }
 

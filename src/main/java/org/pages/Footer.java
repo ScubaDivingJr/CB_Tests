@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Set;
 import org.enums.FooterMenuItems;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.BeforeClass;
 
 public class Footer extends BasePage {
 
@@ -35,14 +36,11 @@ public class Footer extends BasePage {
 
     public Footer() {
         PageFactory.initElements(driver, this);
-
     }
 
     public void clickFooterItem(FooterMenuItems footerItem) {
 
         scrollToFooter();
-
-        log.info("Cliking Footer element {}...", footerItem);
 
         switch (footerItem) {
             case DESPRE_NOI-> click(despreNoi, false);

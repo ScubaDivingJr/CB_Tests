@@ -1,13 +1,26 @@
 package com.tests;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.framework.CommonVerifications;
 import org.enums.Menus;
 import org.pages.Header;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class HamburgerMenuTests extends BaseTestClass{
     CommonVerifications commonVerifications = new CommonVerifications();
     Header header = new Header();
+
+    private static final Logger log = LogManager.getLogger(HamburgerMenuTests.class);
+
+    @Override
+    @BeforeClass
+    public void beforeClassSetup() {
+        //navigate to the homepage once when starting these tests
+        log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
+        driver.get(base_url);
+    }
 
     @Test
     void hamburgerMenuHomeTest() {
@@ -61,35 +74,35 @@ public class HamburgerMenuTests extends BaseTestClass{
 
     }
     @Test
-    void hambugerMenuDermatoTreatments() {
+    void hamburgerMenuDermatoTreatments() {
         header.clickHamburgerMenuItem(Menus.TRATAMENTE_DERMATO_COSMETICE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/tratamente-dermato-cosmetice.html")
                 .verifyTextOnPage("Tratamente dermato-cosmetice");
     }
     @Test
-    void hambugerMenuMakeupTest() {
+    void hamburgerMenuMakeupTest() {
         header.clickHamburgerMenuItem(Menus.MAKE_UP);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/make-up.html")
                 .verifyTextOnPage("Make-up");
     }
     @Test
-    void hambugerEyebrowStylingTest() {
+    void hamburgerEyebrowStylingTest() {
         header.clickHamburgerMenuItem(Menus.STILIZARE_SPRANCENE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/stilizare-sprancene.html")
                 .verifyTextOnPage("Stilizare sprancene");
     }
     @Test
-    void hambugerMicrobladingTest() {
+    void hamburgerMicrobladingTest() {
         header.clickHamburgerMenuItem(Menus.MICROBLADING);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/microblading.html")
                 .verifyTextOnPage("Microblading");
     }
     @Test
-    void hambugerWaxingTest() {
+    void hamburgerWaxingTest() {
         header.clickHamburgerMenuItem(Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/epilare-cu-ceara-de-unica-folosinta.html")
@@ -110,7 +123,7 @@ public class HamburgerMenuTests extends BaseTestClass{
                 .verifyTextOnPage("Blog - Noutati -Info");
     }
     @Test
-    void hambugerContactTest() {
+    void hamburgerContactTest() {
         header.clickHamburgerMenuItem(Menus.CONTACT);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/contact.html")

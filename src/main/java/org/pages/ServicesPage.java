@@ -35,7 +35,7 @@ public class ServicesPage extends BasePage {
         List<WebElement> treatmentTitlesClickable = ul.findElements(By.tagName("li"));
 
         if (descriptions.size() == Treatments.values().length) {
-            log.info("Size of descriptions String list is: {}", descriptions.size() + "\nThis is what we expect given our Treatments enum value.");
+            log.info("Size of descriptions String list is: {}. ", descriptions.size() + "This is what we expect given our Treatments enum values.");
         } else {
             log.warn("The size of description String list isn't 10. Either more were added or we have a problem.");
         }

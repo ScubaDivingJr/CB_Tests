@@ -1,20 +1,38 @@
 package com.tests;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.internal.LogManagerStatus;
 import org.framework.CommonVerifications;
 import org.enums.Menus;
 import org.framework.DriverFactory;
 import org.pages.Header;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
 public class NavBarTests extends BaseTestClass {
 
+    private static final Logger log = LogManager.getLogger(ContactTests.class);
+
+    @Override
     @BeforeClass
-    public void skipIfHeadless() {
+    public void beforeClassSetup() {
         if (DriverFactory.headless) {
-            throw new SkipException("The navbar turns into a hamburger menu in Headless. No point in testing navbar items. We have separate hamburger menu tests");
+            log.info("Skipping navBar tests in headless mode. It becomes the Hamburger menu at that resolution.");
+            throw new SkipException("Skipped.");
+        } else {
+            log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
+            driver.get(base_url);
         }
+    }
+
+    @Override
+    @BeforeMethod
+    public void beforeMethodSetup() {
+        //for these tests, we have to navigate to homepage each time.
+        driver.get(base_url);
     }
 
     Header header = new Header();

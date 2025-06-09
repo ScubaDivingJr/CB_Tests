@@ -18,15 +18,9 @@ public class ContactTests extends BaseTestClass {
     Header header = new Header();
 
     @Override
-    @BeforeMethod
-    public void setUp(java.lang.reflect.Method method) {
-        log.info("Executing test '{}'...", method.getName());
-        // Navigate directly to the Contact page URL
-    }
-
-    @Override
     @BeforeClass
-    public void setUp() {
+    public void beforeClassSetup() {
+            log.info("Executing prerequisites for test class '{}'", this.getClass().getSimpleName());
             driver.get(base_url);
             header.clickHamburgerMenuItem(Menus.CONTACT);
     }

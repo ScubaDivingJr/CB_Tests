@@ -4,12 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.framework.DriverFactory;
 import org.framework.Screenshotter;
+import org.framework.TestLogger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
-import java.lang.reflect.Method;
 
-@Listeners({Screenshotter.class})
+@Listeners({Screenshotter.class, TestLogger.class})
 
 public class BaseTestClass {
     private static final Logger log = LogManager.getLogger(BaseTestClass.class);
@@ -24,29 +24,17 @@ public class BaseTestClass {
     }
 
     @BeforeClass
-    public void setUp() {
-
+    public void beforeClassSetup() {
+        //implement in each test class
     }
 
     @BeforeMethod
-    public void setUp(Method method) {
-        log.info("Executing test '{}'...", method.getName());
-        driver.get(base_url);
+    public void beforeMethodSetup() {
+        //implement in each test class
     }
 
     @AfterSuite
     public void cleanUp() {
-
-/*
-        EmailSender emailSender = new EmailSender();
-        try {
-            emailSender.sendEmail();
-        } catch (IOException | MailjetException e) {
-            throw new RuntimeException(e);
-        }
-*/
-
         DriverFactory.getInstance(browser).quitBrowser();
-    //}
     }
 }

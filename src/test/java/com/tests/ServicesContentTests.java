@@ -1,7 +1,11 @@
 package com.tests;
 import org.Data.TreatmentsDataProvider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.enums.Treatments;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.pages.*;
 import org.testng.Assert;
@@ -10,8 +14,24 @@ import java.util.List;
 
 public class ServicesContentTests extends BaseTestClass {
 
+    private static final Logger log = LogManager.getLogger(ServicesContentTests.class);
+
     ServicesPage servicesPage = new ServicesPage();
     Header header = new Header();
+
+    @Override
+    @BeforeClass
+    public void beforeClassSetup() {
+        driver.get(base_url);
+        log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
+    }
+
+    @Override
+    @BeforeMethod
+    public void beforeMethodSetup() {
+        //navigate to homepage beore each test. safer for these.
+        driver.get(base_url);
+    }
 
     @Test
     void verifyTreatmentTitles() {
