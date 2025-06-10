@@ -6,17 +6,16 @@ import org.framework.DriverFactory;
 import org.framework.Screenshotter;
 import org.framework.TestLogger;
 import org.openqa.selenium.WebDriver;
+import org.testng.SkipException;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
 
 @Listeners({Screenshotter.class, TestLogger.class})
 
-public class BaseTestClass {
+public abstract class BaseTestClass {
     private static final Logger log = LogManager.getLogger(BaseTestClass.class);
-    private static final String browser = "chrome";
-    public static final String base_url = "https://cosmeticabrasov.ro";
-
-    WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+    protected static final String browser = "chrome";
+    protected static final String base_url = "https://cosmeticabrasov.ro";
 
     @BeforeSuite
     public void logStart() {
@@ -28,7 +27,7 @@ public class BaseTestClass {
         //implement in each test class
     }
 
-    @BeforeMethod
+    @BeforeMethod()
     public void beforeMethodSetup() {
         //implement in each test class
     }

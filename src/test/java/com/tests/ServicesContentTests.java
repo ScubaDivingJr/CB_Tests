@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.enums.Treatments;
+import org.framework.DriverFactory;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -16,25 +18,28 @@ public class ServicesContentTests extends BaseTestClass {
 
     private static final Logger log = LogManager.getLogger(ServicesContentTests.class);
 
-    ServicesPage servicesPage = new ServicesPage();
-    Header header = new Header();
+
 
     @Override
     @BeforeClass
     public void beforeClassSetup() {
-        driver.get(base_url);
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
+        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+        driver.get(base_url);
     }
 
     @Override
     @BeforeMethod
     public void beforeMethodSetup() {
+        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         //navigate to homepage beore each test. safer for these.
         driver.get(base_url);
     }
 
     @Test
     void verifyTreatmentTitles() {
+        ServicesPage servicesPage = new ServicesPage();
+        Header header = new Header();
         //checking that all treatments titles are there against a list that we have.
         header.clickHamburgerMenuItem(Menus.SERVICII);
         List<String> actualTreatmentTitles = servicesPage.getActualTreatmentTitles();
@@ -49,6 +54,8 @@ public class ServicesContentTests extends BaseTestClass {
 
     @Test
     void verifyTreatmentDescriptions() {
+        ServicesPage servicesPage = new ServicesPage();
+        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         List<String> actualTreatmentDescriptions = servicesPage.getActualTreatmentDescriptions();
         List<String> expectedTreatmentDescriptions = TreatmentsDataProvider.expectedTreatmentDescriptionExcerpts().values().stream().toList();
@@ -63,12 +70,16 @@ public class ServicesContentTests extends BaseTestClass {
 
     @Test
     void verifyTreatmentDescriptionImages() {
+        ServicesPage servicesPage = new ServicesPage();
+        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         Assert.assertTrue(servicesPage.checkTreatmentImages(), "Something went wrong checking the images.");
     }
 
     @Test
     void verifyFacialTreatmentsImages() {
+        ServicesPage servicesPage = new ServicesPage();
+        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         Assert.assertTrue(servicesPage.checkFacialTreatmentImages(), "Something went wrong checking the images.");
     }

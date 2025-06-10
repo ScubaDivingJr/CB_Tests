@@ -5,7 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.framework.CommonVerifications;
+import org.framework.DriverFactory;
 import org.framework.EmailSender;
+import org.openqa.selenium.WebDriver;
 import org.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -28,11 +30,13 @@ public class SmokeTests extends BaseTestClass {
     @BeforeClass
     public void beforeClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
+        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         driver.get(base_url);
     }
 
     @Override
     public void beforeMethodSetup(){
+        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         driver.get(base_url);
     }
 
