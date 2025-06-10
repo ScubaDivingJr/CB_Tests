@@ -36,12 +36,12 @@ public class DriverFactory {
     private void initializeDriver(String browser) {
        switch (browser) {
            case "chrome":
-               //System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver-win64\\chromedriver.exe");
                ChromeOptions options = new ChromeOptions();
                if (headless) {
-                   options.addArguments("--headless=new"); // or "--headless"
+                   options.addArguments("--headless");
                    options.addArguments("--no-sandbox");
                    options.addArguments("--disable-gpu");
+                   options.addArguments("--window-size=1280,800");
                }
                options.addArguments("start-maximized");
                options.addArguments("--remote-allow-origins=*");

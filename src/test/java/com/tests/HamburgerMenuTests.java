@@ -11,13 +11,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class HamburgerMenuTests extends BaseTestClass{
-    CommonVerifications commonVerifications = new CommonVerifications();
-
-    private static final Logger log = LogManager.getLogger(HamburgerMenuTests.class);
 
     @Override
-    @BeforeClass
+    @BeforeClass()
     public void beforeClassSetup() {
+        Logger log = LogManager.getLogger(HamburgerMenuTests.class);
         //navigate to the homepage once when starting these tests
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
         WebDriver driver = DriverFactory.getInstance(browser).getDriver();
@@ -26,6 +24,7 @@ public class HamburgerMenuTests extends BaseTestClass{
 
     @Test
     void hamburgerMenuHomeTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.ACASA);
         commonVerifications
@@ -34,6 +33,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuDespreNoiTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.DESPRE_NOI);
         commonVerifications
@@ -43,6 +43,7 @@ public class HamburgerMenuTests extends BaseTestClass{
 
     @Test
     void hamburgerMenuServicesTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         commonVerifications
@@ -51,6 +52,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuFacialTreatmentsTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.TRATAMENTE_FACIALE);
         commonVerifications
@@ -59,6 +61,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuMezotherapyTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MEZOTERAPIE_VIRTUALA);
         commonVerifications
@@ -67,6 +70,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuOxygenTherapyTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.TERAPIE_CU_OXIGEN);
         commonVerifications
@@ -75,6 +79,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuMicroneedlingTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE);
         commonVerifications
@@ -84,6 +89,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuDermatoTreatments() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.TRATAMENTE_DERMATO_COSMETICE);
         commonVerifications
@@ -92,6 +98,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuMakeupTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MAKE_UP);
         commonVerifications
@@ -100,6 +107,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerEyebrowStylingTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.STILIZARE_SPRANCENE);
         commonVerifications
@@ -108,6 +116,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMicrobladingTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MICROBLADING);
         commonVerifications
@@ -116,6 +125,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerWaxingTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA);
         commonVerifications
@@ -124,6 +134,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerOnlineAppoimentsTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.PROGRAMARI_ONLINE);
         commonVerifications
@@ -132,6 +143,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerBlogTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.BLOG);
         commonVerifications
@@ -140,6 +152,7 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerContactTest() {
+        CommonVerifications commonVerifications = new CommonVerifications();
         Header header = new Header();
         header.clickHamburgerMenuItem(Menus.CONTACT);
         commonVerifications

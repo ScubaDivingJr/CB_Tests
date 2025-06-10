@@ -16,23 +16,12 @@ import java.util.List;
 
 public class ServicesContentTests extends BaseTestClass {
 
-    private static final Logger log = LogManager.getLogger(ServicesContentTests.class);
-
-
-
     @Override
     @BeforeClass
     public void beforeClassSetup() {
+        Logger log = LogManager.getLogger(ServicesContentTests.class);
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
         WebDriver driver = DriverFactory.getInstance(browser).getDriver();
-        driver.get(base_url);
-    }
-
-    @Override
-    @BeforeMethod
-    public void beforeMethodSetup() {
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
-        //navigate to homepage beore each test. safer for these.
         driver.get(base_url);
     }
 

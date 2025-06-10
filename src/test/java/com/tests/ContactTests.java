@@ -9,23 +9,20 @@ import org.pages.ContactPage;
 import org.pages.Header;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ContactTests extends BaseTestClass {
 
     private static final Logger log = LogManager.getLogger(ContactTests.class);
 
-
-    Header header = new Header();
-
     @Override
-    @BeforeClass
+    @BeforeClass()
     public void beforeClassSetup() {
-            log.info("Executing prerequisites for test class '{}'", this.getClass().getSimpleName());
-            WebDriver driver = DriverFactory.getInstance(browser).getDriver();
-            driver.get(base_url);
-            header.clickHamburgerMenuItem(Menus.CONTACT);
+        Header header = new Header();
+        log.info("Executing prerequisites for test class '{}'", this.getClass().getSimpleName());
+        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+        driver.get(base_url);
+        header.clickHamburgerMenuItem(Menus.CONTACT);
     }
 
     @Test

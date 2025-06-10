@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Set;
 import org.enums.FooterMenuItems;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.BeforeClass;
 
 public class Footer extends BasePage {
 

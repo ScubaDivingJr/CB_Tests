@@ -13,22 +13,16 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 
 import static org.framework.CommonVerifications.getCommonVerifications;
 
 public class SmokeTests extends BaseTestClass {
 
-    public static final Logger log = LogManager.getLogger(SmokeTests.class);
-
-    Header header = new Header();
-    Homepage home = new Homepage();
-    CommonVerifications commonVerifications = getCommonVerifications();
-    OnlineAppointmentsPage onlineAppointments = new OnlineAppointmentsPage();
 
     @Override
     @BeforeClass
     public void beforeClassSetup() {
+        Logger log = LogManager.getLogger(SmokeTests.class);
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
         WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         driver.get(base_url);
@@ -36,19 +30,23 @@ public class SmokeTests extends BaseTestClass {
 
     @Override
     public void beforeMethodSetup(){
+        //navigate to homepage before for all of these.
         WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         driver.get(base_url);
     }
 
     @Test
-    void HomePageloaded() throws InterruptedException {
-        Thread.sleep(1000);
+    void HomePageloaded() {
+        CommonVerifications commonVerifications = getCommonVerifications();
         commonVerifications
                 .verifyTextOnPage("Consultanta cosmetica personalizata");
     }
 
     @Test
     void sliderButtons() {
+        Homepage home = new Homepage();
+        Header header = new Header();
+        CommonVerifications commonVerifications = getCommonVerifications();
         header.clickHamburgerMenuItem(Menus.ACASA);
         home.switchToSlide(1);
         home.switchToSlide(0);
@@ -58,6 +56,8 @@ public class SmokeTests extends BaseTestClass {
 
     @Test
     void createOnlineAppointment() {
+        Header header = new Header();
+        OnlineAppointmentsPage onlineAppointments = new OnlineAppointmentsPage();
         header.clickHamburgerMenuItem(Menus.PROGRAMARI_ONLINE);
         //onlineAppointments.sendCompleteOnlineAppointmentWithDummyData(); --don't send it. it doesn't work. Stalls for 10 seconds.
         //Assert.assertTrue(onlineAppointments.verifyMessageAfterSubmit());

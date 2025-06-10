@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.bidi.log.Log;
 import org.openqa.selenium.interactions.Actions;
 import java.util.Map;
 import java.util.Set;

@@ -9,15 +9,14 @@ import java.time.format.DateTimeFormatter;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.pages.BasePage;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class Screenshotter extends BasePage implements ITestListener {
+public class Screenshotter implements ITestListener {
 
-    WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
     @Override
     public void onTestFailure(ITestResult result) {
+        WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
         if (result.getStatus() == 2) { // if the test execution has failed
             String baseFileName = result.getTestName() + "-"
                     + result.getTestClass().getName()

@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.framework.DriverFactory;
 import org.framework.Screenshotter;
 import org.framework.TestLogger;
-import org.openqa.selenium.WebDriver;
-import org.testng.SkipException;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
 
@@ -30,6 +28,11 @@ public abstract class BaseTestClass {
     @BeforeMethod()
     public void beforeMethodSetup() {
         //implement in each test class
+    }
+
+    @AfterClass (alwaysRun = true)
+    public void cleanUpAfterEachClass() {
+        DriverFactory.getInstance(browser).quitBrowser();
     }
 
     @AfterSuite
