@@ -5,6 +5,7 @@ import org.framework.CommonVerifications;
 import org.enums.Menus;
 import org.framework.DriverFactory;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.pages.Header;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -12,19 +13,18 @@ import org.testng.annotations.Test;
 
 public class NavBarTests extends BaseTestClass {
 
+    private static final Logger log = LogManager.getLogger(NavBarTests.class);
+
     @Override
-    @BeforeClass
-    public void beforeClassSetup() {
-        Logger log = LogManager.getLogger(ContactTests.class);
+    protected void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+
         driver.get(base_url);
     }
 
     @BeforeMethod
     public void navigateToHomePage() {
-        //for these tests, we have to navigate to homepage each time.
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+        // for these tests, we have to navigate to homepage each time.
         driver.get(base_url);
     }
 

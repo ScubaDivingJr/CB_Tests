@@ -5,38 +5,62 @@ import org.apache.logging.log4j.Logger;
 import org.framework.DriverFactory;
 import org.framework.Screenshotter;
 import org.framework.TestLogger;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Listeners({Screenshotter.class, TestLogger.class})
 
 public abstract class BaseTestClass {
-    private static final Logger log = LogManager.getLogger(BaseTestClass.class);
+
+    protected WebDriver driver;
+
     protected static final String browser = "chrome";
     protected static final String base_url = "https://cosmeticabrasov.ro";
 
+    private static final Logger log = LogManager.getLogger(BaseTestClass.class);
+
+
     @BeforeSuite
-    public void logStart() {
+    protected void logStart() {
+        try {
+            Files.createDirectories(Paths.get("target", "logs"));
+        } catch (IOException e) {
+            log.error("Unable to create log file. Attempting test run regardless.");
+        }
         log.info("Starting test suite...");
     }
 
     @BeforeClass
-    public void beforeClassSetup() {
-        //implement in each test class
+    public final void beforeClassSetup() {
+        // ensures driver instance per class (!), if we decide on parallelizing tests per method, we need to do move this in @BeforeMethod.
+        DriverFactory.getInstance().initializeDriver(browser);
+        driver = DriverFactory.getInstance().getDriver();
+
+        individualClassSetup();
     }
 
+    // implement this in all child test classes (navigate to page, whatever).
+    protected abstract void individualClassSetup();
+
     @BeforeMethod()
-    public void beforeMethodSetup() {
-        //implement in each test class
+    protected void beforeMethodSetup() {
+        // implement in each test class
     }
 
     @AfterClass (alwaysRun = true)
-    public void cleanUpAfterEachClass() {
-        DriverFactory.getInstance(browser).quitBrowser();
+    protected final void cleanUpAfterEachClass() {
+        // this is set to run after each class because we're grouping our threads by class (not methods), so we're ok wrt multi-threading.
+        DriverFactory.getInstance().quitBrowser();
     }
 
     @AfterSuite
-    public void cleanUp() {
-        DriverFactory.getInstance(browser).quitBrowser();
+    protected void cleanUp() {
+        // not sure if we need this actually but safer I guess.
+        DriverFactory.getInstance().quitBrowser();
     }
 }

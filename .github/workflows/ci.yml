@@ -36,6 +36,12 @@ jobs:
           name: surefire-report
           path: target/surefire-reports/emailable-report.html
 
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-log
+          path: target/logs/test-log.txt
+
       - name: Create Mailjet Payload
         run: |
           REPORT_PATH="target/surefire-reports/emailable-report.html"

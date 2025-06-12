@@ -4,21 +4,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.framework.CommonVerifications;
 import org.enums.Menus;
-import org.framework.DriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.pages.Header;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class HamburgerMenuTests extends BaseTestClass{
 
+    private static final Logger log = LogManager.getLogger(HamburgerMenuTests.class);
+
     @Override
-    @BeforeClass()
-    public void beforeClassSetup() {
-        Logger log = LogManager.getLogger(HamburgerMenuTests.class);
-        //navigate to the homepage once when starting these tests
+    protected void individualClassSetup(){
+
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         driver.get(base_url);
     }
 

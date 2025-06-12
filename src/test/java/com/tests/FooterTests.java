@@ -12,12 +12,11 @@ import org.testng.annotations.Test;
 
 public class FooterTests extends BaseTestClass {
 
+    private static final Logger log = LogManager.getLogger(FooterTests.class);
+
     @Override
-    @BeforeClass
-    public void beforeClassSetup() {
-        Logger log = LogManager.getLogger(FooterTests.class);
+    public void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
         driver.get(base_url);
     }
 
@@ -49,7 +48,7 @@ public class FooterTests extends BaseTestClass {
     void footerFacebook() {
         Footer footer = new Footer();
         footer.clickFooterItem(FooterMenuItems.FACEBOOK_BTN);
-        //footer.loginToFacebook();    -- getting a test Facebook account is painful. Shelving this.
+        //footer.loginToFacebook();    -- Facebook just blocked me from creating a test account. Whatever. Shelving this.
         footer.closeFacebookWindowsAndSwitchToOriginal();
     }
 }

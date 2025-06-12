@@ -18,20 +18,19 @@ import static org.framework.CommonVerifications.getCommonVerifications;
 
 public class SmokeTests extends BaseTestClass {
 
+    private static final Logger log = LogManager.getLogger(SmokeTests.class);
 
     @Override
-    @BeforeClass
-    public void beforeClassSetup() {
-        Logger log = LogManager.getLogger(SmokeTests.class);
+    public void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+
         driver.get(base_url);
     }
 
     @Override
     public void beforeMethodSetup(){
         //navigate to homepage before for all of these.
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+        log.info("going to homepage");
         driver.get(base_url);
     }
 

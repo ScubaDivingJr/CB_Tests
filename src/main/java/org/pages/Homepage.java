@@ -7,7 +7,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 public class Homepage extends BasePage {
@@ -23,15 +22,15 @@ public class Homepage extends BasePage {
     private final By clonedActiveSlideLocator = By.cssSelector("[class='owl-item cloned active']"); //yes, we need this.
 
     public void clickCurrentSlideDetailsBtn() {
-        //hours spent here: 6
+        // hours spent here: 6
 
-        //we have to wait for the animations to finish.
+        // we have to wait for the animations to finish. custom wait for this.
         webDriverWait(2).until(driver -> (
                 driver.findElements(animationInLocator).isEmpty() &&
                 driver.findElements(animationOutLocator).isEmpty()
                         ));
 
-        //when the animation finishes, we need to wait for one of two slides to be active: the "cloned" on or the "normal" one.
+        // when the animation finishes, we need to wait for one of two slides to be active: the "cloned" on or the "normal" one.
         WebElement activeSlide = webDriverWait(2).until(driver -> {
             List<WebElement> normalSlide = driver.findElements(normalActiveSlideLocator);
             if (!normalSlide.isEmpty()) {
@@ -46,12 +45,12 @@ public class Homepage extends BasePage {
             }
         });
 
-        //if we got a slide, click the button inside it.
+        // if we got a slide, click the button inside it.
         if (activeSlide != null) {
             try {
-                //avoid long waits. slide changes fast (~2 seconds).
-                WebElement activeSlideBtn = webDriverWait(1).until(ExpectedConditions.elementToBeClickable(activeSlide.findElement(activeSlideBtnLocator)));
-                activeSlideBtn.click();
+                // avoid long waits. slide changes fast (~2 seconds).
+                waitForClickability(activeSlideBtnLocator, 2);
+                click(activeSlideBtnLocator, false);
 
                 //I've spent enough time here. It seems that this falls back to the javascript method about half the time. I'll come back to it later. Maybe.
             } catch (org.openqa.selenium.ElementNotInteractableException | TimeoutException e) {
@@ -70,14 +69,15 @@ public class Homepage extends BasePage {
 
     public int getCurrentSlideIndex() {
 
-        //first, let's get div that contains the dots at the bottom of the slide
+        // first, let's get div that contains the dots at the bottom of the slide
         WebElement dotContainer = driver.findElement(By.className("owl-dots"));
-        //then, inside it, let's get the all the owl dots classnames in order
+        // then, inside it, let's get the all the owl dots classnames in order
         List<WebElement> owlDots = dotContainer.findElements(By.tagName("div"));
 
-        for (WebElement ele : owlDots) {
-            if (!owlDots.isEmpty() && ele.getAttribute("class").equals("owl-dot active")) {
-                return owlDots.indexOf(ele);
+        for (int i = 0; i < owlDots.size(); i++) {
+            String classAttr = owlDots.get(i).getAttribute("class");
+            if (classAttr != null && classAttr.contains("active")) {
+                return i;
             }
         }
         return -1;
@@ -87,7 +87,7 @@ public class Homepage extends BasePage {
 
         int currentSlideIndex = getCurrentSlideIndex();
 
-        //we need to hover over the slider to make prev/next buttons appear.
+        // we need to hover over the slider to make prev/next buttons appear.
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(By.id("slide-fullwidth"))).perform();
 

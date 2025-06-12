@@ -2,6 +2,8 @@ package org.framework;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.*;
+
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class TestLogger implements ITestListener, IInvokedMethodListener  {
 
@@ -27,21 +28,23 @@ public class TestLogger implements ITestListener, IInvokedMethodListener  {
 
     @Override
     public void onTestSuccess(ITestResult result) {
-       log.info(result.getMethod().getQualifiedName() + " - PASSED.");
+
+
+       log.info("{} - PASSED.", result.getMethod().getQualifiedName());
        testResults.add(transformTimeStamp(result.getStartMillis()) + " - " + result.getMethod().getQualifiedName() + " - PASSED.");
        testResultAgg.put("PASSED", testResultAgg.get("PASSED") + 1);
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        log.info(result.getMethod().getQualifiedName() + " - FAILED.");
+        log.error("{} - FAILED.", result.getMethod().getQualifiedName());
         testResults.add(transformTimeStamp(result.getStartMillis()) + " - " + result.getMethod().getQualifiedName() + " - FAILED.");
         testResultAgg.put("FAILED", testResultAgg.get("FAILED") + 1);
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        log.info(result.getMethod().getQualifiedName() + " - SKIPPED.");
+        log.info("{} - SKIPPED.", result.getMethod().getQualifiedName());
         testResults.add(transformTimeStamp(result.getStartMillis()) + " - " + result.getMethod().getQualifiedName() + " - SKIPPED.");
         testResultAgg.put("SKIPPED", testResultAgg.get("SKIPPED") + 1);
     }
@@ -52,11 +55,13 @@ public class TestLogger implements ITestListener, IInvokedMethodListener  {
             log.info("Executing test '{}' ", method.getTestMethod().getQualifiedName());
         }
     }
+
     @Override
     public void onFinish(ITestContext context) {
-        log.info(testResults);
-        log.info(testResultAgg);
-        writeLogFile(testResults, testResultAgg);
+        log.info("------------------------------------------------------------------");
+        log.info("SUMMARY: {}", testResultAgg);
+        log.info("------------------------------------------------------------------");
+        log.info("Individual results: {}", testResults);
     }
 
     private String transformTimeStamp(long millis) {
@@ -65,22 +70,11 @@ public class TestLogger implements ITestListener, IInvokedMethodListener  {
         return formatter.format(Instant.ofEpochMilli(millis));
     }
 
-    private void writeLogFile(List<String> testResults, Map<String, Integer> testResultAgg) {
-
-        //combine results
-        List<String> lines = new ArrayList<>(testResults);
-        testResultAgg.forEach((k, v) -> lines.add(k + ": " + v));
-
-        //write
-        try {
-            java.nio.file.Files.write(
-                    java.nio.file.Paths.get("target\\test-results.txt"),
-                    lines,
-                    java.nio.file.StandardOpenOption.CREATE,
-                    java.nio.file.StandardOpenOption.TRUNCATE_EXISTING
-            );
-        } catch (java.io.IOException e) {
-            log.error("Failed to write test results file", e);
-        }
+    private String calculateDuration(ITestResult result) {
+        long durationInMillis = result.getEndMillis() - result.getStartMillis();
+        Duration duration = Duration.ofMillis(durationInMillis);
+        long minutes = duration.toMinutes();
+        long seconds = duration.minusMinutes(minutes).getSeconds();
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }

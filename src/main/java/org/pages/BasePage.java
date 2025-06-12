@@ -6,15 +6,19 @@ import org.framework.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+import java.util.List;
 
 public class BasePage {
+
+    protected WebDriver driver;
 
     public static final String baseUrl = "https://cosmeticabrasov.ro";
     private static final Logger log = LogManager.getLogger(BasePage.class);
 
-    WebDriver driver = DriverFactory.getInstance("chrome").getDriver();
+    public BasePage() {
+        this.driver = DriverFactory.getInstance().getDriver();
+    }
 
     public void goToHomepage() {
         driver.get(baseUrl);
@@ -22,6 +26,99 @@ public class BasePage {
 
     protected WebDriverWait webDriverWait(int duration) {
         return new WebDriverWait(driver, Duration.ofSeconds(duration));
+    }
+
+    protected WebElement waitForVisibility(By locator, int customDuration) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+
+        try {
+            log.info("Waiting for visibility of element with locator '{}'...", locator);
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': element with locator '{}' not visible after waiting for '{}' seconds.",e.getClass().getSimpleName(), locator, customDuration);
+            log.error(e);
+            throw e;
+        }
+    }
+
+    protected WebElement waitForVisibility(WebElement element, int customDuration) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+
+        try {
+            log.info("Waiting for visibility of element...");
+            return wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': element not visible after waiting for '{}' seconds.", e.getClass().getSimpleName(), customDuration);
+            log.error(e);
+            throw e;
+        }
+    }
+
+    protected WebElement waitForClickability(By locator, int customDuration) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+
+        try {
+            log.info("Waiting for element with locator '{}' to be clickable...", locator);
+            return wait.until(ExpectedConditions.elementToBeClickable(locator));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': element with locator '{}' clickable after waiting for '{}' seconds.",e.getClass().getSimpleName(), locator, customDuration);
+            log.error(e);
+            throw e;
+        }
+    }
+
+    protected WebElement waitForClickability(WebElement element, int customDuration) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+
+        try {
+            log.info("Waiting for element to be clickable...");
+            return wait.until(ExpectedConditions.elementToBeClickable(element));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': element not clickable after waiting for '{}' seconds.",e.getClass().getSimpleName(), customDuration);
+            log.error(e);
+            throw e;
+        }
+    }
+
+    protected WebElement waitForPresence(By locator, int customDuration) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+
+        try {
+            log.info("Waiting for presence of element with locator '{}'...", locator);
+            return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': element with locator '{}' not visible after '{}' seconds.", e.getClass().getSimpleName(), locator, customDuration);
+            log.error(e);
+            throw e;
+        }
+    }
+
+    protected List<WebElement> waitForPresenceOfAll(By locator, int customDuration) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+
+        try {
+            log.info("Waiting for presence of elements with locator '{}'...", locator);
+            return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': elements with locator '{}' not present after '{}' seconds.", e.getClass().getSimpleName(), locator, customDuration);
+            log.error(e);
+            throw e;
+        }
+    }
+
+    protected List<WebElement> waitForVisibilityOfAll(By locator, int customDuration) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(customDuration));
+        try {
+            log.info("Waiting for visibility of elements with locator '{}'...", locator);
+            return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            log.error("'{}': elements with locator '{}' not visible after '{}' seconds.", e.getClass().getSimpleName(), locator, customDuration);
+            log.error(e);
+            throw e;
+        }
     }
 
     /**
@@ -48,7 +145,7 @@ public class BasePage {
                 }
             } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException | StaleElementReferenceException  e) {
                 log.error("Unable to click element with locator '{}' after waiting for 5 seconds.", elementLocator);
-                log.error(e.getMessage());
+                log.error(e);
             }
         }
         else {
@@ -60,7 +157,7 @@ public class BasePage {
                 log.info("Successfully clicked '{}' (without wait).", elementText);
             } catch (TimeoutException | NoSuchElementException | ElementClickInterceptedException | StaleElementReferenceException  e) {
                 log.error("Unable to click element with locator: '{}' without waiting.", elementLocator);
-                log.error(e.getMessage());
+                log.error(e);
             }
         }
     }
@@ -84,7 +181,7 @@ public class BasePage {
                 log.info("Successfully clicked '{}' (with wait).", elementText);
             } catch (TimeoutException | ElementClickInterceptedException | StaleElementReferenceException  e) {
                 log.error("Unable to click element '{}' after waiting {} seconds.", element, 5);
-                log.error(e.getMessage());
+                log.error(e);
             }
         }
         else {
@@ -95,7 +192,7 @@ public class BasePage {
                 log.info("Successfully clicked '{}'.", elementText);
             } catch (TimeoutException | ElementClickInterceptedException | StaleElementReferenceException  e) {
                 log.error("Unable to click element {} without waiting.", element);
-                log.error(e.getMessage());
+                log.error(e);
             }
         }
     }

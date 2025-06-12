@@ -1,11 +1,11 @@
 package org.framework;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 public class DriverFactory {
 
     private static DriverFactory instance;
@@ -17,28 +17,32 @@ public class DriverFactory {
         //
     }
 
-    public static DriverFactory getInstance(String browser) {
+    public static DriverFactory getInstance() {
 
         if (instance == null) {
-            synchronized (WebDriver.class) {
+            synchronized (DriverFactory.class) {
                 if (instance == null) {
                     instance = new DriverFactory();
                 }
             }
         }
-
-        if (tlDriver.get() == null) {
-            instance.initializeDriver(browser);
-        }
         return instance;
     }
 
-    private void initializeDriver(String browser) {
+    public void initializeDriver(String browser) {
+
+        if (tlDriver.get() != null) {
+            return;
+        }
+
        switch (browser) {
            case "chrome":
+               WebDriverManager.chromedriver()
+                       .clearResolutionCache()
+                       .setup();// setup compatible chromedriver.
                ChromeOptions options = new ChromeOptions();
                if (headless) {
-                   options.addArguments("--headless");
+                   options.addArguments("--headless=new");
                    options.addArguments("--no-sandbox");
                    options.addArguments("--disable-gpu");
                    options.addArguments("--window-size=1280,800");
@@ -49,9 +53,11 @@ public class DriverFactory {
                tlDriver.set(new ChromeDriver(options));
                break;
            case "firefox":
+               WebDriverManager.firefoxdriver();
                tlDriver.set(new FirefoxDriver());
                break;
            case "edge":
+               WebDriverManager.edgedriver();
                tlDriver.set(new EdgeDriver());
                break;
            default:

@@ -3,8 +3,6 @@ package com.tests;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
-import org.framework.DriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.pages.ContactPage;
 import org.pages.Header;
 import org.testng.Assert;
@@ -16,13 +14,14 @@ public class ContactTests extends BaseTestClass {
     private static final Logger log = LogManager.getLogger(ContactTests.class);
 
     @Override
-    @BeforeClass()
-    public void beforeClassSetup() {
-        Header header = new Header();
+    protected void individualClassSetup() {
+
         log.info("Executing prerequisites for test class '{}'", this.getClass().getSimpleName());
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+
         driver.get(base_url);
+        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.CONTACT);
+
     }
 
     @Test
@@ -46,7 +45,8 @@ public class ContactTests extends BaseTestClass {
     @Test
     void verifyContactFormSubmission() {
         ContactPage contactPage = new ContactPage();
-        Assert.assertTrue(contactPage.verifyContactFormWithDummyData());
+        contactPage.fillContactFormWithDummyData();
+        //contactPage.sendFormAndVerifySent(); //let's not spam this for now.
     }
 
     @Test

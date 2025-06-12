@@ -6,8 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.Data.TreatmentsDataProvider;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.List;
 
 public class ContactPage extends BasePage {
@@ -29,11 +27,12 @@ public class ContactPage extends BasePage {
         }
     }
 
-    private final By textLocator = By.cssSelector(".sppb-addon-text");
-    private final By topDivWithContainers = By.cssSelector(".sppb-row-container");
-    private final By containersList = By.cssSelector("div[class='sppb-col-md-4 sppb-col-sm-4']");
-    private final By formSuccessMsg = By.cssSelector(".sppb-text-success");
-    private final By gmapsIFrame = By.tagName("iframe");
+    private final By byTextLocator = By.cssSelector(".sppb-addon-text");
+    private final By byTopDivWithContainers = By.cssSelector(".sppb-row-container");
+    private final By byContainersList = By.cssSelector("div[class='sppb-col-md-4 sppb-col-sm-4']");
+    private final By byFormSuccessMsg = By.cssSelector(".sppb-text-success");
+    private final By byGmapsIFrame = By.tagName("iframe");
+    private final By bySubmitBtnLocator = By.id("btn-1513851268456");
 
     public boolean verifyAddressContent() {
         String expectedAddressContent = TreatmentsDataProvider.expectedContactPageContent().get(ContactContainers.ADDRESS);
@@ -53,35 +52,29 @@ public class ContactPage extends BasePage {
         return actualEmailContent.equals(expectedEmailContent);
     }
 
-    public boolean verifyContactFormWithDummyData() {
+    // temporary
+    public void fillContactFormWithDummyData() {
         log.info("Filling out the form.");
         driver.findElement(By.name("name")).sendKeys("Andrei");
         driver.findElement(By.name("email")).sendKeys("andrei.marcu1337@gmail.com");
         driver.findElement(By.name("subject")).sendKeys("Test Subject");
         driver.findElement(By.name("message")).sendKeys("Test Message.");
+    }
 
-        //let's not spam this. commenting out for now.
-
-/*        click(By.id("btn-1513851268456"), false);
-
+    public boolean sendFormAndVerifySent() {
+        click(bySubmitBtnLocator, false);
         log.info("Verifying if form was sent successfully...");
-        WebElement successMsg = webDriverWait(10).until(ExpectedConditions.visibilityOfElementLocated(formSuccessMsg));
-        if (successMsg.isDisplayed()) {
-            log.info("Form sent successfully.");
-            return true;
-        }
-        return false;*/
-        return true;
+        return waitForVisibility(byFormSuccessMsg, 10).isDisplayed();
     }
 
     public boolean verifyGoogleMapsIFrameIsPresent() {
 
-       //find the div and scroll to it
-       WebElement iframeParentDiv = webDriverWait(1).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".gm-style")));
+       // find the div and scroll to it
+       WebElement iframeParentDiv = waitForVisibility(By.cssSelector(".gm-style"), 5);
        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", iframeParentDiv);
 
-       //isDisplayed() doesn't work for this finicky embedded Google Maps iframe. let's just make sure we can find it for now.
-        if (!iframeParentDiv.findElements(By.tagName("iframe")).isEmpty()) {
+       // isDisplayed() doesn't work for this finicky embedded Google Maps iframe. let's just make sure we can find it for now.
+        if (!iframeParentDiv.findElements(byGmapsIFrame).isEmpty()) {
             log.info("Found Google Maps Iframe. This is fine for now.");
             return true;
         } else {
@@ -92,17 +85,21 @@ public class ContactPage extends BasePage {
         //TODO: try to fiddle with the map.
     }
 
-    //once we're in the specified container, the locator is the same for each text.
+    // once we're in the specified container, the locator is the same for each text.
     private String getContainerText(ContactContainers contactContainer) {
         WebElement container = getContainer(contactContainer);
-        return webDriverWait(2).until(ExpectedConditions.visibilityOf(container.findElement(textLocator))).getText();
+        return waitForVisibility(container.findElement(byTextLocator), 3).getText();
     }
 
-    //get the container we're interested in (e.g address / email / phone..
+    // get the container we're interested in (e.g address / email / phone)...
     private WebElement getContainer(ContactContainers contactContainers) {
 
-        WebElement topDiv = driver.findElement(topDivWithContainers);
-        List<WebElement> containers = topDiv.findElements(containersList);
+        WebElement topDiv = driver.findElement(byTopDivWithContainers);
+        List<WebElement> containers = topDiv.findElements(byContainersList);
         return containers.get(contactContainers.getValue());
+    }
+
+    public void testFail() {
+        waitForVisibility(By.cssSelector("asdfg"), 5);
     }
 }

@@ -16,12 +16,12 @@ import java.util.List;
 
 public class ServicesContentTests extends BaseTestClass {
 
+    private static final Logger log = LogManager.getLogger(ServicesContentTests.class);
+
     @Override
-    @BeforeClass
-    public void beforeClassSetup() {
-        Logger log = LogManager.getLogger(ServicesContentTests.class);
+    public void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-        WebDriver driver = DriverFactory.getInstance(browser).getDriver();
+
         driver.get(base_url);
     }
 
