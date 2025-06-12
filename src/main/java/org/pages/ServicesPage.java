@@ -39,7 +39,7 @@ public class ServicesPage extends BasePage {
         List<WebElement> treatmentTitlesClickable = ul.findElements(By.tagName("li"));
 
         if (descriptions.size() == Treatments.values().length) {
-            log.info("Size of descriptions String list is:{}. ", descriptions.size() + "This is what we expect given our Treatments enum values.");
+            log.info("Size of descriptions String list is:{}.", descriptions.size() + " This is what we expect given our Treatments enum values.");
         } else {
             log.warn("The size of description String list was '{}'. Either more were added some or we have a problem.", Treatments.values().length);
         }
@@ -51,10 +51,6 @@ public class ServicesPage extends BasePage {
                 click(treatmentTitlesClickable.get(i), true);
 
                 //each description lives 3 divs under descriptions List. We have to wait for them to load when we click each one. We care about the first paragraph only.
-/*                WebElement shortDescription = webDriverWait(2).until(ExpectedConditions.visibilityOf(
-                        descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")))
-                );*/
-
                 WebElement shortDescription = waitForVisibility(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")), 3);
 
                 // Add it to the list of actual descriptions.
@@ -65,6 +61,7 @@ public class ServicesPage extends BasePage {
     }
 
     public String getActualTreatmentDescription(@NotNull Treatments treatments) {
+
         WebElement ul = driver.findElement(treatmentListLocator);
         List<WebElement> li = ul.findElements(By.tagName("li"));
         click(li.get(treatments.getValue()), true);
@@ -134,8 +131,8 @@ public class ServicesPage extends BasePage {
 
     public boolean checkFacialTreatmentImages() {
 
-        ImageChecker imageChecker = new ImageChecker();
         List<String> webElementIds = List.of("section-id-1517131626142", "section-id-1517131626144", "section-id-1517131626156");
+        ImageChecker imageChecker = new ImageChecker();
 
         for (String webElementId : webElementIds) {
 

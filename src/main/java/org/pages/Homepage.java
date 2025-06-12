@@ -2,10 +2,7 @@ package org.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import java.util.List;
 
@@ -56,9 +53,10 @@ public class Homepage extends BasePage {
             } catch (org.openqa.selenium.ElementNotInteractableException | TimeoutException e) {
                 WebElement activeSlideBtn = activeSlide.findElement(activeSlideBtnLocator);
                 try {
-                    log.warn("Could not interact with slide button. Trying Javascript click fallback.");
+                    log.warn("Could not interact with slide button. Trying JavascriptExecutor click fallback.");
                     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", activeSlideBtn);
-                } catch (Exception exception) {
+                    log.info("Sucessfully clicked slider button with JavascriptExecutor.");
+                } catch (WebDriverException exception) {
                     log.error("Javascript click failed too. RIP.");
                 }
             }
