@@ -98,8 +98,4 @@ public class ContactPage extends BasePage {
         List<WebElement> containers = topDiv.findElements(byContainersList);
         return containers.get(contactContainers.getValue());
     }
-
-    public void testFail() {
-        waitForVisibility(By.cssSelector("asdfg"), 5);
-    }
 }

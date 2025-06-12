@@ -28,8 +28,6 @@ public class TestLogger implements ITestListener, IInvokedMethodListener  {
 
     @Override
     public void onTestSuccess(ITestResult result) {
-
-
        log.info("{} - PASSED.", result.getMethod().getQualifiedName());
        testResults.add(transformTimeStamp(result.getStartMillis()) + " - " + result.getMethod().getQualifiedName() + " - PASSED.");
        testResultAgg.put("PASSED", testResultAgg.get("PASSED") + 1);

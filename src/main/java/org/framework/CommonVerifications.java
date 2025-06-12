@@ -48,7 +48,7 @@ public class CommonVerifications extends BasePage {
             }
         } else {
             log.error("Driver was null in verifyUrl(). We shouldn't be here.");
-            Assert.fail("Driver was null in verifyUrl(). We shouldn't be here.");
+            Assert.fail();
         }
         return this;
     }
