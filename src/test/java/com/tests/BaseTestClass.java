@@ -2,9 +2,11 @@ package com.tests;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.framework.DriverFactory;
-import org.framework.Screenshotter;
-import org.framework.TestLogger;
+import org.enums.BrowserTypes;
+import org.framework.driver.ConfigManager;
+import org.framework.driver.DriverFactory;
+import org.framework.utils.Screenshotter;
+import org.framework.utils.TestLogger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
@@ -17,13 +19,13 @@ import java.nio.file.Paths;
 
 public abstract class BaseTestClass {
 
+    protected static final BrowserTypes browser = ConfigManager.getBrowser();
+    protected boolean headless = ConfigManager.isHeadless();
+    protected boolean mobile = ConfigManager.isMobile();
+    protected static final String base_url = "https://cosmeticabrasov.ro";
     protected WebDriver driver;
 
-    protected static final String browser = "chrome";
-    protected static final String base_url = "https://cosmeticabrasov.ro";
-
     private static final Logger log = LogManager.getLogger(BaseTestClass.class);
-
 
     @BeforeSuite
     protected void logStart() {
@@ -38,7 +40,7 @@ public abstract class BaseTestClass {
     @BeforeClass
     public final void beforeClassSetup() {
         // ensures driver instance per class (!), if we decide on parallelizing tests per method, we need to do move this in @BeforeMethod.
-        DriverFactory.getInstance().initializeDriver(browser);
+        DriverFactory.getInstance().initializeDriver(browser, headless);
         driver = DriverFactory.getInstance().getDriver();
 
         individualClassSetup();
@@ -60,7 +62,7 @@ public abstract class BaseTestClass {
 
     @AfterSuite
     protected void cleanUp() {
-        // not sure if we need this actually but safer I guess.
+        // we probably don't need this but safer I guess.
         DriverFactory.getInstance().quitBrowser();
     }
 }

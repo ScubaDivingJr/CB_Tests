@@ -1,12 +1,12 @@
 package org.framework;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.framework.driver.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.pages.BasePage;
 import org.pages.ServicesPage;
 import org.testng.Assert;
-import org.testng.asserts.Assertion;
 
 public class CommonVerifications extends BasePage {
 

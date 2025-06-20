@@ -1,4 +1,4 @@
-package org.framework;
+package org.framework.utils;
 import java.io.*;
 
 public class TestUtils {

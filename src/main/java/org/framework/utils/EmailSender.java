@@ -1,4 +1,4 @@
-package org.framework;
+package org.framework.utils;
 
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.MailjetClient;
