@@ -1,3 +1,4 @@
+/*
 package org.framework.utils;
 
 import java.io.File;
@@ -52,4 +53,4 @@ public class Screenshotter implements ITestListener {
             targetFile.setReadable(true, false);
         }
     }
-}
+}*/
