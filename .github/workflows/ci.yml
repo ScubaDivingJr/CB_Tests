@@ -23,11 +23,11 @@ jobs:
       - name: Build and test
         run: mvn clean test
 
-      - name: Upload Extent Report
+      - name: Upload Maven Report
         uses: actions/upload-artifact@v4
         with:
           name: surefire-report
-          path: target/extentReports/index.html
+          path: target/surefire-reports/emailable-report.html
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
@@ -37,7 +37,7 @@ jobs:
 
       - name: Create Mailjet Payload
         run: |
-          REPORT_PATH="target/extentReports/index.html"
+          REPORT_PATH="target/surefire-reports/emailable-report.html"
           TO_EMAIL="${{ secrets.MAILJET_RECIPIENT || 'andrei.marcu1337@gmail.com' }}"
           FROM_EMAIL="andrei.marcu1337@gmail.com"
           FROM_NAME="Andrei Marcu"
