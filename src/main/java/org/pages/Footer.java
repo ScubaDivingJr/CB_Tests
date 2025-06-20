@@ -9,11 +9,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import java.io.IOException;
 import java.util.Set;
 import org.enums.FooterMenuItems;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class Footer extends BasePage {
 
-    private static Logger log = LogManager.getLogger(Footer.class);
+    private static final Logger log = LogManager.getLogger(Footer.class);
 
     private String originalWindowHandle;
     @FindBy(css = "li[class='item-939']")

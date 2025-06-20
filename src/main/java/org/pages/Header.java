@@ -1,6 +1,4 @@
 package org.pages;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -9,8 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Header extends BasePage {
-
-    private static final Logger log = LogManager.getLogger(Header.class);
 
     private final Map<Menus, By> navBarLocators = Map.ofEntries(
             Map.entry(Menus.ACASA, By.cssSelector(".logo")),

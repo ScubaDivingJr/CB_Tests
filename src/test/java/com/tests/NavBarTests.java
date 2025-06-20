@@ -3,11 +3,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.framework.CommonVerifications;
 import org.enums.Menus;
-import org.framework.DriverFactory;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.pages.Header;
-import org.testng.annotations.BeforeClass;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,6 +27,7 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void homeButtonTest() {
+
         Header header = new Header();
         CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.ACASA);
@@ -38,6 +36,9 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void despreNoiTest() {
+        if (mobile) {
+            throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
+        }
         Header header = new Header();
         CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.DESPRE_NOI);
@@ -48,6 +49,9 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void serviciiParent() {
+        if (mobile) {
+            throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
+        }
         Header header = new Header();
         CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.SERVICII);
@@ -58,6 +62,9 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void serviciiTratementeFaciale() {
+        if (mobile) {
+            throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
+        }
         Header header = new Header();
         CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.TRATAMENTE_FACIALE);
@@ -68,6 +75,9 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void serviciiMezoterapieVirtuala() {
+        if (mobile) {
+            throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
+        }
         Header header = new Header();
         CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.MEZOTERAPIE_VIRTUALA);
@@ -78,6 +88,9 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void serviciiTerapieCuOxigen() {
+        if (mobile) {
+            throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
+        }
         Header header = new Header();
         CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.TERAPIE_CU_OXIGEN);

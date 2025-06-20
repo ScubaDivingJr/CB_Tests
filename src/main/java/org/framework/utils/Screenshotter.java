@@ -1,4 +1,4 @@
-package org.framework;
+package org.framework.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.framework.driver.DriverFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;

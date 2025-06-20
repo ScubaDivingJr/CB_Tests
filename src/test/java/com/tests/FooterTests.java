@@ -4,10 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.FooterMenuItems;
 import org.framework.CommonVerifications;
-import org.framework.DriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.pages.Footer;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class FooterTests extends BaseTestClass {
