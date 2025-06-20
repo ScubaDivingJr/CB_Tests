@@ -20,21 +20,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Debug MailJet environment variables
-        run: |
-          echo "MJ_APIKEY_PUBLIC=${MJ_APIKEY_PUBLIC:0:4}****"
-          echo "MJ_APIKEY_PRIVATE=${MJ_APIKEY_PRIVATE:0:4}****"
-          echo "::add-mask::$MJ_APIKEY_PUBLIC"
-          echo "::add-mask::$MJ_APIKEY_PRIVATE"
-
       - name: Build and test
         run: mvn clean test
 
-      - name: Upload Surefire Report
+      - name: Upload Extent Report
         uses: actions/upload-artifact@v4
         with:
           name: surefire-report
-          path: target/surefire-reports/emailable-report.html
+          path: target/extentReports/index.html
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
@@ -44,7 +37,7 @@ jobs:
 
       - name: Create Mailjet Payload
         run: |
-          REPORT_PATH="target/surefire-reports/emailable-report.html"
+          REPORT_PATH="target/extentReports/index.html"
           TO_EMAIL="${{ secrets.MAILJET_RECIPIENT || 'andrei.marcu1337@gmail.com' }}"
           FROM_EMAIL="andrei.marcu1337@gmail.com"
           FROM_NAME="Andrei Marcu"

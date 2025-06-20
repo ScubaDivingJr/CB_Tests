@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.enums.BrowserTypes;
 import org.framework.driver.ConfigManager;
 import org.framework.driver.DriverFactory;
-import org.framework.utils.Screenshotter;
-import org.framework.utils.TestLogger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.annotations.BeforeClass;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@Listeners({Screenshotter.class, TestLogger.class})
+//@Listeners({Screenshotter.class, TestLogger.class})
 
 public abstract class BaseTestClass {
 
