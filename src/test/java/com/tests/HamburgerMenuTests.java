@@ -5,24 +5,25 @@ import org.apache.logging.log4j.Logger;
 import org.framework.CommonVerifications;
 import org.enums.Menus;
 import org.pages.Header;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class HamburgerMenuTests extends BaseTestClass{
 
     private static final Logger log = LogManager.getLogger(HamburgerMenuTests.class);
+    private Header header;
+    private CommonVerifications commonVerifications;
 
     @Override
     protected void individualClassSetup(){
 
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
+        this.header = new Header();
+        this.commonVerifications = new CommonVerifications();
         driver.get(base_url);
     }
 
     @Test
     void hamburgerMenuHomeTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.ACASA);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/")
@@ -30,8 +31,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuDespreNoiTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.DESPRE_NOI);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/despre-noi.html")
@@ -40,8 +39,6 @@ public class HamburgerMenuTests extends BaseTestClass{
 
     @Test
     void hamburgerMenuServicesTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii.html")
@@ -49,8 +46,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuFacialTreatmentsTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.TRATAMENTE_FACIALE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale.html")
@@ -58,8 +53,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuMezotherapyTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MEZOTERAPIE_VIRTUALA);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/mezoterapie-virtuala.html")
@@ -67,8 +60,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuOxygenTherapyTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.TERAPIE_CU_OXIGEN);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/terapie-cu-oxigen-hiperboric.html")
@@ -76,8 +67,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuMicroneedlingTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MICRONEEDLING_SAU_MEZOTERAPIE_CU_ACE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/microneedling-sau-mezoterapie-cu-ace.html")
@@ -86,8 +75,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuDermatoTreatments() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.TRATAMENTE_DERMATO_COSMETICE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/tratamente-dermato-cosmetice.html")
@@ -95,8 +82,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMenuMakeupTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MAKE_UP);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/make-up.html")
@@ -104,8 +89,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerEyebrowStylingTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.STILIZARE_SPRANCENE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/stilizare-sprancene.html")
@@ -113,8 +96,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerMicrobladingTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.MICROBLADING);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/microblading.html")
@@ -122,8 +103,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerWaxingTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.EPILARE_CU_CEARA_DE_UNICA_FOLOSINTA);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/epilare-cu-ceara-de-unica-folosinta.html")
@@ -131,8 +110,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerOnlineAppoimentsTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.PROGRAMARI_ONLINE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/programari-online.html")
@@ -140,8 +117,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerBlogTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.BLOG);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/blog.html")
@@ -149,8 +124,6 @@ public class HamburgerMenuTests extends BaseTestClass{
     }
     @Test
     void hamburgerContactTest() {
-        CommonVerifications commonVerifications = new CommonVerifications();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.CONTACT);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/contact.html")
