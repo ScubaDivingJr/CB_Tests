@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-//@Listeners({Screenshotter.class, TestLogger.class})
-
 public abstract class BaseTestClass {
 
     protected static final BrowserTypes browser = ConfigManager.getBrowser();
