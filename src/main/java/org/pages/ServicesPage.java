@@ -23,8 +23,7 @@ public class ServicesPage extends BasePage {
     private final By individualDescriptionContainerLocator = By.cssSelector("[class^='sppb-tab-pane sppb-fade']");
 
     public void clickTreatment(@NotNull Treatments treatment) {
-        WebElement ul = driver.findElement(treatmentListLocator);
-        List<WebElement> li = ul.findElements(By.tagName("li"));
+        List<WebElement> li = getTreatmentContainerlist();
         click(li.get(treatment.getValue()), true);
     }
 
@@ -34,8 +33,7 @@ public class ServicesPage extends BasePage {
         List<WebElement> descriptions = getTreatmentDescriptionsContainer();
 
         // We locate this so we can click on the titles to load each description
-        WebElement ul = driver.findElement(treatmentListLocator);
-        List<WebElement> treatmentTitlesClickable = ul.findElements(By.tagName("li"));
+        List<WebElement> treatmentTitlesClickable = getTreatmentContainerlist();
 
         if (descriptions.size() == Treatments.values().length) {
             log.info("Size of descriptions String list is:{}.", descriptions.size() + " This is what we expect given our Treatments enum values.");
@@ -61,8 +59,7 @@ public class ServicesPage extends BasePage {
 
     public String getActualTreatmentDescription(@NotNull Treatments treatments) {
 
-        WebElement ul = driver.findElement(treatmentListLocator);
-        List<WebElement> li = ul.findElements(By.tagName("li"));
+        List<WebElement> li = getTreatmentContainerlist();
         click(li.get(treatments.getValue()), true);
 
         List<WebElement> treatmentDescriptionWrapper = waitForVisibilityOfAll(activeTreatmentDescriptionWrapperLocator, 3);
@@ -74,9 +71,7 @@ public class ServicesPage extends BasePage {
     public List<String> getActualTreatmentTitles() {
 
         List<String> actualTreatments = new ArrayList<>();
-
-        WebElement ul = driver.findElement(treatmentListLocator);
-        List<WebElement> li = ul.findElements(By.tagName("li"));
+        List<WebElement> li = getTreatmentContainerlist();
 
         for (WebElement webElement : li) {
             actualTreatments.add(webElement.getText());
@@ -86,8 +81,7 @@ public class ServicesPage extends BasePage {
 
     public boolean checkTreatmentImage(@NotNull Treatments treatment) {
 
-        WebElement ul = driver.findElement(treatmentListLocator);
-        List<WebElement> li = ul.findElements(By.tagName("li"));
+        List<WebElement> li = getTreatmentContainerlist();
         click(li.get(treatment.getValue()), true);
 
         List<WebElement> treatmentDescriptionWrapper = waitForPresenceOfAll(activeTreatmentDescriptionWrapperLocator, 2);
@@ -105,8 +99,7 @@ public class ServicesPage extends BasePage {
         List<WebElement> descriptions = getTreatmentDescriptionsContainer();
 
         // We locate this so we can click on the titles to load each description
-        WebElement ul = driver.findElement(treatmentListLocator);
-        List<WebElement> treatmentTitlesClickable = ul.findElements(By.tagName("li"));
+        List<WebElement> treatmentTitlesClickable = getTreatmentContainerlist();
 
         ImageChecker imageChecker = new ImageChecker();
         if (!descriptions.isEmpty()) {
@@ -154,5 +147,10 @@ public class ServicesPage extends BasePage {
         WebElement outerContainer = driver.findElement(treatmentOuterContainerLocator);
         // Get all description containers under it.
         return outerContainer.findElements(individualDescriptionContainerLocator);
+    }
+
+    private List<WebElement> getTreatmentContainerlist() {
+        WebElement ul = driver.findElement(treatmentListLocator);
+        return ul.findElements(By.tagName("li"));
     }
 }

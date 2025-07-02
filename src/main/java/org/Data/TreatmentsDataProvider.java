@@ -1,5 +1,6 @@
 package org.Data;
 
+import org.enums.ContactContainers;
 import org.pages.ContactPage;
 
 import java.util.*;
@@ -36,11 +37,11 @@ public class TreatmentsDataProvider {
         return map;
     }
 
-    public static Map<ContactPage.ContactContainers, String> expectedContactPageContent() {
-        Map<ContactPage.ContactContainers, String> expectedContentMap = new HashMap<>();
-        expectedContentMap.put(ContactPage.ContactContainers.ADDRESS, "Str. Traian nr. 44, Brasov. Cod posta: 500332 (intrare din strada Lunii, vis-a-vis de Hotel Traian)");
-        expectedContentMap.put(ContactPage.ContactContainers.PHONE, "0724 080 699");
-        expectedContentMap.put(ContactPage.ContactContainers.EMAIL, "office@cosmeticabrasov.ro");
+    public static Map<ContactContainers, String> expectedContactPageContent() {
+        Map<ContactContainers, String> expectedContentMap = new HashMap<>();
+        expectedContentMap.put(ContactContainers.ADDRESS, "Str. Traian nr. 44, Brasov. Cod posta: 500332 (intrare din strada Lunii, vis-a-vis de Hotel Traian)");
+        expectedContentMap.put(ContactContainers.PHONE, "0724 080 699");
+        expectedContentMap.put(ContactContainers.EMAIL, "office@cosmeticabrasov.ro");
 
         return expectedContentMap;
     }
