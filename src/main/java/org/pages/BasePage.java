@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class BasePage {
+public abstract class BasePage {
 
     protected WebDriver driver;
 
@@ -195,5 +195,9 @@ public class BasePage {
                 log.error(e);
             }
         }
+    }
+
+    protected void sendKeys(By locator, String keysToSend) {
+        driver.findElement(locator).sendKeys(keysToSend);
     }
 }

@@ -2,6 +2,7 @@ package org.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.enums.ContactContainers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -12,27 +13,16 @@ public class ContactPage extends BasePage {
 
     private static final Logger log = LogManager.getLogger(ContactPage.class);
 
-    public enum ContactContainers {
-        ADDRESS(0),
-        PHONE (1),
-        EMAIL(2);
-        final int value;
-
-        ContactContainers(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return this.value;
-        }
-    }
-
     private final By byTextLocator = By.cssSelector(".sppb-addon-text");
     private final By byTopDivWithContainers = By.cssSelector(".sppb-row-container");
     private final By byContainersList = By.cssSelector("div[class='sppb-col-md-4 sppb-col-sm-4']");
     private final By byFormSuccessMsg = By.cssSelector(".sppb-text-success");
     private final By byGmapsIFrame = By.tagName("iframe");
     private final By bySubmitBtnLocator = By.id("btn-1513851268456");
+    private final By nameFieldLocator = By.name("name");
+    private final By emailFieldLocator = By.name("email");
+    private final By subjectFieldLocator = By.name("subject");
+    private final By messageFieldLocator = By.name("message");
 
     public boolean verifyAddressContent() {
         String expectedAddressContent = TreatmentsDataProvider.expectedContactPageContent().get(ContactContainers.ADDRESS);
@@ -55,10 +45,11 @@ public class ContactPage extends BasePage {
     // temporary
     public void fillContactFormWithDummyData() {
         log.info("Filling out the form.");
-        driver.findElement(By.name("name")).sendKeys("Andrei");
-        driver.findElement(By.name("email")).sendKeys("andrei.marcu1337@gmail.com");
-        driver.findElement(By.name("subject")).sendKeys("Test Subject");
-        driver.findElement(By.name("message")).sendKeys("Test Message.");
+
+        sendKeys(nameFieldLocator, "Andrei");
+        sendKeys(emailFieldLocator, "andrei.marcu1337@gmail.com");
+        sendKeys(subjectFieldLocator, "TestSubject");
+        sendKeys(messageFieldLocator, "Test Message");
     }
 
     public boolean sendFormAndVerifySent() {

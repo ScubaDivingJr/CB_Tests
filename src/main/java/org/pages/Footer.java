@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.JavascriptExecutor;
-import java.io.IOException;
 import java.util.Set;
 import org.enums.FooterMenuItems;
 
@@ -51,10 +50,10 @@ public class Footer extends BasePage {
     }
 
     /**
-     * logins to Facebook with stored TestUtils credentials. Just for local testing only.
+     * logs in to Facebook with stored TestUtils credentials. Just for local testing only.
      * Important: Call closeFacebookWindowsAndSwitchToOriginal() after this to return to context.
      */
-    public void loginToFacebook() throws IOException {
+    public void loginToFacebook() {
 
         //Login if we're not logged in
         if (driver.getPageSource().contains("You must log in to continue.")) {
