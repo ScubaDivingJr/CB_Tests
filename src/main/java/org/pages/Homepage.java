@@ -47,7 +47,7 @@ public class Homepage extends BasePage {
             try {
                 // avoid long waits. slide changes fast (~2 seconds).
 
-                waitForClickability(activeSlideBtnLocator, 2).click();
+                webElementActions.waitForClickability(activeSlideBtnLocator, 2).click();
 
                 //I've spent enough time here. It seems that this falls back to the javascript method about half the time. I'll come back to it later. Maybe.
             } catch (org.openqa.selenium.ElementNotInteractableException | TimeoutException e) {
@@ -110,7 +110,7 @@ public class Homepage extends BasePage {
         }
 
         for (int i = 0; i < slideChangeSteps; i++) {
-            click(navigationBtn, true);
+            webElementActions.clickWithWait(navigationBtn, 1);
         }
     }
 }

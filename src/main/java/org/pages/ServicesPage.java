@@ -24,7 +24,7 @@ public class ServicesPage extends BasePage {
 
     public void clickTreatment(@NotNull Treatments treatment) {
         List<WebElement> li = getTreatmentContainerlist();
-        click(li.get(treatment.getValue()), true);
+        webElementActions.clickWithWait(li.get(treatment.getValue()), 2);
     }
 
     public List<String> getActualTreatmentDescriptions() {
@@ -46,13 +46,9 @@ public class ServicesPage extends BasePage {
 
                 // We have to click so they can render.
                 webElementActions.clickWithWait(treatmentTitlesClickable.get(i), 2);
-                //click(treatmentTitlesClickable.get(i), true);
 
                 //each description lives 3 divs under descriptions List. We have to wait for them to load when we click each one. We care about the first paragraph only.
-
                 WebElement shortDescription = webElementActions.waitForVisibility(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")), 3);
-                //WebElement shortDescription = waitForVisibility(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")), 3);
-
 
                 // Add it to the list of actual descriptions.
                 actualTreatmentDescriptions.add(shortDescription.getText());
@@ -65,13 +61,10 @@ public class ServicesPage extends BasePage {
 
         List<WebElement> li = getTreatmentContainerlist();
         webElementActions.clickWithWait(li.get(treatments.getValue()), 2);
-        //click(li.get(treatments.getValue()), true);
 
         List<WebElement> treatmentDescriptionWrapper = webElementActions.waitForVisibilityOfAll(activeTreatmentDescriptionWrapperLocator, 3);
-        //List<WebElement> treatmentDescriptionWrapper = waitForVisibilityOfAll(activeTreatmentDescriptionWrapperLocator, 3);
 
         WebElement treatmentDescription = webElementActions.waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
-        //WebElement treatmentDescription = waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
         return treatmentDescription.getText();
     }
 
@@ -90,15 +83,11 @@ public class ServicesPage extends BasePage {
 
         List<WebElement> li = getTreatmentContainerlist();
         webElementActions.clickWithWait(li.get(treatment.getValue()), 2);
-        //click(li.get(treatment.getValue()), true);
 
         List<WebElement> treatmentDescriptionWrapper = webElementActions.waitForPresenceOfAll(activeTreatmentDescriptionWrapperLocator, 2);
-        //List<WebElement> treatmentDescriptionWrapper = waitForPresenceOfAll(activeTreatmentDescriptionWrapperLocator, 2);
 
         WebElement treatmentDescription = webElementActions.waitForVisibility(treatmentDescriptionWrapper.getFirst(), 2);
-        //WebElement treatmentDescription = waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
-
-        String imageSrc =  treatmentDescription.findElement(By.tagName("img")).getAttribute("src");
+        String imageSrc = treatmentDescription.findElement(By.tagName("img")).getAttribute("src");
 
         ImageChecker imageChecker = new ImageChecker();
         return imageChecker.isImageLoaded(imageSrc);
@@ -117,7 +106,6 @@ public class ServicesPage extends BasePage {
 
                 // we have to click so they can render.
                 webElementActions.clickWithWait(treatmentTitlesClickable.get(i), 2);
-                //click(treatmentTitlesClickable.get(i), true);
                 WebElement img = descriptions.get(i).findElement(By.tagName("img"));
 
                 String imageSrc = img != null ? img.getAttribute("src") : "";
@@ -142,7 +130,7 @@ public class ServicesPage extends BasePage {
             WebElement section = driver.findElement(By.id(webElementIds.get(webElementIds.indexOf(webElementId))));
             WebElement imageHolderElement = section.findElement(imageHolderLocator);
 
-            //getting the url in brackets brackets inside the style attribute
+            //getting the url in brackets inside the style attribute
             String imageSrc = imageHolderElement.getAttribute("style");
             Pattern pattern = Pattern.compile("url\\(['\"]?([^'\")]+)['\"]?\\)");
             Matcher matcher = pattern.matcher(imageSrc);

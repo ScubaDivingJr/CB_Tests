@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.JavascriptExecutor;
 import java.util.Set;
 import org.enums.FooterMenuItems;
 
@@ -60,13 +59,13 @@ public class Footer extends BasePage {
 
             //Decline cookie pop-up window
             try {
-                click(By.xpath("//*[@id=\"facebook\"]/body/div[3]/div[2]/div/div/div/div/div[3]/div[2]/div/div[1]/div[2]/div/div[1]/div/span/span"), true);
+                webElementActions.clickWithWait(By.xpath("//*[@id=\"facebook\"]/body/div[3]/div[2]/div/div/div/div/div[3]/div[2]/div/div[1]/div[2]/div/div[1]/div/span/span"), 2);
                 webElementActions.sendKeys(email,"test");
                 webElementActions.sendKeys(password, "test");
             } catch (Exception e) {
                 log.error("Could not click cookie pop-up in Facebook / entering user&pass. Whatever, moving on.");
             }
-            //driver.findElement(By.id("loginbutton")).click();
+            //webElementActions.click(By.id("loginbutton"));
         }
         log.warn("You must call closeFacebookWindowsAndSwitchToOriginal after this.");
     }

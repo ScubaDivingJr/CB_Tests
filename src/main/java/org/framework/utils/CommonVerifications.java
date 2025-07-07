@@ -1,11 +1,10 @@
-package org.framework;
+package org.framework.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.framework.driver.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.pages.BasePage;
-import org.pages.ServicesPage;
 import org.testng.Assert;
 
 public class CommonVerifications extends BasePage {
@@ -15,6 +14,7 @@ public class CommonVerifications extends BasePage {
     WebDriver driver = DriverFactory.getInstance().getDriver();
 
     public static CommonVerifications getCommonVerifications() { return new CommonVerifications();}
+
     public CommonVerifications verifyIsDisplayed(By element){
         Assert.assertTrue(driver.findElement(element).isDisplayed());
         return this;

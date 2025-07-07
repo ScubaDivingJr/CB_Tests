@@ -24,19 +24,16 @@ public class OnlineAppointmentsPage extends BasePage {
 
     public OnlineAppointmentsPage enterName(String name) {
         webElementActions.sendKeys(nameLocator, name);
-        //driver.findElement(nameLocator).sendKeys(name);
         return this;
     }
 
     public OnlineAppointmentsPage enterPhoneNumber(String phone) {
         webElementActions.sendKeys(phoneNumberLocator, phone);
-        //driver.findElement(phoneNumberLocator).sendKeys(phone);
         return this;
     }
 
     public OnlineAppointmentsPage enterEmail(String email) {
         webElementActions.sendKeys(emailLocator, email);
-        //driver.findElement(emailLocator).sendKeys(email);
         return this;
     }
 
@@ -46,14 +43,11 @@ public class OnlineAppointmentsPage extends BasePage {
         String formattedDate = date.format(formatter);
 
         webElementActions.sendKeys(dateLocator, formattedDate);
-        //driver.findElement(dateLocator).sendKeys(formattedDate);
-
         return this;
     }
     //maybe one prefers magic strings of type dd/mm/yyyy
     public OnlineAppointmentsPage enterPreferredDate(String date) {
         webElementActions.sendKeys(dateLocator, date);
-        //driver.findElement(dateLocator).sendKeys(date);
         return this;
     }
 
@@ -73,13 +67,11 @@ public class OnlineAppointmentsPage extends BasePage {
     public OnlineAppointmentsPage enterAdditionalDetails(String details) {
         //any string works here
         webElementActions.sendKeys(servicesAndDetailsLocator, details);
-        //driver.findElement(servicesAndDetailsLocator).sendKeys(details);
         return this;
     }
 
     public void clickSubmit() {
         webElementActions.click(submitBtnLocator);
-        //click(submitBtnLocator, false);
     }
 
     public boolean verifyMessageAfterSubmit() {

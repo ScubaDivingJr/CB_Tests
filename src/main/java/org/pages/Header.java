@@ -62,22 +62,18 @@ public class Header extends BasePage {
 
         if (!driver.findElement(By.className("offcanvas-menu")).isDisplayed()) {
             webElementActions.clickWithWait(By.cssSelector("i[class='fa fa-bars']"), 2);
-            //click(By.cssSelector("i[class='fa fa-bars']"), true);
         }
         if (firstLevelMenuChildItems.contains(itemToClick)) {
             expandServicesInHamburgerMenu();
             webElementActions.clickWithWait(hamburgerMenuLocators.get(itemToClick), 2);
-            //click(hamburgerMenuLocators.get(itemToClick), true);
         }
         else if (secondLevelMenuChildren.contains(itemToClick)) {
             expandServicesInHamburgerMenu();
             expandFacialTreatmentsHamburgerMenu();
             webElementActions.clickWithWait(hamburgerMenuLocators.get(itemToClick), 2);
-            //click(hamburgerMenuLocators.get(itemToClick), true);
         }
         else {
             webElementActions.clickWithWait(hamburgerMenuLocators.get(itemToClick), 2);
-            //click(hamburgerMenuLocators.get(itemToClick), true);
         }
     }
 
@@ -85,15 +81,15 @@ public class Header extends BasePage {
 
         if (firstLevelMenuChildItems.contains(itemToClick)) {
             selectServicesExpandable();
-            click(navBarLocators.get(itemToClick), true);
+            webElementActions.clickWithWait(navBarLocators.get(itemToClick), 2);
         }
         else if (secondLevelMenuChildren.contains(itemToClick)) {
             selectServicesExpandable();
             selectTreatmentsExpandable();
-            click(navBarLocators.get(itemToClick), true);
+            webElementActions.clickWithWait(navBarLocators.get(itemToClick), 2);
         }
         else {
-            click(navBarLocators.get(itemToClick), true);
+            webElementActions.clickWithWait(navBarLocators.get(itemToClick), 2);
         }
     }
 
@@ -110,7 +106,6 @@ public class Header extends BasePage {
 
     private void expandServicesInHamburgerMenu() {
         webElementActions.clickWithWait(By.cssSelector("span[class='offcanvas-menu-toggler collapsed']"), 2);
-        //click(By.cssSelector("span[class='offcanvas-menu-toggler collapsed']"), true);
     }
 
     private void expandFacialTreatmentsHamburgerMenu() {
@@ -119,6 +114,5 @@ public class Header extends BasePage {
         WebElement facialTreatmentsBtn = driver.findElement(By.cssSelector("li[class^='item-985']"));
         WebElement facialTreatmentsExpander = facialTreatmentsBtn.findElement(By.cssSelector("[class='offcanvas-menu-toggler']"));
         webElementActions.clickWithWait(facialTreatmentsExpander, 2);
-        //click(facialTreatmentsExpander, true);
     }
 }
