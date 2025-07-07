@@ -8,17 +8,21 @@ import org.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-
-import static org.framework.CommonVerifications.getCommonVerifications;
-
 public class SmokeTests extends BaseTestClass {
 
     private static final Logger log = LogManager.getLogger(SmokeTests.class);
+    private CommonVerifications commonVerifications;
+    private Header header;
+    private OnlineAppointmentsPage onlineAppointmentsPage;
+    private Homepage homepage;
 
     @Override
     public void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-
+        this.commonVerifications = new CommonVerifications();
+        this.header = new Header();
+        this.onlineAppointmentsPage = new OnlineAppointmentsPage();
+        this.homepage = new Homepage();
         driver.get(base_url);
     }
 
@@ -31,27 +35,20 @@ public class SmokeTests extends BaseTestClass {
 
     @Test
     void HomePageloaded() {
-        CommonVerifications commonVerifications = getCommonVerifications();
-        commonVerifications
-                .verifyTextOnPage("Consultanta cosmetica personalizata");
+        commonVerifications.verifyTextOnPage("Consultanta cosmetica personalizata");
     }
 
     @Test
     void sliderButtons() {
-        Homepage home = new Homepage();
-        Header header = new Header();
-        CommonVerifications commonVerifications = getCommonVerifications();
         header.clickHamburgerMenuItem(Menus.ACASA);
-        home.switchToSlide(1);
-        home.switchToSlide(0);
-        home.clickCurrentSlideDetailsBtn();
+        homepage.switchToSlide(1);
+        homepage.switchToSlide(0);
+        homepage.clickCurrentSlideDetailsBtn();
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }
 
     @Test
     void createOnlineAppointment() {
-        Header header = new Header();
-        OnlineAppointmentsPage onlineAppointments = new OnlineAppointmentsPage();
         header.clickHamburgerMenuItem(Menus.PROGRAMARI_ONLINE);
         //onlineAppointments.sendCompleteOnlineAppointmentWithDummyData(); --don't send it. it doesn't work. Stalls for 10 seconds.
         //Assert.assertTrue(onlineAppointments.verifyMessageAfterSubmit());

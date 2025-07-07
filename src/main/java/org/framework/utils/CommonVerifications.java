@@ -12,7 +12,6 @@ public class CommonVerifications extends BasePage {
 
     private static final Logger log = LogManager.getLogger(CommonVerifications.class);
 
-    ServicesPage serv = new ServicesPage();
     WebDriver driver = DriverFactory.getInstance().getDriver();
 
     public static CommonVerifications getCommonVerifications() { return new CommonVerifications();}
@@ -26,7 +25,7 @@ public class CommonVerifications extends BasePage {
     }
     public CommonVerifications verifyTextOnPage(String text) {
         try {
-            Assert.assertTrue(driver.getPageSource().contains(text));
+            Assert.assertTrue(driver.getPageSource().contains(text), "Unable to find text " + text + " on page " + driver.getCurrentUrl() + ".");
             log.info("Verify text '{}' on page successful.", text);
         } catch(AssertionError e) {
             log.error("Cloud not find text '{}' on page.", text);
@@ -39,8 +38,8 @@ public class CommonVerifications extends BasePage {
 
         if (driver != null) {
             try {
-                Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
-                log.info("VerifyUrl() assertion successful.");
+                Assert.assertEquals(driver.getCurrentUrl(), expectedUrl, "URL " + expectedUrl + " did not match " + driver.getCurrentUrl() + ".");
+                log.info("URL '{}' matched current page URL.", expectedUrl);
             } catch(AssertionError e) {
                 log.error("Expected URL ('{}') did not match current URL ('{}').", expectedUrl, driver.getCurrentUrl());
                 log.error(e.getMessage());

@@ -6,24 +6,24 @@ import org.enums.Menus;
 import org.testng.annotations.Test;
 import org.pages.*;
 import org.testng.Assert;
-
 import java.util.List;
 
 public class ServicesContentTests extends BaseTestClass {
 
     private static final Logger log = LogManager.getLogger(ServicesContentTests.class);
+    private ServicesPage servicesPage;
+    private Header header;
 
     @Override
     public void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-
+        this.header = new Header();
+        this.servicesPage = new ServicesPage();
         driver.get(base_url);
     }
 
     @Test
     void verifyTreatmentTitles() {
-        ServicesPage servicesPage = new ServicesPage();
-        Header header = new Header();
         //checking that all treatments titles are there against a list that we have.
         header.clickHamburgerMenuItem(Menus.SERVICII);
         List<String> actualTreatmentTitles = servicesPage.getActualTreatmentTitles();
@@ -38,8 +38,6 @@ public class ServicesContentTests extends BaseTestClass {
 
     @Test
     void verifyTreatmentDescriptions() {
-        ServicesPage servicesPage = new ServicesPage();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         List<String> actualTreatmentDescriptions = servicesPage.getActualTreatmentDescriptions();
         List<String> expectedTreatmentDescriptions = TreatmentsDataProvider.expectedTreatmentDescriptionExcerpts().values().stream().toList();
@@ -54,16 +52,12 @@ public class ServicesContentTests extends BaseTestClass {
 
     @Test
     void verifyTreatmentDescriptionImages() {
-        ServicesPage servicesPage = new ServicesPage();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         Assert.assertTrue(servicesPage.checkTreatmentImages(), "Something went wrong checking the images.");
     }
 
     @Test
     void verifyFacialTreatmentsImages() {
-        ServicesPage servicesPage = new ServicesPage();
-        Header header = new Header();
         header.clickHamburgerMenuItem(Menus.SERVICII);
         Assert.assertTrue(servicesPage.checkFacialTreatmentImages(), "Something went wrong checking the images.");
     }

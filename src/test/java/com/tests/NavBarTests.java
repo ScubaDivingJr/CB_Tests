@@ -11,11 +11,14 @@ import org.testng.annotations.Test;
 public class NavBarTests extends BaseTestClass {
 
     private static final Logger log = LogManager.getLogger(NavBarTests.class);
+    private Header header;
+    private CommonVerifications commonVerifications;
 
     @Override
     protected void individualClassSetup() {
         log.info("Executing prerequisites for '{}'...", this.getClass().getSimpleName());
-
+        this.commonVerifications = new CommonVerifications();
+        this.header = new Header();
         driver.get(base_url);
     }
 
@@ -27,9 +30,6 @@ public class NavBarTests extends BaseTestClass {
 
     @Test
     void homeButtonTest() {
-
-        Header header = new Header();
-        CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.ACASA);
         commonVerifications.verifyUrl("https://cosmeticabrasov.ro/");
     }
@@ -39,8 +39,6 @@ public class NavBarTests extends BaseTestClass {
         if (mobile) {
             throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
         }
-        Header header = new Header();
-        CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.DESPRE_NOI);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/despre-noi.html")
@@ -52,8 +50,6 @@ public class NavBarTests extends BaseTestClass {
         if (mobile) {
             throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
         }
-        Header header = new Header();
-        CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.SERVICII);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii.html")
@@ -65,8 +61,6 @@ public class NavBarTests extends BaseTestClass {
         if (mobile) {
             throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
         }
-        Header header = new Header();
-        CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.TRATAMENTE_FACIALE);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale.html")
@@ -78,8 +72,6 @@ public class NavBarTests extends BaseTestClass {
         if (mobile) {
             throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
         }
-        Header header = new Header();
-        CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.MEZOTERAPIE_VIRTUALA);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/mezoterapie-virtuala.html")
@@ -91,8 +83,6 @@ public class NavBarTests extends BaseTestClass {
         if (mobile) {
             throw new SkipException("Skpping navbar tests on mobile. It becomes the hamburger menu.");
         }
-        Header header = new Header();
-        CommonVerifications commonVerifications = new CommonVerifications();
         header.clickNavBarMenuItem(Menus.TERAPIE_CU_OXIGEN);
         commonVerifications
                 .verifyUrl("https://cosmeticabrasov.ro/servicii/tratamente-faciale/terapie-cu-oxigen-hiperboric.html")
