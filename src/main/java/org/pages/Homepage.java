@@ -46,6 +46,7 @@ public class Homepage extends BasePage {
         if (activeSlide != null) {
             try {
                 // avoid long waits. slide changes fast (~2 seconds).
+
                 waitForClickability(activeSlideBtnLocator, 2).click();
 
                 //I've spent enough time here. It seems that this falls back to the javascript method about half the time. I'll come back to it later. Maybe.

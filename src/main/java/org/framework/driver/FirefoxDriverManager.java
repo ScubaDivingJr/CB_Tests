@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-public class FirefoxDriverManager implements IBrowserDriver {
+public class FirefoxDriverManager implements BrowserDriver {
     @Override
     public WebDriver getDriver(boolean headless) {
         WebDriverManager.firefoxdriver()

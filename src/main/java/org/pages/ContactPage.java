@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.ContactContainers;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.Data.TreatmentsDataProvider;
 import java.util.List;
@@ -44,47 +43,41 @@ public class ContactPage extends BasePage {
 
     // temporary
     public void fillContactFormWithDummyData() {
-        log.info("Filling out the form.");
-
-        sendKeys(nameFieldLocator, "Andrei");
-        sendKeys(emailFieldLocator, "andrei.marcu1337@gmail.com");
-        sendKeys(subjectFieldLocator, "TestSubject");
-        sendKeys(messageFieldLocator, "Test Message");
+        webElementActions.sendKeys(nameFieldLocator, "Andrei");
+        webElementActions.sendKeys(emailFieldLocator, "andrei.marcu1337@gmail.com");
+        webElementActions.sendKeys(subjectFieldLocator, "TestSubject");
+        webElementActions.sendKeys(messageFieldLocator, "Test Message");
     }
 
     public boolean sendFormAndVerifySent() {
-        click(bySubmitBtnLocator, false);
-        log.info("Verifying if form was sent successfully...");
-        return waitForVisibility(byFormSuccessMsg, 10).isDisplayed();
+        webElementActions.click(bySubmitBtnLocator);
+        return webElementActions.waitForPresence(byFormSuccessMsg, 10).isDisplayed();
     }
 
     public boolean verifyGoogleMapsIFrameIsPresent() {
 
        // find the div and scroll to it
-       WebElement iframeParentDiv = waitForVisibility(By.cssSelector(".gm-style"), 5);
-       ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", iframeParentDiv);
+        WebElement iFrameParentDiv = webElementActions.waitForPresence(By.cssSelector(".gm-style"), 3);
+        webElementActions.jsScrollIntoView(iFrameParentDiv);
 
-       // isDisplayed() doesn't work for this finicky embedded Google Maps iframe. let's just make sure we can find it for now.
-        if (!iframeParentDiv.findElements(byGmapsIFrame).isEmpty()) {
+        if (!iFrameParentDiv.findElements(byGmapsIFrame).isEmpty()) {
             log.info("Found Google Maps Iframe. This is fine for now.");
             return true;
         } else {
             log.error("Unable to find Google Maps Iframe.");
             return false;
         }
-
         //TODO: try to fiddle with the map.
     }
 
     // once we're in the specified container, the locator is the same for each text.
     private String getContainerText(ContactContainers contactContainer) {
         WebElement container = getContainer(contactContainer);
-        return waitForVisibility(container.findElement(byTextLocator), 3).getText();
+        return webElementActions.waitForVisibility(container.findElement(byTextLocator), 3).getText();
     }
 
     // get the container we're interested in (e.g address / email / phone)...
     private WebElement getContainer(ContactContainers contactContainers) {
-
         WebElement topDiv = driver.findElement(byTopDivWithContainers);
         List<WebElement> containers = topDiv.findElements(byContainersList);
         return containers.get(contactContainers.getValue());

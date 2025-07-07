@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.enums.Menus;
 import org.framework.CommonVerifications;
+import org.framework.actions.WebElementActions;
+import org.framework.actions.WebElementActionsImpl;
+import org.framework.actions.WebElementActionsLogger;
 import org.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -41,9 +44,8 @@ public class SmokeTests extends BaseTestClass {
     @Test
     void sliderButtons() {
         header.clickHamburgerMenuItem(Menus.ACASA);
-        homepage.switchToSlide(1);
-        homepage.switchToSlide(0);
         homepage.clickCurrentSlideDetailsBtn();
+        homepage.switchToSlide(1);
         commonVerifications.verifyTextOnPage("Mezoterapie virtuala");
     }
 

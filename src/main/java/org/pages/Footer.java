@@ -40,11 +40,11 @@ public class Footer extends BasePage {
         scrollToFooter();
 
         switch (footerItem) {
-            case DESPRE_NOI-> click(despreNoi, false);
-            case SERVICII -> click(servicii, false);
-            case BLOG -> click(blog, false);
-            case PROGRAMARI_ONLINE -> click(programariOnline, false);
-            case CONTACT -> click(contact, false);
+            case DESPRE_NOI-> webElementActions.click(despreNoi);
+            case SERVICII -> webElementActions.click(servicii);
+            case BLOG -> webElementActions.click(blog);
+            case PROGRAMARI_ONLINE -> webElementActions.click(programariOnline);
+            case CONTACT -> webElementActions.click(contact);
             case FACEBOOK_BTN -> handleFacebook();
         }
     }
@@ -61,8 +61,8 @@ public class Footer extends BasePage {
             //Decline cookie pop-up window
             try {
                 click(By.xpath("//*[@id=\"facebook\"]/body/div[3]/div[2]/div/div/div/div/div[3]/div[2]/div/div[1]/div[2]/div/div[1]/div/span/span"), true);
-                email.sendKeys("test");
-                password.sendKeys("test");
+                webElementActions.sendKeys(email,"test");
+                webElementActions.sendKeys(password, "test");
             } catch (Exception e) {
                 log.error("Could not click cookie pop-up in Facebook / entering user&pass. Whatever, moving on.");
             }
@@ -90,10 +90,8 @@ public class Footer extends BasePage {
         driver.switchTo().window(originalWindowHandle);
     }
     private void scrollToFooter() {
-        WebElement f = waitForPresence(By.id("sp-bottom"), 2);
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", f);
+        WebElement f = webElementActions.waitForPresence(By.id("sp-bottom"), 2);
+        webElementActions.jsScrollIntoView(f);
     }
 
     private void handleFacebook() {
@@ -102,11 +100,13 @@ public class Footer extends BasePage {
         this.originalWindowHandle = driver.getWindowHandle();
 
         log.info("Waiting for Facebook Widget...");
-        WebElement fbIframe = waitForVisibility(By.tagName("iframe"), 3);
+        WebElement fbIframe = webElementActions.waitForVisibility(By.tagName("iframe"), 3);
+        //WebElement fbIframe = waitForVisibility(By.tagName("iframe"), 3);
 
         log.info("Switching to its iframe...");
         driver.switchTo().frame(fbIframe);
-        click(By.className("_1drq"), true);
+        webElementActions.click(By.className("_1drq"));
+        //click(By.className("_1drq"), true);
 
         log.info("Getting window information and switching to Facebook window...");
         Object[] windowHandles = driver.getWindowHandles().toArray();
