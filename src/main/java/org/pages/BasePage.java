@@ -2,6 +2,7 @@ package org.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.framework.actions.*;
 import org.framework.driver.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,9 +16,16 @@ public abstract class BasePage {
 
     public static final String baseUrl = "https://cosmeticabrasov.ro";
     private static final Logger log = LogManager.getLogger(BasePage.class);
+    protected WebElementActions webElementActions;
+    protected ClickStrategy clickWithWait;
+    protected ClickStrategy jsClick;
 
     public BasePage() {
         this.driver = DriverFactory.getInstance().getDriver();
+        WebElementActions baseImpl = new WebElementActionsImpl();
+        this.webElementActions = new WebElementActionsLogger(baseImpl);
+        this.clickWithWait = new WaitClick(2);
+        this.jsClick = new RetryWithJsFallbackClick();
     }
 
     public void goToHomepage() {

@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Map;
 
-public class ChromeMobileDriverManager implements IBrowserDriver {
+public class ChromeMobileDriverManager implements BrowserDriver {
 
     @Override
     public WebDriver getDriver(boolean headless) {

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
-public class EdgeDriverManager implements IBrowserDriver {
+public class EdgeDriverManager implements BrowserDriver {
     @Override
     public WebDriver getDriver(boolean headless) {
         WebDriverManager.edgedriver()

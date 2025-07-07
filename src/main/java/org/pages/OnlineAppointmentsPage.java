@@ -23,17 +23,20 @@ public class OnlineAppointmentsPage extends BasePage {
     private final By successMessageContainerLocator = By.cssSelector(".ui message success");
 
     public OnlineAppointmentsPage enterName(String name) {
-        driver.findElement(nameLocator).sendKeys(name);
+        webElementActions.sendKeys(nameLocator, name);
+        //driver.findElement(nameLocator).sendKeys(name);
         return this;
     }
 
     public OnlineAppointmentsPage enterPhoneNumber(String phone) {
-        driver.findElement(phoneNumberLocator).sendKeys(phone);
+        webElementActions.sendKeys(phoneNumberLocator, phone);
+        //driver.findElement(phoneNumberLocator).sendKeys(phone);
         return this;
     }
 
     public OnlineAppointmentsPage enterEmail(String email) {
-        driver.findElement(emailLocator).sendKeys(email);
+        webElementActions.sendKeys(emailLocator, email);
+        //driver.findElement(emailLocator).sendKeys(email);
         return this;
     }
 
@@ -41,13 +44,16 @@ public class OnlineAppointmentsPage extends BasePage {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = date.format(formatter);
-        driver.findElement(dateLocator).sendKeys(formattedDate);
+
+        webElementActions.sendKeys(dateLocator, formattedDate);
+        //driver.findElement(dateLocator).sendKeys(formattedDate);
 
         return this;
     }
     //maybe one prefers magic strings of type dd/mm/yyyy
     public OnlineAppointmentsPage enterPreferredDate(String date) {
-        driver.findElement(dateLocator).sendKeys(date);
+        webElementActions.sendKeys(dateLocator, date);
+        //driver.findElement(dateLocator).sendKeys(date);
         return this;
     }
 
@@ -66,12 +72,14 @@ public class OnlineAppointmentsPage extends BasePage {
 
     public OnlineAppointmentsPage enterAdditionalDetails(String details) {
         //any string works here
-        driver.findElement(servicesAndDetailsLocator).sendKeys(details);
+        webElementActions.sendKeys(servicesAndDetailsLocator, details);
+        //driver.findElement(servicesAndDetailsLocator).sendKeys(details);
         return this;
     }
 
     public void clickSubmit() {
-        click(submitBtnLocator, false);
+        webElementActions.click(submitBtnLocator);
+        //click(submitBtnLocator, false);
     }
 
     public boolean verifyMessageAfterSubmit() {

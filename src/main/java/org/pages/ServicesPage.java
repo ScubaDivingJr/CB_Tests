@@ -45,10 +45,14 @@ public class ServicesPage extends BasePage {
             for (int i = 0; i < descriptions.size(); i++) {
 
                 // We have to click so they can render.
-                click(treatmentTitlesClickable.get(i), true);
+                webElementActions.clickWithWait(treatmentTitlesClickable.get(i), 2);
+                //click(treatmentTitlesClickable.get(i), true);
 
                 //each description lives 3 divs under descriptions List. We have to wait for them to load when we click each one. We care about the first paragraph only.
-                WebElement shortDescription = waitForVisibility(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")), 3);
+
+                WebElement shortDescription = webElementActions.waitForVisibility(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")), 3);
+                //WebElement shortDescription = waitForVisibility(descriptions.get(i).findElement(By.xpath("./div/div/div/p[1]")), 3);
+
 
                 // Add it to the list of actual descriptions.
                 actualTreatmentDescriptions.add(shortDescription.getText());
@@ -60,11 +64,14 @@ public class ServicesPage extends BasePage {
     public String getActualTreatmentDescription(@NotNull Treatments treatments) {
 
         List<WebElement> li = getTreatmentContainerlist();
-        click(li.get(treatments.getValue()), true);
+        webElementActions.clickWithWait(li.get(treatments.getValue()), 2);
+        //click(li.get(treatments.getValue()), true);
 
-        List<WebElement> treatmentDescriptionWrapper = waitForVisibilityOfAll(activeTreatmentDescriptionWrapperLocator, 3);
+        List<WebElement> treatmentDescriptionWrapper = webElementActions.waitForVisibilityOfAll(activeTreatmentDescriptionWrapperLocator, 3);
+        //List<WebElement> treatmentDescriptionWrapper = waitForVisibilityOfAll(activeTreatmentDescriptionWrapperLocator, 3);
 
-        WebElement treatmentDescription = waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
+        WebElement treatmentDescription = webElementActions.waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
+        //WebElement treatmentDescription = waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
         return treatmentDescription.getText();
     }
 
@@ -82,11 +89,14 @@ public class ServicesPage extends BasePage {
     public boolean checkTreatmentImage(@NotNull Treatments treatment) {
 
         List<WebElement> li = getTreatmentContainerlist();
-        click(li.get(treatment.getValue()), true);
+        webElementActions.clickWithWait(li.get(treatment.getValue()), 2);
+        //click(li.get(treatment.getValue()), true);
 
-        List<WebElement> treatmentDescriptionWrapper = waitForPresenceOfAll(activeTreatmentDescriptionWrapperLocator, 2);
+        List<WebElement> treatmentDescriptionWrapper = webElementActions.waitForPresenceOfAll(activeTreatmentDescriptionWrapperLocator, 2);
+        //List<WebElement> treatmentDescriptionWrapper = waitForPresenceOfAll(activeTreatmentDescriptionWrapperLocator, 2);
 
-        WebElement treatmentDescription = waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
+        WebElement treatmentDescription = webElementActions.waitForVisibility(treatmentDescriptionWrapper.getFirst(), 2);
+        //WebElement treatmentDescription = waitForVisibility(treatmentDescriptionWrapper.getFirst(), 3);
 
         String imageSrc =  treatmentDescription.findElement(By.tagName("img")).getAttribute("src");
 
@@ -106,7 +116,8 @@ public class ServicesPage extends BasePage {
             for (int i = 0; i < descriptions.size(); i++) {
 
                 // we have to click so they can render.
-                click(treatmentTitlesClickable.get(i), true);
+                webElementActions.clickWithWait(treatmentTitlesClickable.get(i), 2);
+                //click(treatmentTitlesClickable.get(i), true);
                 WebElement img = descriptions.get(i).findElement(By.tagName("img"));
 
                 String imageSrc = img != null ? img.getAttribute("src") : "";
