@@ -1,7 +1,7 @@
 package com.tests;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.framework.CommonVerifications;
+import org.framework.utils.CommonVerifications;
 import org.enums.Menus;
 import org.pages.Header;
 import org.testng.SkipException;
