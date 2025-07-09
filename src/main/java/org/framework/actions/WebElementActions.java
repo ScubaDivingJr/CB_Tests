@@ -21,5 +21,6 @@ public interface WebElementActions {
     void sendKeys(By locator, String keysToSend);
     void sendKeys(WebElement webElement, String keysToSend);
     void clickWithStrategy(By locator, ClickStrategy clickStrategy);
+    void clickWithStrategy(WebElement element, ClickStrategy clickStrategy);
     void jsScrollIntoView(WebElement webElement);
 }

@@ -29,6 +29,11 @@ public class WebElementActionsImpl implements WebElementActions {
     }
 
     @Override
+    public void clickWithStrategy(WebElement element, ClickStrategy clickStrategy) {
+        clickStrategy.click(element);
+    }
+
+    @Override
     public void click(By locator) {
         defaultClickStrategy.click(locator);
     }
