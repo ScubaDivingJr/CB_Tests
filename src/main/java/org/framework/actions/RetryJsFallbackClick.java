@@ -9,13 +9,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class RetryWithJsFallbackClick implements ClickStrategy {
+public class RetryJsFallbackClick implements ClickStrategy {
 
     private final WebDriverWait webDriverWait;
     private final WebDriver driver;
-    private static final Logger log = LogManager.getLogger(RetryWithJsFallbackClick.class);
+    private static final Logger log = LogManager.getLogger(RetryJsFallbackClick.class);
 
-    public RetryWithJsFallbackClick() {
+    public RetryJsFallbackClick() {
         this.driver = DriverFactory.getInstance().getDriver();
         this.webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }

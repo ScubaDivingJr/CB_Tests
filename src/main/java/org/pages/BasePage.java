@@ -14,12 +14,14 @@ public abstract class BasePage {
     protected ClickStrategy clickWithWait;
     protected ClickStrategy jsClick;
 
+    private final int standardWaitDuration = 2;
+
     public BasePage() {
         this.driver = DriverFactory.getInstance().getDriver();
         WebElementActions baseImpl = new WebElementActionsImpl();
         this.webElementActions = new WebElementActionsLogger(baseImpl);
-        this.clickWithWait = new WaitClick(2);
-        this.jsClick = new RetryWithJsFallbackClick();
+        //this.clickWithWait = new WaitClick(standardWaitDuration);
+        this.jsClick = new RetryJsFallbackClick();
     }
 
     protected WebDriverWait webDriverWait(int duration) {

@@ -24,6 +24,12 @@ public class WebElementActionsLogger implements WebElementActions {
     }
 
     @Override
+    public void clickWithStrategy(WebElement element, ClickStrategy clickStrategy) {
+        log.info("Clicking element '{}' using '{}' strategy...", element, clickStrategy);
+        webElementActions.clickWithStrategy(element, clickStrategy);
+    }
+
+    @Override
     public WebDriverWait webDriverWait(int duration) {
         log.info("Custom explicit wait applied for maximum {} seconds.", duration);
         return webElementActions.webDriverWait(duration);
